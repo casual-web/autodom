@@ -3,12 +3,12 @@ parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: null
+    database_name: autodom
+    database_user: dev
+    database_password: coffee50
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: 676042130a068dda00227e421db07738c3d20a2f
+    secret: 5b6af5d42f592b37d552310fd9556567b
