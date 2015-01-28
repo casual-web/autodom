@@ -127,9 +127,96 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // homepage
-        if ($pathinfo === '/app/example') {
-            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+        if (0 === strpos($pathinfo, '/a')) {
+            if (0 === strpos($pathinfo, '/admin/service')) {
+                // admin_service
+                if (rtrim($pathinfo, '/') === '/admin/service') {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_admin_service;
+                    }
+
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'admin_service');
+                    }
+
+                    return array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::indexAction',  '_route' => 'admin_service',);
+                }
+                not_admin_service:
+
+                // admin_service_create
+                if ($pathinfo === '/admin/service/') {
+                    if ($this->context->getMethod() != 'POST') {
+                        $allow[] = 'POST';
+                        goto not_admin_service_create;
+                    }
+
+                    return array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::createAction',  '_route' => 'admin_service_create',);
+                }
+                not_admin_service_create:
+
+                // admin_service_new
+                if ($pathinfo === '/admin/service/new') {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_admin_service_new;
+                    }
+
+                    return array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::newAction',  '_route' => 'admin_service_new',);
+                }
+                not_admin_service_new:
+
+                // admin_service_show
+                if (preg_match('#^/admin/service/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_admin_service_show;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_service_show')), array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::showAction',));
+                }
+                not_admin_service_show:
+
+                // admin_service_edit
+                if (preg_match('#^/admin/service/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                    if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                        $allow = array_merge($allow, array('GET', 'HEAD'));
+                        goto not_admin_service_edit;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_service_edit')), array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::editAction',));
+                }
+                not_admin_service_edit:
+
+                // admin_service_update
+                if (preg_match('#^/admin/service/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    if ($this->context->getMethod() != 'PUT') {
+                        $allow[] = 'PUT';
+                        goto not_admin_service_update;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_service_update')), array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::updateAction',));
+                }
+                not_admin_service_update:
+
+                // admin_service_delete
+                if (preg_match('#^/admin/service/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                    if ($this->context->getMethod() != 'DELETE') {
+                        $allow[] = 'DELETE';
+                        goto not_admin_service_delete;
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'admin_service_delete')), array (  '_controller' => 'AppBundle\\Controller\\BusinessServiceController::deleteAction',));
+                }
+                not_admin_service_delete:
+
+            }
+
+            // homepage
+            if ($pathinfo === '/app/example') {
+                return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
+            }
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

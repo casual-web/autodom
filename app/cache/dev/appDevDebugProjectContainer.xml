@@ -2968,6 +2968,10 @@
         <argument>Doctrine</argument>
       </call>
       <call method="addPath">
+        <argument>/home/olivier/Dev/autodom/src/AppBundle/Resources/views</argument>
+        <argument>App</argument>
+      </call>
+      <call method="addPath">
         <argument>/home/olivier/Dev/autodom/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
         <argument>Debug</argument>
       </call>

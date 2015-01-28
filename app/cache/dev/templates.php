@@ -77,6 +77,7 @@
   'SwiftmailerBundle:Collector:swiftmailer.html.twig' => '/home/olivier/Dev/autodom/vendor/symfony/swiftmailer-bundle/Resources/views/Collector/swiftmailer.html.twig',
   'DoctrineBundle:Collector:db.html.twig' => '/home/olivier/Dev/autodom/vendor/doctrine/doctrine-bundle/Resources/views/Collector/db.html.twig',
   'DoctrineBundle:Collector:explain.html.twig' => '/home/olivier/Dev/autodom/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig',
+  'AppBundle:BusinessService:index.html.twig' => '/home/olivier/Dev/autodom/src/AppBundle/Resources/views/BusinessService/index.html.twig',
   'DebugBundle:Profiler:dump.html.twig' => '/home/olivier/Dev/autodom/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views/Profiler/dump.html.twig',
   'WebProfilerBundle:Collector:form.html.twig' => '/home/olivier/Dev/autodom/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/form.html.twig',
   'WebProfilerBundle:Collector:ajax.html.twig' => '/home/olivier/Dev/autodom/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views/Collector/ajax.html.twig',
