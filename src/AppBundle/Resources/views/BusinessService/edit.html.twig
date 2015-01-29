@@ -1,16 +1,28 @@
 {% extends '::base.html.twig' %}
 
+
 {% block body -%}
-    <h1>BusinessService edit</h1>
+
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Edition d'un service</h1>
+    </div>
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_service') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+
+    <ul class="record_actions">
+        <li>
+            <a class="btn btn-default" role="button" href="{{ path('admin_service') }}">
+                Retour à la liste
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+
+
+</div>
+
 {% endblock %}
