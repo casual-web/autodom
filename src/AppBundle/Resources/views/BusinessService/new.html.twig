@@ -1,15 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>BusinessService creation</h1>
+    <div class="container">
+        <div class="page-header">
+            <h1>Création d'un nouveau service</h1>
+        </div>
 
-    {{ form(form) }}
-
+        {{ form(form) }}
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_service') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+            <li>
+                <a class="btn btn-default" role="button" href="{{ path('admin_service') }}">
+                    Retour à la liste
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

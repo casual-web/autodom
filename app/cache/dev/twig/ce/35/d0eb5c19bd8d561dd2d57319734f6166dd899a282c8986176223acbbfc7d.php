@@ -1,7 +1,7 @@
 <?php
 
-/* AppBundle:BusinessService:new.html.twig */
-class __TwigTemplate_a3a6b6332f04491ada956f94d95df02a8990db0388c44bdaea57e5d2fc2d0628 extends Twig_Template
+/* AppBundle:BusinessService:edit.html.twig */
+class __TwigTemplate_ce35d0eb5c19bd8d561dd2d57319734f6166dd899a282c8986176223acbbfc7d extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
@@ -32,36 +32,46 @@ class __TwigTemplate_a3a6b6332f04491ada956f94d95df02a8990db0388c44bdaea57e5d2fc2
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
+    // line 4
     public function block_body($context, array $blocks = array())
     {
-        // line 4
+        // line 7
         echo "<div class=\"container\">
-        <div class=\"page-header\">
-            <h1>Création d'un nouveau service</h1>
-        </div>
 
-        ";
-        // line 9
-        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form');
+    <div class=\"page-header\">
+        <h1>Edition d'un service</h1>
+    </div>
+
+    ";
+        // line 13
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["edit_form"]) ? $context["edit_form"] : $this->getContext($context, "edit_form")), 'form');
         echo "
-        <ul class=\"record_actions\">
-            <li>
-                <a class=\"btn btn-default\" role=\"button\" href=\"";
-        // line 12
+
+
+    <ul class=\"record_actions\">
+        <li>
+            <a class=\"btn btn-default\" role=\"button\" href=\"";
+        // line 18
         echo $this->env->getExtension('routing')->getPath("admin_service");
         echo "\">
-                    Retour à la liste
-                </a>
-            </li>
-        </ul>
-    </div>
+                Retour à la liste
+            </a>
+        </li>
+        <li>";
+        // line 22
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["delete_form"]) ? $context["delete_form"] : $this->getContext($context, "delete_form")), 'form');
+        echo "</li>
+    </ul>
+
+
+</div>
+
 ";
     }
 
     public function getTemplateName()
     {
-        return "AppBundle:BusinessService:new.html.twig";
+        return "AppBundle:BusinessService:edit.html.twig";
     }
 
     public function isTraitable()
@@ -71,6 +81,6 @@ class __TwigTemplate_a3a6b6332f04491ada956f94d95df02a8990db0388c44bdaea57e5d2fc2
 
     public function getDebugInfo()
     {
-        return array (  52 => 12,  46 => 9,  39 => 4,  36 => 3,  11 => 1,);
+        return array (  62 => 22,  55 => 18,  47 => 13,  39 => 7,  36 => 4,  11 => 1,);
     }
 }
