@@ -76,7 +76,7 @@ class BusinessServiceController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -125,6 +125,22 @@ class BusinessServiceController extends Controller
     }
 
     /**
+     * Creates a form to delete a BusinessService entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_service_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Supprimer'))
+            ->getForm();
+    }
+
+    /**
      * Displays a form to edit an existing BusinessService entity.
      *
      * @Route("/{id}/edit", name="admin_service_edit")
@@ -169,6 +185,7 @@ class BusinessServiceController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing BusinessService entity.
      *
@@ -202,6 +219,7 @@ class BusinessServiceController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a BusinessService entity.
      *
@@ -226,22 +244,5 @@ class BusinessServiceController extends Controller
         }
 
         return $this->redirect($this->generateUrl('admin_service'));
-    }
-
-    /**
-     * Creates a form to delete a BusinessService entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_service_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

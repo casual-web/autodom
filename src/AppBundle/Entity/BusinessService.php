@@ -47,7 +47,7 @@ class BusinessService
     /**
      * @var boolean
      *
-     * @ORM\Column(name="enabled", type="boolean", options={"default"=true})
+     * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled = true;
 
@@ -60,6 +60,16 @@ class BusinessService
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get ref
+     *
+     * @return string
+     */
+    public function getRef()
+    {
+        return $this->ref;
     }
 
     /**
@@ -76,13 +86,13 @@ class BusinessService
     }
 
     /**
-     * Get ref
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getRef()
+    public function getName()
     {
-        return $this->ref;
+        return $this->name;
     }
 
     /**
@@ -99,13 +109,13 @@ class BusinessService
     }
 
     /**
-     * Get name
+     * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**
@@ -122,13 +132,13 @@ class BusinessService
     }
 
     /**
-     * Get description
+     * Get enabled
      *
-     * @return string 
+     * @return boolean
      */
-    public function getDescription()
+    public function getEnabled()
     {
-        return $this->description;
+        return $this->enabled;
     }
 
     /**
@@ -142,15 +152,5 @@ class BusinessService
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean 
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
     }
 }
