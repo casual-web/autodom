@@ -15,11 +15,18 @@ class BusinessServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('ref')
-            ->add('name')
+            ->add('ref', 'text' , array(
+                'label'     => 'Référence',
+            ))
+            ->add('name', 'text' , array(
+                'label'     => 'Nom',
+            ))
             ->add('description')
-            ->add('enabled')
+            ->add('enabled', 'checkbox', array(
+                'label'     => 'Actif',
+                'required'  => false))
         ;
+
     }
     
     /**
