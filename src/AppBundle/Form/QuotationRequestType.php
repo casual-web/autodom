@@ -25,9 +25,10 @@ class QuotationRequestType extends AbstractType
             ->add('address')
             ->add('contactOrigin')
             ->add('created')
-            ->add('status');
+            ->add('status')
+        ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */

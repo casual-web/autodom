@@ -35,7 +35,6 @@ class QuotationRequestController extends Controller
             'entities' => $entities,
         );
     }
-
     /**
      * Creates a new QuotationRequest entity.
      *
