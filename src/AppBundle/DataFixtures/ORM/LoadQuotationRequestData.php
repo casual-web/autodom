@@ -10,6 +10,7 @@ namespace AppBundle\DataFixtures\ORM;
  */
 
 use AppBundle\Entity\QuotationRequest;
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -31,7 +32,13 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr1->setHasShelter(true);
         $qr1->setContactOrigin('recherche sur internet');
         $qr1->setProblemDescription("2 coups dans la portière conducteur et peinture terne sur le capot moteur");
+
+        $qrsr = new QuotationRequestServiceRelation();
+        $qrsr->setBusinessServiceId(118);
+        $qrsr->setQuotationRequest($qr1);
+
         $manager->persist($qr1);
+        $manager->persist($qrsr);
 
         $qr2 = new QuotationRequest();
         $qr2->setVehicleModel("ABARTH 500");

@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Liste des demandes de devis</h1>
+        </div>
+
+        <table class="records_list table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Etat</th>
+                <th>Date</th>
+                <th>Véhicule</th>
+                <th>Descr. problème</th>
+                <th>Prénom/Nom</th>
+                <th>Téléphone/Email</th>
+                <th>Adresse</th>
+                <th>Abri</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_devis_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
+                    </td>
+                    <td>{{ entity.status }}</td>
+                    <td>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
+                    <td>{{ entity.vehicleModel }}</td>
+                    <td>{{ entity.problemDescription }}</td>
+                    <td>{{ entity.firstname }} {{ entity.lastname }}</td>
+                    <td>{{ entity.phone }} {{ entity.email }}</td>
+                    <td>{{ entity.address }}</td>
+                    <td class="text-center">
+                        {% if entity.hasShelter %}
+                            <span class="glyphicon glyphicon-tent" aria-hidden="true"></span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_devis_show', { 'id': entity.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('admin_devis_new') }}">
+            Créer une nouvelle demande de devis
+        </a>
+
+        </ul>
+    </div>
+{% endblock %}

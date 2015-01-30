@@ -12,7 +12,7 @@
       <column name="ref" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
-      <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
@@ -27,7 +27,17 @@
       <column name="contact_origin" sqlType="ENUM" precision="25" scale="0" nullable="true" jdbcType="1"/>
       <column name="created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="last_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_9F9D69167EECC807" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="quotation_request_id"/>
+    </table>
+    <table name="QuotationRequestServiceRelation" schema="" catalog="autodom" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="quotation_request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="business_service_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_9F9D69167EECC807" columns="quotation_request_id" ref-table="QuotationRequest" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="IDX_9F9D69167EECC807" unique="false" columns="quotation_request_id"/>
     </table>
   </data-source>
 </component>
