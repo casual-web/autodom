@@ -58,7 +58,7 @@ class QuotationRequestController extends Controller
 
         return array(
             'entity' => $entity,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         );
     }
 
@@ -91,11 +91,11 @@ class QuotationRequestController extends Controller
     public function newAction()
     {
         $entity = new QuotationRequest();
-        $form = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
         );
     }
 
@@ -119,25 +119,9 @@ class QuotationRequestController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
+            'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
-    }
-
-    /**
-     * Creates a form to delete a QuotationRequest entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
     }
 
     /**
@@ -161,19 +145,19 @@ class QuotationRequestController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-     * Creates a form to edit a QuotationRequest entity.
-     *
-     * @param QuotationRequest $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
+    * Creates a form to edit a QuotationRequest entity.
+    *
+    * @param QuotationRequest $entity The entity
+    *
+    * @return \Symfony\Component\Form\Form The form
+    */
     private function createEditForm(QuotationRequest $entity)
     {
         $form = $this->createForm(new QuotationRequestType(), $entity, array(
@@ -185,7 +169,6 @@ class QuotationRequestController extends Controller
 
         return $form;
     }
-
     /**
      * Edits an existing QuotationRequest entity.
      *
@@ -214,12 +197,11 @@ class QuotationRequestController extends Controller
         }
 
         return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
-
     /**
      * Deletes a QuotationRequest entity.
      *
@@ -244,5 +226,22 @@ class QuotationRequestController extends Controller
         }
 
         return $this->redirect($this->generateUrl('admin_devis'));
+    }
+
+    /**
+     * Creates a form to delete a QuotationRequest entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm()
+        ;
     }
 }

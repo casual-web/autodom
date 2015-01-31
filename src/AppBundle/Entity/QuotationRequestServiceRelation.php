@@ -12,11 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequestServiceRelation
 {
+
     /**
-     * @ORM\ManyToOne(targetEntity="QuotationRequest", inversedBy="$quotation_request_service_relation")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BusinessService")
+     * @ORM\JoinColumn(name="business_service_id", referencedColumnName="id")
+     */
+    protected $businessService;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\QuotationRequest", inversedBy="quotationRequestServiceRelations")
      * @ORM\JoinColumn(name="quotation_request_id", referencedColumnName="id")
      */
     protected $quotationRequest;
+
     /**
      * @var integer
      *
@@ -85,7 +94,7 @@ class QuotationRequestServiceRelation
      * Set businessServiceId
      *
      * @param integer $businessServiceId
-     * @return QuotationServiceMap
+     * @return QuotationRequestServiceRelation
      */
     public function setBusinessServiceId($businessServiceId)
     {
@@ -107,12 +116,35 @@ class QuotationRequestServiceRelation
     /**
      * Set quotation request
      *
-     * @param \AppBundle\Entity\QuotationRequest $quotation_request
+     * @param \AppBundle\Entity\QuotationRequest $quotationRequest
      * @return QuotationRequestServiceRelation
      */
     public function setQuotationRequest(\AppBundle\Entity\QuotationRequest $quotationRequest = null)
     {
         $this->quotationRequest = $quotationRequest;
+
+        return $this;
+    }
+
+    /**
+     * Get business service
+     *
+     * @return \AppBundle\Entity\BusinessService
+     */
+    public function getBusinessService()
+    {
+        return $this->businessService;
+    }
+
+    /**
+     * Set business service
+     *
+     * @param \AppBundle\Entity\BusinessService $businessService
+     * @return QuotationRequestServiceRelation
+     */
+    public function setBusinessService(\AppBundle\Entity\BusinessService $businessService = null)
+    {
+        $this->businessService = $businessService;
 
         return $this;
     }

@@ -13,12 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequest
 {
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotation_request", cascade={"remove", "persist"})
-     *
-     */
-    protected $quotationRequestServiceRelation;
+
     /**
      * @var integer
      *
@@ -102,7 +97,7 @@ class QuotationRequest
      */
     public function __construct()
     {
-        $this->quotationRequestServiceRelation = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->quotationRequestServiceRelations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -376,7 +371,7 @@ class QuotationRequest
      */
     public function addQuotationRequestServiceRelation(\AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation)
     {
-        $this->quotationRequestServiceRelation[] = $quotationRequestServiceRelation;
+        $this->quotationRequestServiceRelations[] = $quotationRequestServiceRelation;
 
         return $this;
     }
@@ -388,7 +383,7 @@ class QuotationRequest
      */
     public function removeQuotationRequestServiceRelation(\AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation)
     {
-        $this->quotationRequestServiceRelation->removeElement($quotationRequestServiceRelation);
+        $this->quotationRequestServiceRelations->removeElement($quotationRequestServiceRelation);
     }
 
     /**
@@ -396,8 +391,8 @@ class QuotationRequest
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getQuotationRequestServiceRelation()
+    public function getQuotationRequestServiceRelations()
     {
-        return $this->quotationRequestServiceRelation;
+        return $this->quotationRequestServiceRelations;
     }
 }

@@ -15,6 +15,7 @@
                 <th>Date</th>
                 <th>Véhicule</th>
                 <th>Descr. problème</th>
+                <th>Services</th>
                 <th>Prénom/Nom</th>
                 <th>Téléphone/Email</th>
                 <th>Adresse</th>
@@ -32,6 +33,11 @@
                     <td>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
                     <td>{{ entity.vehicleModel }}</td>
                     <td>{{ entity.problemDescription }}</td>
+                    <td>
+                        {% for subEntity in entity.quotationRequestServiceRelations %}
+                            {{ subEntity.businessServiceId  }}
+                        {% endfor %}
+                    </td>
                     <td>{{ entity.firstname }} {{ entity.lastname }}</td>
                     <td>{{ entity.phone }} {{ entity.email }}</td>
                     <td>{{ entity.address }}</td>

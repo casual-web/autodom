@@ -33,15 +33,10 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr1->setContactOrigin('recherche sur internet');
         $qr1->setProblemDescription("2 coups dans la portière conducteur et peinture terne sur le capot moteur");
 
-        $qrsr = new QuotationRequestServiceRelation();
-        $qrsr->setBusinessServiceId(118);
-        $qrsr->setQuotationRequest($qr1);
-
         $manager->persist($qr1);
-        $manager->persist($qrsr);
 
         $qr2 = new QuotationRequest();
-        $qr2->setVehicleModel("ABARTH 500");
+        $qr2->setVehicleModel("Audi A6");
         $qr2->setLastName('Brendis');
         $qr2->setFirstName('');
         $qr2->setEmail("letrefle23@yahoo.fr");
@@ -51,6 +46,18 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr2->setContactOrigin('recherche sur internet');
         $qr2->setProblemDescription("Donner un coup de jeune pour mise en vente");
         $manager->persist($qr2);
+
+        $qr3 = new QuotationRequest();
+        $qr3->setVehicleModel("mercedes classe c 220");
+        $qr3->setLastName('pantani');
+        $qr3->setFirstName('joe');
+        $qr3->setEmail("jo-moha84@hotmail.fr");
+        $qr3->setPhone("0761594387");
+        $qr3->setAddress("7 rue loucheur");
+        $qr3->setHasShelter(false);
+        $qr3->setContactOrigin('Lien depuis un autre site');
+        $qr3->setProblemDescription("Peinture pare choc avant et arrière , Aile gauche avant et aile gauche arrière a de bosselé et a peindre fard avant a renoverr");
+        $manager->persist($qr3);
 
         $manager->flush();
 

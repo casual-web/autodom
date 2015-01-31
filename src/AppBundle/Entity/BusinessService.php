@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class BusinessService
 {
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\QuotationRequestServiceRelation", mappedBy="businessService")
+     *
+     */
+    protected $quotationRequestServiceRelations;
 
     /**
      * @var integer
