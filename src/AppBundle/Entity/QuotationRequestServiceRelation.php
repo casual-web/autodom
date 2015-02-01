@@ -13,12 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class QuotationRequestServiceRelation
 {
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BusinessService")
-     * @ORM\JoinColumn(name="business_service_id", referencedColumnName="id")
-     */
-    protected $businessService;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\QuotationRequest", inversedBy="quotationRequestServiceRelations")
@@ -126,26 +120,5 @@ class QuotationRequestServiceRelation
         return $this;
     }
 
-    /**
-     * Get business service
-     *
-     * @return \AppBundle\Entity\BusinessService
-     */
-    public function getBusinessService()
-    {
-        return $this->businessService;
-    }
 
-    /**
-     * Set business service
-     *
-     * @param \AppBundle\Entity\BusinessService $businessService
-     * @return QuotationRequestServiceRelation
-     */
-    public function setBusinessService(\AppBundle\Entity\BusinessService $businessService = null)
-    {
-        $this->businessService = $businessService;
-
-        return $this;
-    }
 }

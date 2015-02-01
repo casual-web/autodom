@@ -13,8 +13,4 @@ use Doctrine\ORM\EntityRepository;
 class QuotationRequestRepository extends EntityRepository
 {
 
-    public function addQuotationRequest()
-    {
-
-    }
 }

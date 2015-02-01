@@ -32,7 +32,6 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr1->setHasShelter(true);
         $qr1->setContactOrigin('recherche sur internet');
         $qr1->setProblemDescription("2 coups dans la portière conducteur et peinture terne sur le capot moteur");
-
         $manager->persist($qr1);
 
         $qr2 = new QuotationRequest();
@@ -51,11 +50,11 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr3->setVehicleModel("mercedes classe c 220");
         $qr3->setLastName('pantani');
         $qr3->setFirstName('joe');
-        $qr3->setEmail("jo-moha84@hotmail.fr");
+        $qr3->setEmail("	jo-moha84@hotmail.fr");
         $qr3->setPhone("0761594387");
-        $qr3->setAddress("7 rue loucheur");
+        $qr3->setAddress("13010 marseille");
         $qr3->setHasShelter(false);
-        $qr3->setContactOrigin('Lien depuis un autre site');
+        $qr3->setContactOrigin('7 rue loucheur');
         $qr3->setProblemDescription("Peinture pare choc avant et arrière , Aile gauche avant et aile gauche arrière a de bosselé et a peindre fard avant a renoverr");
         $manager->persist($qr3);
 

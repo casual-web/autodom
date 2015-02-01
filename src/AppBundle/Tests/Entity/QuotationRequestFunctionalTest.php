@@ -10,6 +10,7 @@ namespace AppBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
+use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
 
 
 class QuotationRequestFunctionalTest extends WebTestCase
@@ -28,8 +29,18 @@ class QuotationRequestFunctionalTest extends WebTestCase
         $this->dem = $this->em->getDoctrineDefaultManager();
 
         // add fixtures
-        $fixtureLoader = new LoadQuotationRequestData();
-        $fixtureLoader->load($this->dem);
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderQR = new LoadQuotationRequestData();
+        $fixtureLoaderBS->load($this->dem);
+        $fixtureLoaderQR->load($this->dem);
+
+        //add relations
+        $bsr = $this->dem->getRepository('AppBundle\Entity\BusinessService');
+        $businessServiceCollection = $bsr->findByRefList(array('DSP', 'VIT'));
+        $quotationRequest = $this->em->loadEntity(1);
+        $this->em->persistAndFlushCollectionServiceRelation(
+            $quotationRequest,
+            $businessServiceCollection);
 
     }
 
@@ -59,7 +70,8 @@ class QuotationRequestFunctionalTest extends WebTestCase
                     START TRANSACTION;
                     SET FOREIGN_KEY_CHECKS=0;
                     TRUNCATE QuotationRequest;
-                    TRUNCATE table2;
+                    TRUNCATE BusinessService;
+                    TRUNCATE QuotationRequestServiceRelation;
                     SET FOREIGN_KEY_CHECKS=1;
                     COMMIT;
 EOT;

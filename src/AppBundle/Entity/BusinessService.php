@@ -8,17 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
  * BusinessService
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\BusinessServiceRepository")
  */
 class BusinessService
 {
 
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\QuotationRequestServiceRelation", mappedBy="businessService")
-     *
-     */
-    protected $quotationRequestServiceRelations;
 
     /**
      * @var integer
