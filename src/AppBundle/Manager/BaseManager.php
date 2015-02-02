@@ -11,7 +11,7 @@ namespace AppBundle\Manager;
 
 abstract class BaseManager
 {
-    protected function persistAndFlush($entity)
+    public function persistAndFlush($entity)
     {
         $this->em->persist($entity);
         $this->em->flush();

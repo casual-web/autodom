@@ -84,6 +84,7 @@ class QuotationRequest
      * @ORM\Column(type="datetime")
      */
     private $created;
+
     /**
      * @var integer
      *
@@ -93,12 +94,17 @@ class QuotationRequest
     private $status = "0";
 
     /**
-     * Constructor
+     * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})
+     *
      */
+    private $quotationRequestServiceRelations;
+
+
     public function __construct()
     {
         $this->quotationRequestServiceRelations = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
     /**
      * Get id

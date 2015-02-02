@@ -14,7 +14,6 @@
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="FK_9F9D69162DFFA14D" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="business_service_id"/>
     </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -38,8 +37,6 @@
       <column name="quotation_request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="FK_9F9D69167EECC807" columns="quotation_request_id" ref-table="QuotationRequest" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="FK_9F9D69162DFFA14D" columns="business_service_id" ref-table="BusinessService" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="IDX_9F9D69162DFFA14D" unique="false" columns="business_service_id"/>
       <index name="IDX_9F9D69167EECC807" unique="false" columns="quotation_request_id"/>
     </table>
   </data-source>

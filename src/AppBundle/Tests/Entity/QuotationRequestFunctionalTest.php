@@ -17,55 +17,53 @@ class QuotationRequestFunctionalTest extends WebTestCase
 {
 
     /**
+     * @var \AppBundle\Manager\QuotationRequestManager;
+     */
+    private $quotation_em;
+
+    /**
      * @var \Doctrine\ORM\EntityManager
      */
-    private $em;
+    private $default_em;
 
     public function setUp()
     {
         static::$kernel = static::createKernel();
         static::$kernel->boot();
-        $this->em = static::$kernel->getContainer()->get('doctrine.orm.request_manager');
-        $this->dem = $this->em->getDoctrineDefaultManager();
-
-        // add fixtures
-        $fixtureLoaderBS = new LoadBusinessServicesData();
-        $fixtureLoaderQR = new LoadQuotationRequestData();
-        $fixtureLoaderBS->load($this->dem);
-        $fixtureLoaderQR->load($this->dem);
-
-        //add relations
-        $bsr = $this->dem->getRepository('AppBundle\Entity\BusinessService');
-        $businessServiceCollection = $bsr->findByRefList(array('DSP', 'VIT'));
-        $quotationRequest = $this->em->loadEntity(1);
-        $this->em->persistAndFlushCollectionServiceRelation(
-            $quotationRequest,
-            $businessServiceCollection);
-
+        $this->quotation_em = static::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
+        $this->default_em = $this->quotation_em->getDoctrineDefaultManager();
+        $this->loadFixtures();
     }
 
-
-    public function testSearchByCategoryName()
+    public function loadFixtures()
     {
 
-        $products = $this->em
-            ->getRepository('AppBundle:QuotationRequest')
-            ->findByContactOrigin('recherche sur internet');
+        // load existing fixtures
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderQR = new LoadQuotationRequestData();
+        $fixtureLoaderBS->load($this->default_em);
+        $fixtureLoaderQR->load($this->default_em);
 
-        $this->assertCount(2, $products);
+        // add relations
+        $bs_repository = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
+        $qr_repository = $this->quotation_em->getRepository();
+
+        $this->quotation_em->persistAndFlushServiceRelations(
+            $qr_repository->find(1),
+            $bs_repository->findByRefList(array('DSP', 'VIT')));
+
     }
 
     public function tearDown()
     {
-
-        $this->truncateTables();
+        $this->unLoadFixtures();
 
     }
 
-    public function truncateTables()
+    public function unLoadFixtures()
     {
 
-        $connection = $this->dem->getConnection();
+        $connection = $this->default_em->getConnection();
         $sqlQuery = <<<EOT
                     START TRANSACTION;
                     SET FOREIGN_KEY_CHECKS=0;
@@ -77,4 +75,34 @@ class QuotationRequestFunctionalTest extends WebTestCase
 EOT;
         $connection->query($sqlQuery);
     }
+
+
+    public function testSearchByContactOrigin()
+    {
+
+        $qr = $this->quotation_em
+            ->getRepository()
+            ->findByContactOrigin('recherche sur internet');
+
+        $this->assertCount(2, $qr);
+    }
+
+    public function testBusinessService()
+    {
+        $bsr = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
+        $businessServiceCollection = $bsr->findByRefList(array('DSP', 'VIT'));
+        $this->assertEquals(2, count($businessServiceCollection));
+    }
+
+    public function testRelations()
+    {
+
+        $repository = $this->default_em->getRepository('AppBundle:QuotationRequest');
+        $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
+        $quotationRequest = $repository->find(1);
+
+        $this->assertCount(2, $quotationRequest->getQuotationRequestServiceRelations());
+    }
+
+
 }

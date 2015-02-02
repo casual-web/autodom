@@ -17,11 +17,6 @@ class QuotationRequestManager extends BaseManager
         $this->em = $em;
     }
 
-    public function loadEntity($entityId)
-    {
-        return $this->getRepository()
-            ->findOneBy(array('id' => $entityId));
-    }
 
     public function getRepository()
     {
@@ -33,21 +28,22 @@ class QuotationRequestManager extends BaseManager
         return $this->em;
     }
 
-    public function persistAndFlushCollectionServiceRelation(QuotationRequest $quotationRequest, array $businessServices)
+    public function persistAndFlushServiceRelations(QuotationRequest $quotationRequest, array $businessServices)
     {
 
         foreach ($businessServices as $bsEntity) {
-            $this->persistOneServiceRelation($quotationRequest, $bsEntity);
+            $relation = $this->createServiceRelation($quotationRequest, $bsEntity);
+            $this->em->persist($relation);
         }
         $this->em->flush();
     }
 
-    public function persistOneServiceRelation(QuotationRequest $quotationRequest, BusinessService $businessService)
+    public function createServiceRelation(QuotationRequest $quotationRequest, BusinessService $businessService)
     {
         $relation = new QuotationRequestServiceRelation();
         $relation->setBusinessServiceId($businessService->getId());
         $relation->setQuotationRequest($quotationRequest);
-        $this->em->persist($relation);
+        return $relation;
     }
 
 }

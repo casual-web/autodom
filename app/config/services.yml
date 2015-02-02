@@ -4,6 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-    doctrine.orm.request_manager:
+    doctrine.orm.quotation_request_manager:
         class: AppBundle\Manager\QuotationRequestManager
         arguments: ["@doctrine.orm.entity_manager"]
