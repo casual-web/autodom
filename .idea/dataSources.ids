@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - autodom@localhost" uuid="cb3acd28-f7a7-43cd-9bc5-cd1303791500">
+  <data-source name="MySQL - autodom@localhost" uuid="6d496daa-c85b-4b1d-9ecd-fb3aa67388b3">
     <database-info product="MySQL" version="5.5.41-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -14,6 +14,7 @@
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_9F9D69162DFFA14D" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="business_service_id"/>
     </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -33,10 +34,12 @@
     </table>
     <table name="QuotationRequestServiceRelation" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="business_service_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="quotation_request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="business_service_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_9F9D69162DFFA14D" columns="business_service_id" ref-table="BusinessService" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_9F9D69167EECC807" columns="quotation_request_id" ref-table="QuotationRequest" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="UNIQ_9F9D69162DFFA14D" unique="true" columns="business_service_id"/>
       <index name="IDX_9F9D69167EECC807" unique="false" columns="quotation_request_id"/>
     </table>
   </data-source>

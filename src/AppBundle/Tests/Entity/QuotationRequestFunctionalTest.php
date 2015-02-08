@@ -28,11 +28,13 @@ class QuotationRequestFunctionalTest extends WebTestCase
 
     public function setUp()
     {
+
         static::$kernel = static::createKernel();
         static::$kernel->boot();
         $this->quotation_em = static::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
         $this->default_em = $this->quotation_em->getDoctrineDefaultManager();
         $this->loadFixtures();
+        $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
     }
 
     public function loadFixtures()
@@ -56,7 +58,7 @@ class QuotationRequestFunctionalTest extends WebTestCase
 
     public function tearDown()
     {
-        $this->unLoadFixtures();
+       //$this->unLoadFixtures();
 
     }
 
@@ -98,10 +100,12 @@ EOT;
     {
 
         $repository = $this->default_em->getRepository('AppBundle:QuotationRequest');
-        $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
         $quotationRequest = $repository->find(1);
+        $qrRelations = $quotationRequest->getQuotationRequestServiceRelations();
+        $this->assertCount(2, $qrRelations);
+        $this->assertEquals('DSP', $qrRelations[0]->getBusinessServiceRef());
 
-        $this->assertCount(2, $quotationRequest->getQuotationRequestServiceRelations());
+
     }
 
 

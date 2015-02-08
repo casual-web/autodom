@@ -35,7 +35,7 @@
                     <td>{{ entity.problemDescription }}</td>
                     <td>
                         {% for subEntity in entity.quotationRequestServiceRelations %}
-                            {{ subEntity.businessServiceId  }}
+                            {{ subEntity.businessServiceRef  }}
                         {% endfor %}
                     </td>
                     <td>{{ entity.firstname }} {{ entity.lastname }}</td>

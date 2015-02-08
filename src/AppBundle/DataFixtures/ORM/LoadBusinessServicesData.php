@@ -21,8 +21,6 @@ class LoadBusinessServicesData implements FixtureInterface {
     public function load(ObjectManager $manager)
     {
 
-        $manager->clear();
-
         $bsDSP = new BusinessService();
         $bsDSP->setName('Débosselage sans peinture');
         $bsDSP->setRef('DSP');

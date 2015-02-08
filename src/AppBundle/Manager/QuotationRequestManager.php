@@ -32,6 +32,7 @@ class QuotationRequestManager extends BaseManager
     {
 
         foreach ($businessServices as $bsEntity) {
+
             $relation = $this->createServiceRelation($quotationRequest, $bsEntity);
             $this->em->persist($relation);
         }
@@ -40,8 +41,9 @@ class QuotationRequestManager extends BaseManager
 
     public function createServiceRelation(QuotationRequest $quotationRequest, BusinessService $businessService)
     {
+
         $relation = new QuotationRequestServiceRelation();
-        $relation->setBusinessServiceId($businessService->getId());
+        $relation->setBusinessServiceRef($businessService->getRef());
         $relation->setQuotationRequest($quotationRequest);
         return $relation;
     }

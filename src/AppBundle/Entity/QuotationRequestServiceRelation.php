@@ -20,6 +20,7 @@ class QuotationRequestServiceRelation
      */
     protected $quotationRequest;
 
+
     /**
      * @var integer
      *
@@ -35,11 +36,11 @@ class QuotationRequestServiceRelation
      */
     private $quotationRequestId;
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="business_service_id", type="integer")
+     * @ORM\Column(name="business_service_ref", type="string")
      */
-    private $businessServiceId;
+    private $businessServiceRef;
 
     /**
      * Get id
@@ -75,24 +76,24 @@ class QuotationRequestServiceRelation
     }
 
     /**
-     * Get businessServiceId
+     * Get businessServiceRef
      *
-     * @return integer
+     * @return string
      */
-    public function getBusinessServiceId()
+    public function getBusinessServiceRef()
     {
-        return $this->businessServiceId;
+        return $this->businessServiceRef;
     }
 
     /**
-     * Set businessServiceId
+     * Set businessServiceRef
      *
-     * @param integer $businessServiceId
+     * @param string $businessServiceRef
      * @return QuotationRequestServiceRelation
      */
-    public function setBusinessServiceId($businessServiceId)
+    public function setBusinessServiceRef($businessServiceRef)
     {
-        $this->businessServiceId = $businessServiceId;
+        $this->businessServiceRef = $businessServiceRef;
 
         return $this;
     }
@@ -119,6 +120,5 @@ class QuotationRequestServiceRelation
 
         return $this;
     }
-
 
 }

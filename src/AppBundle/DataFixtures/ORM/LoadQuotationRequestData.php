@@ -33,9 +33,7 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr1->setHasShelter(true);
         $qr1->setContactOrigin('recherche sur internet');
         $qr1->setProblemDescription("2 coups dans la portière conducteur et peinture terne sur le capot moteur");
-
         $manager->persist($qr1);
-
 
         $qr2 = new QuotationRequest();
         $qr2->setVehicleModel("Audi A6");

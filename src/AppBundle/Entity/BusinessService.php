@@ -26,7 +26,7 @@ class BusinessService
     /**
      * @var string
      *
-     * @ORM\Column(name="ref", type="string", length=255)
+     * @ORM\Column(name="ref", type="string", length=255, unique=true)
      */
     private $ref;
 
@@ -50,7 +50,6 @@ class BusinessService
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled = true;
-
 
     /**
      * Get id
