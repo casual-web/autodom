@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+{% javascripts 'bundles/app_bundle/js/*' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<html lang="fr">
+<head>
+    {% block head %}
+        <meta charset="UTF-8"/>
+        <meta property="og:titl e" content="Autodom"/>
+        <meta property="og:type" content="company"/>
+        <meta property="og:url" content="http://www.autodom.biz"/>
+        <meta property="og:image" content="http://autodom.biz/assets/img/logo-autodom-baseline.png"/>
+        <meta property="og:site_name" content="autodom.biz"/>
+        <meta property="fb:app_id" content="288309807901362"/>
+        <meta name="keywords"
+              content="debosselage, pare-brise, carrosserie, polish, lustrage, renovation, optiques, grele, vehicule, portiere, voiture, peinture, DSP"/>
+
+        <title>Autodom.biz - {% block title %}{% endblock %}</title>
+        {% block description %}{% endblock %}
+
+    {% block stylesheets %}
+        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %}
+
+        <!-- google analytics -->
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-32160737-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{#{% block navbar %}{% include 'AppBundle:Frontend:navbar.html.twig' %}{% endblock %}#}
+{% block content %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

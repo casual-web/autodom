@@ -1,7 +1,35 @@
-{% extends "::base.html.twig" %}
+{% extends "AppBundle:Frontend:base.html.twig" %}
 
-{% block title %}AppBundle:Frontend:home{% endblock %}
+{% block title %}Debosselage | Pare-brise | R&eacute;novation Optiques - Avignon 84 Vaucluse{% endblock %}
 
-{% block body %}
-    <h1>Welcome to the Frontend:home page</h1>
+{% block head %} {{ parent() }} {% endblock %}
+
+{% block description %}
+    <meta name="description"
+          content="Service mobile de r&eacute;paration automobile, pour les professionnels et particuliers : debosselage sans peinture, r&eacute;novation carrosserie et optiques, remplacement pare-brise sur Avignon et sa r&eacute;gion. ">
 {% endblock %}
+
+{% set sub_title = "<h1>Sur Avignon et sa r&eacute;gion
+	<a href='../demande-devis'>demandez un devis</a>, c'est gratuit !
+  </h1>" %}
+
+{% set hide_sumup_title = false %}
+
+{% block content %}
+
+    {#{% block menu %}#}
+        {#{% include "menu.html" %}#}
+    {#{% endblock %}#}
+
+    {{ parent() }}
+
+    <div class="container marger1">
+        {% include "AppBundle:Frontend:header.html.twig" with {'vars' : 'sub_title'} %}
+        {#{% include "home/liste_services.html" with {'vars' : 'hide_sumup_title'} %}#}
+    </div>
+
+    {#{% include "footer.html" %}#}
+
+{% endblock %}
+
+
