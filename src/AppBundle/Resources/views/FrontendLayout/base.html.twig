@@ -45,6 +45,9 @@
 </head>
 <body>
 {% block content %}{% endblock %}
+{% block footer %}
+    {% include "AppBundle:FrontendLayout:footer.html.twig" %}
+{% endblock %}
 {% block javascripts %}
     {% javascripts
     '@AppBundle/Resources/public/js/jquery.min.js'
