@@ -5,21 +5,29 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 class FrontendController extends Controller
 {
     /**
-     * @Route("/home")
+     * @Route("/",  name="home")
+     * @Method("GET")
      * @Template()
      */
     public function homeAction()
     {
-        return array(// ...
-        );
+        // get list of business services object
+        $em = $this->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository('AppBundle\Entity\BusinessService');
+        $businessServices = $repository->findEnabled();
+
+        return array('businessServices' => $businessServices);
     }
 
     /**
-     * @Route("/quotationRequest")
+     * @Route("/demande-devis",  name="quotation_request")
+     * @Method("GET")
      * @Template()
      */
     public function quotationRequestAction()
@@ -29,7 +37,8 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/gallery")
+     * @Route("/realisations",  name="gallery")
+     * @Method("GET")
      * @Template()
      */
     public function galleryAction()
@@ -39,7 +48,8 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/qualityCharter")
+     * @Route("/charte-qualite",  name="quality_charter")
+     * @Method("GET")
      * @Template()
      */
     public function qualityCharterAction()
@@ -49,7 +59,8 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/partners")
+     * @Route("/partenaires",  name="partners")
+     * @Method("GET")
      * @Template()
      */
     public function partnersAction()

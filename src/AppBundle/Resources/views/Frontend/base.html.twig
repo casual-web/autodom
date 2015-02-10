@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 
-{% javascripts 'bundles/app_bundle/js/*' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
 <html lang="fr">
 <head>
     {% block head %}
@@ -19,6 +15,7 @@
 
         <title>Autodom.biz - {% block title %}{% endblock %}</title>
         {% block description %}{% endblock %}
+
 
     {% block stylesheets %}
         {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
@@ -47,8 +44,13 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
-{#{% block navbar %}{% include 'AppBundle:Frontend:navbar.html.twig' %}{% endblock %}#}
 {% block content %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/jquery.min.js'
+    '@AppBundle/Resources/public/js/bootstrap.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 </body>
 </html>

@@ -12,26 +12,13 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li
-                    {%  if "admin_tableaudebord" == app.request.attributes.get('_route')  %}
-                         class="active"
-                    {% endif %}
-                >
-                    <a href="{{ path('admin_tableaudebord') }}">Tableau de bord <span class="sr-only">(current)</span></a>
+                <li class="{{ 'admin_tableaudebord' | is_route_active }}">
+                    <a href="{{ path('admin_tableaudebord') }}">Tableau de bord </a>
                 </li>
-
-                <li
-                    {%  if "admin_devis" == app.request.attributes.get('_route')  %}
-                        class="active"
-                    {% endif %}
-                >
+                <li class="{{ 'admin_devis' | is_route_active }}">
                     <a href="{{ path('admin_devis') }}">Devis </a>
                 </li>
-                <li
-                    {%  if "admin_service" == app.request.attributes.get('_route')  %}
-                        class="active"
-                    {% endif %}
-                >
+                <li class="{{ 'admin_service' | is_route_active }}">
                     <a href="{{ path('admin_service') }}">Services </a>
                 </li>
             </ul>

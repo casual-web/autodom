@@ -7,3 +7,8 @@ services:
     doctrine.orm.quotation_request_manager:
         class: AppBundle\Manager\QuotationRequestManager
         arguments: ["@doctrine.orm.entity_manager"]
+    autodom.twig.extension:
+        class: AppBundle\Twig\AutodomExtension
+        arguments: ["@request_stack"]
+        tags:
+            - { name: twig.extension }

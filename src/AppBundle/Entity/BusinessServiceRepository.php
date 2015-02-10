@@ -24,4 +24,9 @@ class BusinessServiceRepository extends EntityRepository
 
     }
 
+    public function findEnabled()
+    {
+        return $this->findBy(array('enabled' => '1'));
+    }
+
 }
