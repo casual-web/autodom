@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequest
 {
+    const STATUS_NEW = '0';
+    const STATUS_PENDING = '1';
+    const STATUS_CLOSED = '2';
 
     /**
      * @var integer
@@ -91,7 +94,7 @@ class QuotationRequest
      * @ORM\Column(name="status", type="integer")
      *
      */
-    private $status = "0";
+    private $status = self::STATUS_NEW;
 
     /**
      * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})

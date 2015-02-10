@@ -21,7 +21,11 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository('AppBundle\Entity\QuotationRequest');
+        $metrics = $repository->findDashboardMetrics();
+
+        return array('metrics' => $metrics);
     }
 
 }

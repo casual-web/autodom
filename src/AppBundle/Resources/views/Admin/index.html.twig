@@ -8,11 +8,16 @@
 
         <div class="jumbotron">
             <h1>Tableau de bord</h1>
-            <p>Nombre de devis en cours : </p>
-            <p>Nombre de devis à traiter : </p>
-            <p>Nombre de clients : </p>
 
-            <p>Nombre de ??? </p>
+            {% for counter in metrics %}
+                {% if counter.status == 0 %}
+                    <p>Nombre de devis en cours : {{ counter.nb }}</p>
+                {% endif %}
+                {% if counter.status == 1 %}
+                    <p>Nombre de devis à traiter : {{ counter.nb }}</p>
+                {% endif %}
+            {% endfor %}
+
         </div>
 
     </div>

@@ -58,7 +58,7 @@ class QuotationRequestFunctionalTest extends WebTestCase
 
     public function tearDown()
     {
-       //$this->unLoadFixtures();
+        $this->unLoadFixtures();
 
     }
 
@@ -105,6 +105,27 @@ EOT;
         $this->assertCount(2, $qrRelations);
         $this->assertEquals('DSP', $qrRelations[0]->getBusinessServiceRef());
 
+    }
+
+    public function testFindDashboardMetrics()
+    {
+
+        $repository = $this->default_em->getRepository('AppBundle:QuotationRequest');
+        $metrics = $repository->findDashboardMetrics();
+
+        $this->assertEquals(
+            Array(
+                0 => Array
+                (
+                    'nb' => 2,
+                    'status' => 0,
+                ),
+                1 => Array
+                (
+                    'nb' => 1,
+                    'status' => 1,
+                )),
+            $metrics);
 
     }
 
