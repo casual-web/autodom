@@ -15,16 +15,15 @@ class QuotationRequestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('vehicleModel')
-            ->add('problemDescription')
-            ->add('hasShelter')
-            ->add('first_name')
-            ->add('last_name')
+            ->add('vehicleModel', 'text', ['label' => 'Marque et modèle du véhicule'])
+            ->add('problemDescription', 'text', ['label' => 'Description du problème'])
+            ->add('hasShelter', 'checkbox', ['label' => 'Je dispose d\'un abri (garage, tonelle, ...) et d\'une alimentation électrique :'])
+            ->add('first_name', 'text', ['label' => 'Nom'])
+            ->add('last_name', 'text', ['label' => 'Prénom'])
             ->add('email')
-            ->add('phone')
-            ->add('address')
+            ->add('phone', 'text', ['label' => 'Téléphone'])
+            ->add('address', 'text', ['label' => 'Adresse postale'])
             ->add('contactOrigin')
-            ->add('created')
             ->add('status')
         ;
     }

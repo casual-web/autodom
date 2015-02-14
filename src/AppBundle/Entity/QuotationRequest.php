@@ -4,6 +4,10 @@ namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use AppBundle\DBAL\Types\BasketballPositionType;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * QuotationRequest
@@ -61,10 +65,12 @@ class QuotationRequest
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
+
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @Assert\Regex("/^0[0-9]([ .-]?[0-9]{2}){4}/")
      */
     private $phone;
     /**
@@ -73,11 +79,12 @@ class QuotationRequest
      * @ORM\Column(name="address", type="string", length=512)
      */
     private $address;
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="contact_origin", type="string", columnDefinition="ENUM('autre', 'recherche sur internet', 'lien depuis un autre site', 'pages jaunes', 'bouche à oreilles', 'cartes de visite, flyers')")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\ContactOriginEnumType")
+     * @ORM\Column(name="contact_origin", type="ContactOriginEnumType", nullable=false)
      */
     private $contactOrigin = "autre";
     /**

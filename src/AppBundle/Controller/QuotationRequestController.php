@@ -125,6 +125,22 @@ class QuotationRequestController extends Controller
     }
 
     /**
+     * Creates a form to delete a QuotationRequest entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Effacer'))
+            ->getForm();
+    }
+
+    /**
      * Displays a form to edit an existing QuotationRequest entity.
      *
      * @Route("/{id}/edit", name="admin_devis_edit")
@@ -165,10 +181,11 @@ class QuotationRequestController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Enregistrer'));
 
         return $form;
     }
+
     /**
      * Edits an existing QuotationRequest entity.
      *
@@ -183,7 +200,7 @@ class QuotationRequestController extends Controller
         $entity = $em->getRepository('AppBundle:QuotationRequest')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find QuotationRequest entity.');
+            throw $this->createNotFoundException('Impossible de retrouver cet objet dans la base de donnée..');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -202,6 +219,7 @@ class QuotationRequestController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a QuotationRequest entity.
      *
@@ -226,22 +244,5 @@ class QuotationRequestController extends Controller
         }
 
         return $this->redirect($this->generateUrl('admin_devis'));
-    }
-
-    /**
-     * Creates a form to delete a QuotationRequest entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

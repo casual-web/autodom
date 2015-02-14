@@ -57,6 +57,8 @@ doctrine:
         charset:  UTF8
         mapping_types:
             enum: string
+        types:
+            ContactOriginEnumType: AppBundle\DBAL\Types\ContactOriginEnumType
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
