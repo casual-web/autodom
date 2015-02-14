@@ -23,7 +23,7 @@ class QuotationRequestType extends AbstractType
             ->add('email')
             ->add('phone', 'text', ['label' => 'Téléphone'])
             ->add('address', 'text', ['label' => 'Adresse postale'])
-            ->add('contactOrigin')
+            ->add('contactOrigin', null, ['label' => 'Dites-nous comment vous nous avez trouvé :'])
             ->add('status')
         ;
     }
