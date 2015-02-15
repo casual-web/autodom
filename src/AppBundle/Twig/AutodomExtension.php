@@ -38,9 +38,11 @@ class AutodomExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('qr_status_enum_to_mabel', array($this, 'QRStatusEnumToLabel')),
+            new \Twig_SimpleFunction('qr_status_enum_to_label', array($this, 'QRStatusEnumToLabel')),
+            new \Twig_SimpleFunction('qr_status_enum_to_style', array($this, 'QRStatusEnumToStyle')),
         );
     }
+
 
     public function isRouteActiveFilter($route)
     {
@@ -53,10 +55,40 @@ class AutodomExtension extends \Twig_Extension
 
     public function QRStatusEnumToLabel($enumItem)
     {
-        $label = QuotationRequestStatusEnumType::getReadableValue($enumItem);;
+        $label = QuotationRequestStatusEnumType::getReadableValue($enumItem);
         return $label;
 
     }
+
+    public function QRStatusEnumToStyle($enumItem)
+    {
+        $style = 'label label-default';
+
+        switch ($enumItem) {
+            case QuotationRequestStatusEnumType::CANCELLED:
+                $style = 'default';
+                break;
+            case QuotationRequestStatusEnumType::CREATED:
+                $style = 'info';
+                break;
+            case QuotationRequestStatusEnumType::SCHEDULED:
+                $style = 'primary';
+                break;
+            case QuotationRequestStatusEnumType::CHARGED:
+                $style = 'danger';
+                break;
+            case QuotationRequestStatusEnumType::CASHED:
+                $style = 'success';
+                break;
+            case QuotationRequestStatusEnumType::PENDING:
+                $style = 'warning';
+                break;
+        }
+
+        return $style;
+
+    }
+
 
     public function getName()
     {
