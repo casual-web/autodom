@@ -10,6 +10,7 @@ namespace AppBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 
 class AutodomExtension extends \Twig_Extension
 {
@@ -34,6 +35,13 @@ class AutodomExtension extends \Twig_Extension
         );
     }
 
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('qr_status_enum_to_mabel', array($this, 'QRStatusEnumToLabel')),
+        );
+    }
+
     public function isRouteActiveFilter($route)
     {
         $class = '';
@@ -41,6 +49,13 @@ class AutodomExtension extends \Twig_Extension
             $class = 'active';
         }
         return $class;
+    }
+
+    public function QRStatusEnumToLabel($enumItem)
+    {
+        $label = QuotationRequestStatusEnumType::getReadableValue($enumItem);;
+        return $label;
+
     }
 
     public function getName()

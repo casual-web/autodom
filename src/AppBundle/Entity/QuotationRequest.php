@@ -6,7 +6,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use AppBundle\DBAL\Types\BasketballPositionType;
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
+use AppBundle\DBAL\Types\ContactOriginEnumType;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
@@ -17,9 +18,6 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  */
 class QuotationRequest
 {
-    const STATUS_NEW = '0';
-    const STATUS_PENDING = '1';
-    const STATUS_CLOSED = '2';
 
     /**
      * @var integer
@@ -81,12 +79,12 @@ class QuotationRequest
     private $address;
 
     /**
-     * @var integer
+     * @var string
      *
      * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\ContactOriginEnumType")
      * @ORM\Column(name="contact_origin", type="ContactOriginEnumType", nullable=false)
      */
-    private $contactOrigin = "autre";
+    private $contactOrigin = ContactOriginEnumType::OTHER;
     /**
      * @var datetime $created
      *
@@ -96,12 +94,12 @@ class QuotationRequest
     private $created;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="status", type="integer")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\QuotationRequestStatusEnumType")
+     * @ORM\Column(name="status", type="QuotationRequestStatusEnumType", nullable=false)
      */
-    private $status = self::STATUS_NEW;
+    private $status = QuotationRequestStatusEnumType::CREATED;
 
     /**
      * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})

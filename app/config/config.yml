@@ -59,6 +59,7 @@ doctrine:
             enum: string
         types:
             ContactOriginEnumType: AppBundle\DBAL\Types\ContactOriginEnumType
+            QuotationRequestStatusEnumType: AppBundle\DBAL\Types\QuotationRequestStatusEnumType
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
