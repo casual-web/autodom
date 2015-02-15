@@ -8,6 +8,8 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\DBAL\Types\ContactOriginEnumType;
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
 use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
@@ -33,8 +35,25 @@ class QuotationRequestFunctionalTest extends WebTestCase
         static::$kernel->boot();
         $this->quotation_em = static::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
         $this->default_em = $this->quotation_em->getDoctrineDefaultManager();
+        $this->unLoadFixtures();
         $this->loadFixtures();
         $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
+    }
+
+    public function unLoadFixtures()
+    {
+
+        $connection = $this->default_em->getConnection();
+        $sqlQuery = <<<EOT
+                    START TRANSACTION;
+                    SET FOREIGN_KEY_CHECKS=0;
+                    TRUNCATE QuotationRequest;
+                    TRUNCATE BusinessService;
+                    TRUNCATE QuotationRequestServiceRelation;
+                    SET FOREIGN_KEY_CHECKS=1;
+                    COMMIT;
+EOT;
+        $connection->query($sqlQuery);
     }
 
     public function loadFixtures()
@@ -62,29 +81,12 @@ class QuotationRequestFunctionalTest extends WebTestCase
 
     }
 
-    public function unLoadFixtures()
-    {
-
-        $connection = $this->default_em->getConnection();
-        $sqlQuery = <<<EOT
-                    START TRANSACTION;
-                    SET FOREIGN_KEY_CHECKS=0;
-                    TRUNCATE QuotationRequest;
-                    TRUNCATE BusinessService;
-                    TRUNCATE QuotationRequestServiceRelation;
-                    SET FOREIGN_KEY_CHECKS=1;
-                    COMMIT;
-EOT;
-        $connection->query($sqlQuery);
-    }
-
-
     public function testSearchByContactOrigin()
     {
 
         $qr = $this->quotation_em
             ->getRepository()
-            ->findByContactOrigin('recherche sur internet');
+            ->findByContactOrigin(ContactOriginEnumType::INTERNET_SEARCH);
 
         $this->assertCount(2, $qr);
     }
@@ -118,12 +120,12 @@ EOT;
                 0 => Array
                 (
                     'nb' => 2,
-                    'status' => 0,
+                    'status' => 'NEW',
                 ),
                 1 => Array
                 (
                     'nb' => 1,
-                    'status' => 1,
+                    'status' => 'SCH',
                 )),
             $metrics);
 

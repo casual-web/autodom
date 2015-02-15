@@ -4,6 +4,11 @@ namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
+use AppBundle\DBAL\Types\ContactOriginEnumType;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * QuotationRequest
@@ -13,9 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequest
 {
-    const STATUS_NEW = '0';
-    const STATUS_PENDING = '1';
-    const STATUS_CLOSED = '2';
 
     /**
      * @var integer
@@ -61,10 +63,12 @@ class QuotationRequest
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
+
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @Assert\Regex("/^0[0-9]([ .-]?[0-9]{2}){4}/")
      */
     private $phone;
     /**
@@ -73,13 +77,14 @@ class QuotationRequest
      * @ORM\Column(name="address", type="string", length=512)
      */
     private $address;
+
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="contact_origin", type="string", columnDefinition="ENUM('autre', 'recherche sur internet', 'lien depuis un autre site', 'pages jaunes', 'bouche à oreilles', 'cartes de visite, flyers')")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\ContactOriginEnumType")
+     * @ORM\Column(name="contact_origin", type="ContactOriginEnumType", nullable=false)
      */
-    private $contactOrigin = "autre";
+    private $contactOrigin = ContactOriginEnumType::OTHER;
     /**
      * @var datetime $created
      *
@@ -89,12 +94,12 @@ class QuotationRequest
     private $created;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="status", type="integer")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\QuotationRequestStatusEnumType")
+     * @ORM\Column(name="status", type="QuotationRequestStatusEnumType", nullable=false)
      */
-    private $status = self::STATUS_NEW;
+    private $status = QuotationRequestStatusEnumType::CREATED;
 
     /**
      * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})
