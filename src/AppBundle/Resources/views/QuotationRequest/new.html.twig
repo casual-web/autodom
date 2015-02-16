@@ -1,15 +1,21 @@
 {% extends "AppBundle:Admin:base.html.twig" %}
 
-{% block body -%}
-    <h1>QuotationRequest creation</h1>
+{% block body %}
 
-    {{ form(form) }}
+    <div class="container">
+        <div class="page-header">
+            <h1>Creation d'une demande de devis</h1>
+        </div>
+
+        {{ form(form) }}
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_devis') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+            <li>
+                <a class="btn btn-default" href="{{ path('admin_devis') }}">
+                    Retour à la liste
+                </a>
+            </li>
+        </ul>
+    </div>
+
 {% endblock %}
