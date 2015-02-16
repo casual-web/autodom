@@ -8,6 +8,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\DBAL\Types\ContactOriginEnumType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
@@ -39,6 +40,7 @@ class AutodomExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('qr_status_enum_to_label', array($this, 'QRStatusEnumToLabel')),
+            new \Twig_SimpleFunction('co_status_enum_to_label', array($this, 'COStatusEnumToLabel')),
             new \Twig_SimpleFunction('qr_status_enum_to_style', array($this, 'QRStatusEnumToStyle')),
         );
     }
@@ -56,6 +58,13 @@ class AutodomExtension extends \Twig_Extension
     public function QRStatusEnumToLabel($enumItem)
     {
         $label = QuotationRequestStatusEnumType::getReadableValue($enumItem);
+        return $label;
+
+    }
+
+    public function COStatusEnumToLabel($enumItem)
+    {
+        $label = ContactOriginEnumType::getReadableValue($enumItem);
         return $label;
 
     }
