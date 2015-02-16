@@ -16,34 +16,19 @@
         <title>Autodom.biz - {% block title %}{% endblock %}</title>
         {% block description %}{% endblock %}
 
+        {% block stylesheets %}
+            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
+        {% endblock %}
 
-    {% block stylesheets %}
-        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}"/>
-        {% endstylesheets %}
+        {% include "AppBundle:FrontendLayout:google_plugin_code.html.twig" %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     {% endblock %}
-
-        <!-- google analytics -->
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-32160737-1']);
-            _gaq.push(['_trackPageview']);
-
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-
-    {% endblock %}
-
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
+{% include "AppBundle:FrontendLayout:facebook_plugin_code.html.twig" %}
 {% block content %}{% endblock %}
 {% block footer %}
     {% include "AppBundle:FrontendLayout:footer.html.twig" %}
