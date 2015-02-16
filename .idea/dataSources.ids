@@ -14,7 +14,7 @@
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="FK_9F9D69162DFFA14D" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="business_service_id"/>
+      <index name="UNIQ_47635A9146F3EA3" unique="true" columns="ref"/>
     </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -26,21 +26,41 @@
       <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="phone" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="address" sqlType="VARCHAR" precision="512" scale="0" nullable="false" jdbcType="12"/>
-      <column name="contact_origin" sqlType="ENUM" precision="25" scale="0" nullable="true" jdbcType="1"/>
+      <column name="contact_origin" sqlType="ENUM" precision="3" scale="0" nullable="false" jdbcType="1" remarks="KERDMlR5cGU6Q29udGFjdE9yaWdpbkVudW1UeXBlKQ=="/>
       <column name="created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
-      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="ENUM" precision="4" scale="0" nullable="false" jdbcType="1" remarks="KERDMlR5cGU6UXVvdGF0aW9uUmVxdWVzdFN0YXR1c0VudW1UeXBlKQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_9F9D69167EECC807" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="quotation_request_id"/>
     </table>
     <table name="QuotationRequestServiceRelation" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="quotation_request_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="business_service_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="business_service_ref" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="FK_9F9D69162DFFA14D" columns="business_service_id" ref-table="BusinessService" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_9F9D69167EECC807" columns="quotation_request_id" ref-table="QuotationRequest" ref-schema="" ref-catalog="autodom" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="UNIQ_9F9D69162DFFA14D" unique="true" columns="business_service_id"/>
       <index name="IDX_9F9D69167EECC807" unique="false" columns="quotation_request_id"/>
+    </table>
+    <table name="fos_user" schema="" catalog="autodom" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="username_canonical" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email_canonical" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="salt" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="locked" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="expired" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="expires_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="confirmation_token" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password_requested_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="roles" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1" remarks="KERDMlR5cGU6YXJyYXkp"/>
+      <column name="credentials_expired" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="credentials_expire_at" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="UNIQ_957A647992FC23A8" unique="true" columns="username_canonical"/>
+      <index name="UNIQ_957A6479A0D96FBF" unique="true" columns="email_canonical"/>
     </table>
   </data-source>
 </component>

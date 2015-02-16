@@ -21,7 +21,8 @@
         "doctrine/doctrine-fixtures-bundle": "v2.2.0",
         "stof/doctrine-extensions-bundle": "1.2.x-dev",
         "symfony/framework-bundle": "v2.6.0",
-        "fresh/doctrine-enum-bundle": "5.3.x-dev"
+        "fresh/doctrine-enum-bundle": "5.3.x-dev",
+        "friendsofsymfony/user-bundle": "2.0.x-dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
