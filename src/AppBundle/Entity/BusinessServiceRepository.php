@@ -29,4 +29,19 @@ class BusinessServiceRepository extends EntityRepository
         return $this->findBy(array('enabled' => '1'));
     }
 
+    public function getChoices()
+    {
+
+        $qb = $this->createQueryBuilder('s');
+        $qb->select('s.ref, s.name')
+            ->where('s.enabled = 1');
+        $results = $qb->getQuery()->execute();
+        $choices = [];
+        foreach ($results as $item) {
+            $choices[$item['ref']] = $item['name'];
+        }
+        return $choices;
+
+    }
+
 }

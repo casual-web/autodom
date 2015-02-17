@@ -5,10 +5,13 @@ namespace AppBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use \Doctrine\Common\Collections\ArrayCollection;
+
+// This is the *INVERSE* side from Doctrine ORM point of view :
+// http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 
 /**
  * QuotationRequest
@@ -102,6 +105,7 @@ class QuotationRequest
     private $status = QuotationRequestStatusEnumType::CREATED;
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})
      *
      */
@@ -408,5 +412,14 @@ class QuotationRequest
     public function getQuotationRequestServiceRelations()
     {
         return $this->quotationRequestServiceRelations;
+    }
+
+    public function setQuotationRequestServiceRelations(ArrayCollection $qrsr_collection)
+    {
+        foreach ($qrsr_collection as $qrsr) {
+            $qrsr->setQuotationRequest($this);
+        }
+
+        $this->quotationRequestServiceRelations = $qrsr_collection;
     }
 }

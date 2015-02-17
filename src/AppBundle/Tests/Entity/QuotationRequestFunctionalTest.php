@@ -91,12 +91,6 @@ EOT;
         $this->assertCount(2, $qr);
     }
 
-    public function testBusinessService()
-    {
-        $bsr = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
-        $businessServiceCollection = $bsr->findByRefList(array('DSP', 'VIT'));
-        $this->assertEquals(2, count($businessServiceCollection));
-    }
 
     public function testRelations()
     {

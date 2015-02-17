@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,13 +29,13 @@ class QuotationRequestController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('AppBundle:QuotationRequest')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new QuotationRequest entity.
      *
@@ -50,15 +51,24 @@ class QuotationRequestController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $entity->getQuotationRequestServiceRelations()->clear();
             $em->persist($entity);
             $em->flush();
+
+            foreach ($form->get('quotationRequestServiceRelations')->getData() as $qrsr) {
+                $qrsr->setQuotationRequest($entity);
+                $em->persist($qrsr);
+            }
+            $em->flush();
+
 
             return $this->redirect($this->generateUrl('admin_devis_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -73,10 +83,10 @@ class QuotationRequestController extends Controller
     {
         $form = $this->createForm(new QuotationRequestType(), $entity, array(
             'action' => $this->generateUrl('admin_devis_create'),
-            'method' => 'POST',
+            'method' => 'POST'
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -91,11 +101,11 @@ class QuotationRequestController extends Controller
     public function newAction()
     {
         $entity = new QuotationRequest();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -119,7 +129,7 @@ class QuotationRequestController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -161,19 +171,19 @@ class QuotationRequestController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a QuotationRequest entity.
-    *
-    * @param QuotationRequest $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a QuotationRequest entity.
+     *
+     * @param QuotationRequest $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(QuotationRequest $entity)
     {
         $form = $this->createForm(new QuotationRequestType(), $entity, array(
@@ -214,8 +224,8 @@ class QuotationRequestController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }

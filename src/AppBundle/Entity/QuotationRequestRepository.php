@@ -18,8 +18,5 @@ class QuotationRequestRepository extends EntityRepository
         $qb = $this->createQueryBuilder('qr');
         $qb->select('COUNT(qr) as nb, qr.status')->groupBy('qr.status');
         return $qb->getQuery()->execute();
-
     }
-
-
 }

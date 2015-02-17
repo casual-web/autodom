@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+// This is the *OWNING* side from Doctrine ORM point of view :
+// http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequestServiceRelation
 {
-
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\QuotationRequest", inversedBy="quotationRequestServiceRelations")
@@ -120,5 +122,6 @@ class QuotationRequestServiceRelation
 
         return $this;
     }
+
 
 }

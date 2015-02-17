@@ -62,29 +62,6 @@ class BusinessService
     }
 
     /**
-     * Get ref
-     *
-     * @return string
-     */
-    public function getRef()
-    {
-        return $this->ref;
-    }
-
-    /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return BusinessService
-     */
-    public function setRef($ref)
-    {
-        $this->ref = $ref;
-
-        return $this;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -152,4 +129,33 @@ class BusinessService
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getRef();
+    }
+
+    /**
+     * Get ref
+     *
+     * @return string
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * Set ref
+     *
+     * @param string $ref
+     * @return BusinessService
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+
+        return $this;
+    }
+
 }
