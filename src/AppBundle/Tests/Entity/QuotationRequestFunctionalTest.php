@@ -10,9 +10,11 @@ namespace AppBundle\Tests\Entity;
 
 use AppBundle\DBAL\Types\ContactOriginEnumType;
 use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
 use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 
 class QuotationRequestFunctionalTest extends WebTestCase
@@ -66,18 +68,22 @@ EOT;
         $fixtureLoaderQR->load($this->default_em);
 
         // add relations
-        $bs_repository = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
         $qr_repository = $this->quotation_em->getRepository();
 
-        $this->quotation_em->persistAndFlushServiceRelations(
-            $qr_repository->find(1),
-            $bs_repository->findByRefList(array('DSP', 'VIT')));
+        $qrsr_collection = new ArrayCollection();
+        $qrsr1 = new QuotationRequestServiceRelation();
+        $qrsr1->setBusinessServiceRef('DSP');
+        $qrsr2 = new QuotationRequestServiceRelation();
+        $qrsr2->setBusinessServiceRef('DSP');
+        $qrsr_collection->add($qrsr1);
+        $qrsr_collection->add($qrsr2);
+        $this->quotation_em->persistAndFlushWithRelation($qr_repository->find(1), $qrsr_collection);
 
     }
 
     public function tearDown()
     {
-        $this->unLoadFixtures();
+        //$this->unLoadFixtures();
 
     }
 

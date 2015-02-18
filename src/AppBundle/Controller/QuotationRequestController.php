@@ -50,18 +50,10 @@ class QuotationRequestController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $entity->getQuotationRequestServiceRelations()->clear();
-            $em->persist($entity);
-            $em->flush();
-
-            foreach ($form->get('quotationRequestServiceRelations')->getData() as $qrsr) {
-                $qrsr->setQuotationRequest($entity);
-                $em->persist($qrsr);
-            }
-            $em->flush();
-
+            $em = $this->get('doctrine.orm.quotation_request_manager');
+            $em->persistAndFlushWithRelation(
+                $entity,
+                $form->get('quotationRequestServiceRelations')->getData());
 
             return $this->redirect($this->generateUrl('admin_devis_show', array('id' => $entity->getId())));
         }
@@ -81,7 +73,9 @@ class QuotationRequestController extends Controller
      */
     private function createCreateForm(QuotationRequest $entity)
     {
-        $form = $this->createForm(new QuotationRequestType(), $entity, array(
+        $em = $this->getDoctrine()->getManager();
+        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_create'),
             'method' => 'POST'
         ));
@@ -160,7 +154,6 @@ class QuotationRequestController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('AppBundle:QuotationRequest')->find($id);
 
         if (!$entity) {
@@ -186,7 +179,9 @@ class QuotationRequestController extends Controller
      */
     private function createEditForm(QuotationRequest $entity)
     {
-        $form = $this->createForm(new QuotationRequestType(), $entity, array(
+        $em = $this->getDoctrine()->getManager();
+        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -218,7 +213,11 @@ class QuotationRequestController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
+            // $em->flush();
+            $em = $this->get('doctrine.orm.quotation_request_manager');
+            $em->persistAndFlushWithRelation(
+                $entity,
+                $editForm->get('quotationRequestServiceRelations')->getData());
 
             return $this->redirect($this->generateUrl('admin_devis_edit', array('id' => $id)));
         }

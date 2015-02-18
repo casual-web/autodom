@@ -5,10 +5,21 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use AppBundle\Entity\BusinessServiceRepository;
 
 
 class QuotationRequestType extends AbstractType
 {
+    /**
+     * @var  BusinessServiceRepository
+     */
+    private $bsr;
+
+    public function __construct(BusinessServiceRepository $bsr)
+    {
+        $this->bsr = $bsr;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -30,7 +41,8 @@ class QuotationRequestType extends AbstractType
             ->add(
                 'quotationRequestServiceRelations',
                 'collection', [
-                    'type' => new QuotationRequestServiceRelationType(),
+                    'label' => 'Référence du service',
+                    'type' => new QuotationRequestServiceRelationType($this->bsr),
                     'allow_add' => true,
                     'by_reference' => false,
                 ]

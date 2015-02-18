@@ -13,8 +13,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use AppBundle\Entity\BusinessServiceRepository;
 
+
 class QuotationRequestServiceRelationType extends AbstractType
 {
+    /**
+     * @var  BusinessServiceRepository
+     */
+    private $bsr;
+
+    public function __construct(BusinessServiceRepository $bsr)
+    {
+        $this->bsr = $bsr;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -22,11 +33,10 @@ class QuotationRequestServiceRelationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('businessServiceRef', 'entity',
+            ->add('businessServiceRef', 'choice',
                 [
+                    'choices' => $this->bsr->getChoices(),
                     'label' => 'Référence du service',
-                    'property' => 'Ref',
-                    'class' => 'AppBundle:BusinessService'
                 ]
             );
     }

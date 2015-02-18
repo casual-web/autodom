@@ -130,10 +130,10 @@ class BusinessService
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->getRef();
-    }
+    /*   public function __toString()
+       {
+           return $this->getRef();
+       }*/
 
     /**
      * Get ref

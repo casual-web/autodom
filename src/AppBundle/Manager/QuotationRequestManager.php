@@ -3,10 +3,8 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\QuotationRequest;
-use AppBundle\Entity\QuotationRequestServiceRelation;
-use AppBundle\Entity\BusinessService;
 use Doctrine\ORM\EntityManager;
-
+use \Doctrine\Common\Collections\ArrayCollection;
 
 class QuotationRequestManager extends BaseManager
 {
@@ -16,7 +14,6 @@ class QuotationRequestManager extends BaseManager
     {
         $this->em = $em;
     }
-
 
     public function getRepository()
     {
@@ -28,24 +25,19 @@ class QuotationRequestManager extends BaseManager
         return $this->em;
     }
 
-    public function persistAndFlushServiceRelations(QuotationRequest $quotationRequest, array $businessServices)
+    public function persistAndFlushWithRelation(QuotationRequest $entity, $qrsr_collection = null)
     {
 
-        foreach ($businessServices as $bsEntity) {
-
-            $relation = $this->createServiceRelation($quotationRequest, $bsEntity);
-            $this->em->persist($relation);
-        }
+        $entity->getQuotationRequestServiceRelations()->clear();
+        $this->em->persist($entity);
         $this->em->flush();
+
+        if (null !== $qrsr_collection) {
+            foreach ($qrsr_collection as $qrsr) {
+                $qrsr->setQuotationRequest($entity);
+                $this->em->persist($qrsr);
+            }
+            $this->em->flush();
+        }
     }
-
-    public function createServiceRelation(QuotationRequest $quotationRequest, BusinessService $businessService)
-    {
-
-        $relation = new QuotationRequestServiceRelation();
-        $relation->setBusinessServiceRef($businessService->getRef());
-        $relation->setQuotationRequest($quotationRequest);
-        return $relation;
-    }
-
 }

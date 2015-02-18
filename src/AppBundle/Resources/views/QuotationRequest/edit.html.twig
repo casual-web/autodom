@@ -6,7 +6,25 @@
         <div class="page-header">
             <h1>Edition d'une demande de devis</h1>
         </div>
-        {{ form(edit_form) }}
+        {{ form_start(edit_form) }}
+
+        {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.status) }}
+        {{ form_row(edit_form.vehicleModel) }}
+        {{ form_row(edit_form.problemDescription) }}
+        {{ form_row(edit_form.hasShelter) }}
+        <div class="btn_place"><strong>Services</strong></div>
+        <div class="well">
+            <ul class="service_relations"
+                data-prototype="{{ form_widget(edit_form.quotationRequestServiceRelations.vars.prototype)|e }}">
+
+                {% for qrsr in edit_form.quotationRequestServiceRelations %}
+                    <li>{{ form_row(qrsr.businessServiceRef) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {{ form_end(edit_form) }}
 
         <ul class="record_actions">
             <li>
@@ -18,3 +36,13 @@
         </ul>
     </div>
 {% endblock %}
+
+
+{% block ending_javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/service_relation_handler.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
