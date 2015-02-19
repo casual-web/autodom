@@ -35,7 +35,7 @@ class QuotationRequestServiceRelationType extends AbstractType
         $builder
             ->add('businessServiceRef', 'choice',
                 [
-                    'choices' => $this->bsr->getChoices(),
+                    'choices' => $this->bsr->getChoices(false),
                     'label' => 'Référence du service',
                 ]
             );

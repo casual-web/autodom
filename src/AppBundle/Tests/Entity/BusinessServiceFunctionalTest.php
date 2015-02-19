@@ -57,6 +57,7 @@ EOT;
 
     public function tearDown()
     {
+
         $this->unLoadFixtures();
 
     }
@@ -72,14 +73,22 @@ EOT;
     {
 
         $bsr = $this->em->getRepository('AppBundle\Entity\BusinessService');
-        $choices = $bsr->getChoices();
+
+        $choices = $bsr->getChoices(false);
         $output = [
             'DSP' => 'Débosselage sans peinture',
             'OPT' => 'Rénovation optiques',
             'CAR' => 'Rénovation carrosserie',
-            'VIT' => 'Remplacement vitrage'
+            'VIT' => 'Remplacement vitrage (désactivé)'
         ];
+        $this->assertEquals($output, $choices);
 
+        $choices = $bsr->getChoices();
+        $output = [
+            'DSP' => 'Débosselage sans peinture',
+            'OPT' => 'Rénovation optiques',
+            'CAR' => 'Rénovation carrosserie'
+        ];
         $this->assertEquals($output, $choices);
     }
 }

@@ -45,6 +45,7 @@ class LoadBusinessServicesData implements FixtureInterface {
         $bsVIT = new BusinessService();
         $bsVIT->setName('Remplacement vitrage');
         $bsVIT->setRef('VIT');
+        $bsVIT->setEnabled(0);
         $bsVIT->setDescription("Remplacement de tout vitrage sur véhicule léger dans le respect des normes en vigueur de la communauté européenne. Si vous êtes assuré 'bris de glace' : nous vérifions ensemble que votre assurance prend bien le sinistre en charge.");
         $manager->persist($bsVIT);
 
