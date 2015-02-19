@@ -15,11 +15,45 @@
                 <li class="{{ 'admin_tableaudebord' | is_route_active }}">
                     <a href="{{ path('admin_tableaudebord') }}">Tableau de bord </a>
                 </li>
-                <li class="{{ 'admin_devis' | is_route_active }}">
-                    <a href="{{ path('admin_devis') }}">Devis </a>
+
+                <!-- DEVIS -->
+                <li class="dropdown {{ 'admin_devis' | is_route_active }} {{ 'admin_devis_new' | is_route_active }}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Devis
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ 'admin_devis' | is_route_active }}">
+                            <a href="{{ path('admin_devis') }}">
+                                Lister
+                            </a>
+                        </li>
+                        <li class="{{ 'admin_devis_new' | is_route_active }}">
+                            <a href="{{ path('admin_devis_new') }}">
+                                Créer
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="{{ 'admin_service' | is_route_active }}">
-                    <a href="{{ path('admin_service') }}">Services </a>
+
+                <!-- SERVICE -->
+                <li class="dropdown {{ 'admin_service' | is_route_active }} {{ 'admin_service_new' | is_route_active }}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Services
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ 'admin_service' | is_route_active }}">
+                            <a href="{{ path('admin_service') }}">
+                                Lister
+                            </a>
+                        </li>
+                        <li class="{{ 'admin_service_new' | is_route_active }}">
+                            <a href="{{ path('admin_service_new') }}">
+                                Créer
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

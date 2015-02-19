@@ -38,17 +38,11 @@
 
         <ul class="record_actions">
             <li>
-                <a class="btn btn-default" href="{{ path('admin_service') }}">
-                    Back to the list
-                </a>
-            </li>
-            <li>
                 <a class="btn btn-default" href="{{ path('admin_service_edit', { 'id': entity.id }) }}">
                     Edit
                 </a>
             </li>
             <li>{{ form(delete_form) }}</li>
         </ul>
-
     </div>
 {% endblock %}

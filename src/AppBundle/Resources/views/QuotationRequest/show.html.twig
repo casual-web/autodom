@@ -1,6 +1,6 @@
 {% extends "AppBundle:Admin:base.html.twig" %}
 
-{% block body -%}
+{% block body %}
 
     <div class="container">
         <div class="page-header">
@@ -65,11 +65,6 @@
         </table>
 
         <ul class="record_actions">
-            <li>
-                <a href="{{ path('admin_devis') }}" class="btn btn-default">
-                    Retour à la liste
-                </a>
-            </li>
             <li>
                 <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}" class="btn btn-default">
                     Editer
