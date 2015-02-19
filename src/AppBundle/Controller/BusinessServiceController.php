@@ -245,4 +245,17 @@ class BusinessServiceController extends Controller
 
         return $this->redirect($this->generateUrl('admin_service'));
     }
+
+    public function enabledBusinessServicesAction()
+    {
+        // get list of business services object
+        $em = $this->get('doctrine.orm.entity_manager');
+        $repository = $em->getRepository('AppBundle\Entity\BusinessService');
+        $businessServices = $repository->findEnabled();
+
+        return $this->render(
+            'AppBundle:FrontendLayout:enabled_bservices_list.html.twig',
+            array('businessServices' => $businessServices)
+        );
+    }
 }

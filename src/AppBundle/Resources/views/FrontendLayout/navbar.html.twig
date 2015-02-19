@@ -11,13 +11,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        {% for service in businessServices %}
-                            <li>
-                                <a href="{{ app.request.baseUrl }}/debosselage-sans-peinture">
-                                    {{ service.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
+                        {{ render(controller(
+                        'AppBundle:BusinessService:enabledBusinessServices'
+                        )) }}
                     </ul>
                 </li>
                 <li class="dropdown">

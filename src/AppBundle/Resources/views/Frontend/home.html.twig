@@ -15,11 +15,7 @@
 
 {% set hide_sumup_title = false %}
 
-{% block content %}
-
-    {% block menu %}
-        {% include "AppBundle:Frontend:navbar.html.twig" with {'vars' : 'businessServices'} %}
-    {% endblock %}
+{% block body %}
 
     {{ parent() }}
 

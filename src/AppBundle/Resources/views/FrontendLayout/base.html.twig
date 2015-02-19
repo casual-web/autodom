@@ -29,7 +29,10 @@
 </head>
 <body>
 {% include "AppBundle:FrontendLayout:facebook_plugin_code.html.twig" %}
-{% block content %}{% endblock %}
+{% block body %}
+    {% block menu %}
+        {% include "AppBundle:FrontendLayout:navbar.html.twig" %}
+    {% endblock %}{% endblock %}
 {% block footer %}
     {% include "AppBundle:FrontendLayout:footer.html.twig" %}
 {% endblock %}

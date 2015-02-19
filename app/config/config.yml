@@ -76,6 +76,7 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+            sluggable: true
 fos_user:
     db_driver: orm
     firewall_name: main

@@ -17,12 +17,9 @@ class FrontendController extends Controller
      */
     public function homeAction()
     {
-        // get list of business services object
-        $em = $this->get('doctrine.orm.entity_manager');
-        $repository = $em->getRepository('AppBundle\Entity\BusinessService');
-        $businessServices = $repository->findEnabled();
 
-        return array('businessServices' => $businessServices);
+        return array(// ...
+        );
     }
 
     /**

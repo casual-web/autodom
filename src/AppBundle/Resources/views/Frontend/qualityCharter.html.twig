@@ -1,7 +1,35 @@
 {% extends "AppBundle:FrontendLayout:base.html.twig" %}
 
-{% block title %}AppBundle:Frontend:qualityCharter{% endblock %}
+{% block title %}Charte qualit&eacute;{% endblock %}
+
+{% block head %} {{ parent() }} {% endblock %}
 
 {% block body %}
-    <h1>Welcome to the Frontend:qualityCharter page</h1>
+
+    {{ parent() }}
+
+    <div class="container marger1">
+
+        {% set sub_title = "<h1>Charte qualit&eacute;</h1>" %}
+        {% include "AppBundle:Frontend:header.html.twig" with {'vars' : 'sub_title'} %}
+
+        <ul class='services_goodies lead' style='margin-top:-20px'>
+            <li class='puce'>Conseil personalis&eacute;</li>
+            <li class='puce'>Suivi de la clientelle</li>
+            <li class='puce'>Devis et intervention rapide</li>
+            <li class='puce'>Ex&eacute;cution des interventions dans les r&egrave;gles de l'art</li>
+            <li class='puce'>Toute pi&egrave;ce de r&eacute;emploie est choisie avec soin</li>
+        </ul>
+        <br/>
+
+        <h2> Autodom c'est aussi 10 ans d'exp&eacute;rience dans le domaine automobile</h2>
+        <ul class="services_goodies">
+            <li class='puce'>Carrossier t&ocirc;lier formeur</li>
+            <li class='puce'>Chef d'&eacute;quipe dans un groupe sp&eacute;cialiste du vitrage automobile</li>
+        </ul>
+        <hr/>
+    </div>
+
 {% endblock %}
+
+

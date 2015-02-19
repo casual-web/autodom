@@ -1,0 +1,7 @@
+{% for service in businessServices %}
+    <li>
+        <a href="{{ app.request.baseUrl }}/{{ service.slug }}">
+            {{ service.name }}
+        </a>
+    </li>
+{% endfor %}
