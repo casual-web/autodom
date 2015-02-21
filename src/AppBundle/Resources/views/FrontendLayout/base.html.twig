@@ -29,19 +29,30 @@
 </head>
 <body>
 {% include "AppBundle:FrontendLayout:facebook_plugin_code.html.twig" %}
-{% block body %}
-    {% block menu %}
-        {% include "AppBundle:FrontendLayout:navbar.html.twig" %}
-    {% endblock %}{% endblock %}
+
+{% block menu %}
+    {% include "AppBundle:FrontendLayout:navbar.html.twig" %}
+{% endblock %}
+
+{% block header %}
+    {% include "AppBundle:FrontendLayout:header.html.twig" %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
 {% block footer %}
     {% include "AppBundle:FrontendLayout:footer.html.twig" %}
 {% endblock %}
+
 {% block javascripts %}
     {% javascripts
-    '@AppBundle/Resources/public/js/jquery.min.js'
-    '@AppBundle/Resources/public/js/bootstrap.min.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+        '@AppBundle/Resources/public/js/jquery.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+
+
+
 </body>
 </html>

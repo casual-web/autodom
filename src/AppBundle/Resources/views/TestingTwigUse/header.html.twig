@@ -1,0 +1,12 @@
+{# header.html.twig #}
+{% block header_container %}
+    <div style="border:1px solid darkred" >
+    {% block header_title %}<h1>Default title</h1>{% endblock %}
+    {% block header_content %}
+        <div>
+            This default text header, blablabla...
+        </div>
+    {% endblock %}
+    {% block header_footer %}<div style="border: 1px solid green">footerheaderfooterheader</div>  {% endblock %}
+    </div>
+{% endblock %}

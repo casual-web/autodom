@@ -1,0 +1,12 @@
+{# index.html.twig #}
+{% extends "AppBundle:TestingTwigUse:base.html.twig" %}
+
+
+{% block header %}
+    {% embed 'AppBundle:TestingTwigUse:header.html.twig'  %}
+       {%  block header_content %}
+           ***** child template specific content ****
+       {% endblock %}
+    {% endembed %}
+{% endblock %}
+
