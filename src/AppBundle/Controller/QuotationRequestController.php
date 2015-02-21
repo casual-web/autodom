@@ -180,7 +180,8 @@ class QuotationRequestController extends Controller
     private function createEditForm(QuotationRequest $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $bsr_repo = $em->getRepository('AppBundle:BusinessService');
+        $qr = new QuotationRequestType($bsr_repo->getChoices(false));
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_update', array('id' => $entity->getId())),
             'method' => 'PUT',

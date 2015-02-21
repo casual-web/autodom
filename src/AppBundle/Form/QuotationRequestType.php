@@ -11,13 +11,13 @@ use AppBundle\Entity\BusinessServiceRepository;
 class QuotationRequestType extends AbstractType
 {
     /**
-     * @var  BusinessServiceRepository
+     * @var  array
      */
-    private $bsr;
+    private $bsrChoices;
 
-    public function __construct(BusinessServiceRepository $bsr)
+    public function __construct(array $bsrChoices)
     {
-        $this->bsr = $bsr;
+        $this->bsrChoices = $bsrChoices;
     }
 
     /**
@@ -31,8 +31,8 @@ class QuotationRequestType extends AbstractType
             ->add('vehicleModel', 'text', ['label' => 'Marque et modèle du véhicule'])
             ->add('problemDescription', 'textarea', ['label' => 'Description du problème'])
             ->add('hasShelter', 'checkbox', ['required' => false, 'label' => 'Je dispose d\'un abri (garage, tonelle, ...) et d\'une alimentation électrique'])
-            ->add('first_name', 'text', ['label' => 'Nom'])
-            ->add('last_name', 'text', ['label' => 'Prénom'])
+            ->add('firstName', 'text', ['label' => 'Nom'])
+            ->add('lastName', 'text', ['label' => 'Prénom'])
             ->add('email')
             ->add('phone', 'text', ['label' => 'Téléphone'])
             ->add('address', 'text', ['label' => 'Adresse postale'])
@@ -42,7 +42,7 @@ class QuotationRequestType extends AbstractType
                 'quotationRequestServiceRelations',
                 'collection', [
                     'label' => 'Référence du service',
-                    'type' => new QuotationRequestServiceRelationType($this->bsr),
+                    'type' => new QuotationRequestServiceRelationType($this->bsrChoices),
                     'allow_add' => true,
                     'by_reference' => false,
                 ]

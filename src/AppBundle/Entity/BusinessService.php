@@ -148,20 +148,6 @@ class BusinessService
     }
 
     /**
-     * Set slug
-     *
-     * @param boolean $slug
-     * @return BusinessService
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-
-    /**
      * Get ref
      *
      * @return string
@@ -182,6 +168,15 @@ class BusinessService
         $this->ref = $ref;
 
         return $this;
+    }
+
+    public function fromArray(array $data)
+    {
+
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            $this->$method($value);
+        }
     }
 
 }
