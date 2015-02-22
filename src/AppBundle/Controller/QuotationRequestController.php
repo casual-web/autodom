@@ -74,7 +74,8 @@ class QuotationRequestController extends Controller
     private function createCreateForm(QuotationRequest $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $choices = $em->getRepository('AppBundle:BusinessService')->getChoices();
+        $qr = new QuotationRequestType($choices);
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_create'),
             'method' => 'POST'
@@ -214,7 +215,6 @@ class QuotationRequestController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            // $em->flush();
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelation(
                 $entity,
