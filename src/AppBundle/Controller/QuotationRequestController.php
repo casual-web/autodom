@@ -55,7 +55,7 @@ class QuotationRequestController extends Controller
                 $entity,
                 $form->get('quotationRequestServiceRelations')->getData());
 
-            return $this->redirect($this->generateUrl('admin_devis_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_devis', array('id' => $entity->getId())));
         }
 
         return array(
@@ -141,7 +141,7 @@ class QuotationRequestController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Effacer'))
+            ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm();
     }
 
@@ -188,7 +188,7 @@ class QuotationRequestController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Enregistrer'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }

@@ -48,7 +48,7 @@ class BusinessServiceControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check the element contains an attribute with value equals "$UNIQUE_REF"
-        $this->assertGreaterThan(0, $crawler->filter("[value='Bar BUSISERV']")->count(), "Missing element [value='$UNIQUE_REF']");
+        $this->assertGreaterThan(0, $crawler->filter("[value='Bar BUSISERV']")->count(), "Missing element [value='Bar BUSISERV']");
 
         // Delete the entity
         $client->submit($crawler->selectButton('Supprimer')->form());
