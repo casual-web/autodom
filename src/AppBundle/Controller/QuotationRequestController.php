@@ -55,7 +55,7 @@ class QuotationRequestController extends Controller
                 $entity,
                 $form->get('quotationRequestServiceRelations')->getData());
 
-            return $this->redirect($this->generateUrl('admin_devis_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_devis', array('id' => $entity->getId())));
         }
 
         return array(
@@ -74,7 +74,8 @@ class QuotationRequestController extends Controller
     private function createCreateForm(QuotationRequest $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $choices = $em->getRepository('AppBundle:BusinessService')->getChoices();
+        $qr = new QuotationRequestType($choices);
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_create'),
             'method' => 'POST'
@@ -140,7 +141,7 @@ class QuotationRequestController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_devis_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Effacer'))
+            ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm();
     }
 
@@ -180,13 +181,14 @@ class QuotationRequestController extends Controller
     private function createEditForm(QuotationRequest $entity)
     {
         $em = $this->getDoctrine()->getManager();
-        $qr = new QuotationRequestType($em->getRepository('AppBundle:BusinessService'));
+        $bsr_repo = $em->getRepository('AppBundle:BusinessService');
+        $qr = new QuotationRequestType($bsr_repo->getChoices(false));
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Enregistrer'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }
@@ -213,7 +215,6 @@ class QuotationRequestController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            // $em->flush();
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelation(
                 $entity,

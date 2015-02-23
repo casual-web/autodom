@@ -19,11 +19,11 @@ class QuotationRequestServiceRelationType extends AbstractType
     /**
      * @var  BusinessServiceRepository
      */
-    private $bsr;
+    private $bsrChoices;
 
-    public function __construct(BusinessServiceRepository $bsr)
+    public function __construct(array $bsrChoices)
     {
-        $this->bsr = $bsr;
+        $this->bsrChoices = $bsrChoices;
     }
 
     /**
@@ -35,7 +35,7 @@ class QuotationRequestServiceRelationType extends AbstractType
         $builder
             ->add('businessServiceRef', 'choice',
                 [
-                    'choices' => $this->bsr->getChoices(false),
+                    'choices' => $this->bsrChoices,
                     'label' => 'Référence du service',
                 ]
             );

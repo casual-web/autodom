@@ -53,7 +53,7 @@ class BusinessServiceController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_service_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_service'));
         }
 
         return array(
@@ -181,7 +181,7 @@ class BusinessServiceController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }
