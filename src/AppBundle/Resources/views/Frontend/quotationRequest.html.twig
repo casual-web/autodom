@@ -1,7 +1,17 @@
 {% extends "AppBundle:FrontendLayout:base.html.twig" %}
 
-{% block title %}AppBundle:Frontend:quotationRequest{% endblock %}
+
+{% block head %} {{ parent() }} {% endblock %}
 
 {% block body %}
-    <h1>Welcome to the Frontend:quotationRequest page</h1>
+
+    {{ parent() }}
+
+    {% block content %}
+        <div class="container">
+            {{ form(form) }}
+        </div>
+
+    {% endblock %}
 {% endblock %}
+

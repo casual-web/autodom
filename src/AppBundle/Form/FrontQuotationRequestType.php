@@ -1,18 +1,20 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: olivier
+ * Date: 23/02/15
+ * Time: 21:09
+ */
 
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use AppBundle\Entity\QuotationRequest;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
-
-
-class QuotationRequestType extends AbstractType
+class FrontQuotationRequestType extends AbstractType
 {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -22,14 +24,14 @@ class QuotationRequestType extends AbstractType
         $builder
             ->add('baseqr', new BaseQuotationRequestType(), array(
                 'data_class' => 'AppBundle\Entity\QuotationRequest'))
-            ->add('status', null, ['label' => 'Etat de la demande'])
             ->add(
-                'quotationRequestServiceRelations',
-                'collection', [
-                    'label' => 'Référence du service',
-                    'type' => new QuotationRequestServiceRelationType($options['enabled_business_services']),
-                    'allow_add' => true,
-                    'by_reference' => false,
+                'business_services',
+                'choice', [
+                    'label' => 'Type d \'intervention',
+                    'choices' => $options['enabled_business_services'],
+                    'expanded' => true,
+                    'multiple' => true,
+                    "mapped" => false,
                 ]
             );
 
@@ -46,11 +48,11 @@ class QuotationRequestType extends AbstractType
         ));
     }
 
-    /**
-     * @return string
-     */
+
     public function getName()
     {
-        return 'appbundle_quotationrequest';
+        return 'appbundle_frontquotationrequest';
     }
+
+
 }

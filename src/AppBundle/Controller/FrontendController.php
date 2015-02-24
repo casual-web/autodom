@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Entity\QuotationRequest;
+use AppBundle\Form\FrontQuotationRequestType;
 
 
 class FrontendController extends Controller
@@ -29,8 +31,37 @@ class FrontendController extends Controller
      */
     public function quotationRequestAction()
     {
-        return array(// ...
+        $entity = new QuotationRequest();
+        $form = $this->createQRForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
         );
+
+    }
+
+    /**
+     * Creates a form to create a QuotationRequest entity.
+     *
+     * @param QuotationRequest $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createQRForm(QuotationRequest $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $choices = $em->getRepository('AppBundle:BusinessService')->getChoices();
+        $qr = new FrontQuotationRequestType();
+        $form = $this->createForm($qr, $entity, array(
+            'action' => $this->generateUrl('quotation_request'),
+            'method' => 'POST',
+            'enabled_business_services' => $choices
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Envoyer ma demande'));
+
+        return $form;
     }
 
     /**
