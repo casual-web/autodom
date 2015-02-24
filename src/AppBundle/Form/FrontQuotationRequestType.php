@@ -23,7 +23,8 @@ class FrontQuotationRequestType extends AbstractType
     {
         $builder
             ->add('baseqr', new BaseQuotationRequestType(), array(
-                'data_class' => 'AppBundle\Entity\QuotationRequest'))
+                'data_class' => 'AppBundle\Entity\QuotationRequest',
+                'label' => false))
             ->add(
                 'business_services',
                 'choice', [
