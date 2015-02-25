@@ -1,14 +1,6 @@
 /* ###################################
-      BACKEND
+      GLOBAL
 ###################################### */
-
-ul.record_actions {
-  float:right;
-}
-
-li {
-  list-style-type: none;
-}
 
 /* centered columns styles */
 .row-centered {
@@ -25,29 +17,85 @@ li {
 }
 
 /* ###################################
-      FRONTEND
+      BACKEND
 ###################################### */
 
-/** -----------------------
-     NAVBAR
---------------------------- **/
-/*.navbar-inner {
-    font-size: 120%;
-    padding:5px;
-    color: #ffffff;
+ul.record_actions {
+  float:right;
 }
 
-.navbar .nav > li > a {
-    float: none;
-    padding:    9px 13px 9px;
-    text-decoration: none;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    color:  #ddd;
+li {
+  list-style-type: none;
 }
+
+/* ###################################
+      FRONTEND
+###################################### */
 
 .navbar .nav > li > a:hover {
     color: #00afc7;
 }
+
+body h1 h2 ul li {
+    color: #140D06;
+}
+
+.lead {
+    font-size: 1.3em;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 215%
+}
+
+h2 {
+    font-size: 170%
+}
+
+a {
+    color: #00afc7;
+}
+
+a:hover {
+    color: #00afc7;
+}
+
+/* ### Floatting contact  ### */
+
+#floatting-contact {
+    background: none;
+    text-align: center;
+    width: 320px;
+}
+
+#floatting-contact img {
+    float: right;
+    padding: 0;
+    margin-top: 12px
+}
+
+#floatting-contact h4 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#floatting-contact p.phone {
+    color: #00afc7;
+    clear: both;
+}
+
+#floatting-contact p.phone i {
+    color: #777777;
+    font-size: 60%;
+}
+
+.footer {
+    padding: 15px 5px 15px 5px;
+    text-align: center;
+}
+
+/*
 
 ul.services_goodies {
     margin: 0;
@@ -67,10 +115,6 @@ li.puce {
     list-style: none;
 }
 
-.lead {
-    font-size: 1.3em;
-}
-
 li.puce-normal {
     background-image: url('../img/puce.png');
     background-repeat: no-repeat;
@@ -79,64 +123,17 @@ li.puce-normal {
     list-style:none;
 }
 
-.center {
-    text-align: center
-}
 
 ul.s {
     list-style-type: none;
 }
 
-body h1 h2 ul li {
-    color: #140D06;
-}
 
 
-h1 {font-size:215%}
-h2 {font-size:170%}
 
-#floatting-contact {
-    background: none;
-    text-align: center;
-    width: 320px;
-}
 
-#floatting-contact img {
-    float:right;
-    padding:0;
-    margin-top:12px
-}
 
-#floatting-contact h4 {
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
-#floatting-contact p.phone {
-    color: #00afc7;
-    clear: both;
-}
-
-#floatting-contact p.phone i {
-    color: #777777;
-    font-size: 60%;
-}
-
-a {
-    color: #00afc7;
-}
-
-.marger1 {
-    margin-top: 30px;
-}
-
-.page-header {
-    margin-top: 65px;
-}
 */
-.footer {
-    padding: 15px 5px 15px 5px;
-    text-align:center;
-}
+
 
 
