@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\QuotationRequest;
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use AppBundle\Form\FrontQuotationRequestType;
 
 
@@ -25,22 +27,32 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/demande-devis",  name="quotation_request")
-     * @Method("GET")
-     * @Template()
+     * Creates a new QuotationRequest entity.
+     *
+     * @Route("/", name="frontend_devis_create")
+     * @Method("POST")
+     * @Template("AppBundle:QuotationRequest:new.html.twig")
      */
-    public function quotationRequestAction()
+    public function createQRAction(Request $request)
     {
+
         $entity = new QuotationRequest();
         $form = $this->createQRForm($entity);
+        $form->handleRequest($request);
 
-        //var_dump($form); die;
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.quotation_request_manager');
+            $em->persistAndFlushWithRelation(
+                $entity,
+                $form->get('quotationRequestServiceRelations')->getData());
+
+            return $this->redirect($this->generateUrl('home'));
+        }
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
-
     }
 
     /**
@@ -52,18 +64,33 @@ class FrontendController extends Controller
      */
     private function createQRForm(QuotationRequest $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-        $choices = $em->getRepository('AppBundle:BusinessService')->getChoices();
         $qr = new FrontQuotationRequestType();
         $form = $this->createForm($qr, $entity, array(
-            'action' => $this->generateUrl('quotation_request'),
+            'action' => $this->generateUrl('frontend_devis_create'),
             'method' => 'POST',
-            'enabled_business_services' => $choices
+            'em' => $this->getDoctrine()->getManager(),
         ));
 
         $form->add('submit', 'submit', array('label' => 'Envoyer ma demande'));
 
         return $form;
+    }
+
+    /**
+     * @Route("/demande-devis",  name="quotation_request")
+     * @Method("GET")
+     * @Template("AppBundle:Frontend:quotationRequest.html.twig")
+     */
+    public function newQRRequestAction()
+    {
+        $entity = new QuotationRequest();
+        $form = $this->createQRForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+
     }
 
     /**

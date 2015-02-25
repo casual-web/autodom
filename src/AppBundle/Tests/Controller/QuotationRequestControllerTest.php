@@ -38,7 +38,7 @@ class QuotationRequestControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("0611733924")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('td:contains("0611733924")')->count(), 'Missing element td:contains("0611733924")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Editer')->last()->link());
@@ -62,10 +62,8 @@ class QuotationRequestControllerTest extends WebTestCase
         // Check the element contains an attribute with value equals "Clio2"
         $this->assertGreaterThan(0, $crawler->filter('[value="Clio2"]')->count(), 'Missing element [value="Clio2"]');
 
-
         // Delete the entity
         $client->submit($crawler->selectButton('Supprimer')->form());
-        $crawler = $client->followRedirect();
 
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Renault Clio2/', $client->getResponse()->getContent());

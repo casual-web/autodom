@@ -39,15 +39,7 @@
 
             </div>
         </div>
-        {% if sub_title is defined %}
-            {% autoescape false %}
-
-            {{ sub_title }}
-
-            {% endautoescape %}
-
-            {% block sub_title %}{% endblock %}
-        {% endif %}
+        {% block subtitle %}{% endblock %}
     </div>
 </div>
 {%  endblock %}

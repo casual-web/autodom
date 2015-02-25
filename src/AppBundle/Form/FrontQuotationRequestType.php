@@ -11,6 +11,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use AppBundle\Form\DataTransformer\CategoryToBusinessService;
 
 class FrontQuotationRequestType extends AbstractType
 {
@@ -21,20 +22,24 @@ class FrontQuotationRequestType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $entityManager = $options['em'];
+        $transformer = new CategoryToBusinessService($entityManager);
+        $bsRepo = $entityManager->getRepository('AppBundle:BusinessService');
+
         $builder
             ->add('baseqr', new BaseQuotationRequestType(), array(
                 'data_class' => 'AppBundle\Entity\QuotationRequest',
                 'label' => false))
             ->add(
-                'business_services',
-                'choice', [
-                    'label' => 'Type d \'intervention',
-                    'choices' => $options['enabled_business_services'],
-                    'expanded' => true,
-                    'multiple' => true,
-                    "mapped" => false,
-                ]
-            );
+                $builder->create('quotationRequestServiceRelations',
+                    'choice', [
+                        'label' => 'Type d \'intervention',
+                        'choices' => $bsRepo->getChoices(),
+                        'expanded' => true,
+                        'multiple' => true,
+                        'mapped' => false,
+                    ])->addModelTransformer($transformer));
 
     }
 
@@ -44,9 +49,17 @@ class FrontQuotationRequestType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\QuotationRequest',
-            'enabled_business_services' => array()
+            'data_class' => 'AppBundle\Entity\QuotationRequest'
         ));
+
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager'
+        ));
+
     }
 
 

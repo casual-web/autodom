@@ -19,6 +19,9 @@ class QuotationRequestType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $entityManager = $options['em'];
+        $bsRepo = $entityManager->getRepository('AppBundle:BusinessService');
+
         $builder
             ->add('baseqr', new BaseQuotationRequestType(), array(
                 'data_class' => 'AppBundle\Entity\QuotationRequest'))
@@ -27,7 +30,7 @@ class QuotationRequestType extends AbstractType
                 'quotationRequestServiceRelations',
                 'collection', [
                     'label' => 'Référence du service',
-                    'type' => new QuotationRequestServiceRelationType($options['enabled_business_services']),
+                    'type' => new QuotationRequestServiceRelationType($bsRepo->getChoices(false)),
                     'allow_add' => true,
                     'by_reference' => false,
                 ]
@@ -42,8 +45,16 @@ class QuotationRequestType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\QuotationRequest',
-            'enabled_business_services' => array()
         ));
+
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager'
+        ));
+
     }
 
     /**

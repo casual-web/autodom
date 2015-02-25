@@ -30,22 +30,14 @@ class CategoryToBusinessService implements DataTransformerInterface
     }
 
     /**
-     * Transforms an object (issue) to a string (number).
+     * No need to transform, returns empty array
      *
-     * @param  Issue|null $issue
-     * @return string
+     * @param  $choices |null
+     * @return array
      */
-    public function transform($issue)
+    public function transform($choices)
     {
-        /* if (null === $issue) {
-             return "";
-         }
-
-         return $issue->getNumber();*/
-
-        return '';
-
-        throw \Exception('Oliv désolé mais là on sait pas koi en faire');
+        return array();
     }
 
     /**
