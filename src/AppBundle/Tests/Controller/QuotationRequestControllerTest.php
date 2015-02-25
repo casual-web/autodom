@@ -21,16 +21,16 @@ class QuotationRequestControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form1 = $crawler->selectButton('Créer')->form(array(
-            'appbundle_quotationrequest[vehicleModel]' => 'Renault Clio',
-            'appbundle_quotationrequest[firstName]' => 'toto',
-            'appbundle_quotationrequest[lastName]' => 'likou',
-            'appbundle_quotationrequest[email]' => 't.likou@gmail.com',
-            'appbundle_quotationrequest[phone]' => '0611733924',
-            'appbundle_quotationrequest[address]' => '3 rue du château',
-            'appbundle_quotationrequest[hasShelter]' => true,
+            'appbundle_quotationrequest[baseqr][vehicleModel]' => 'Renault Clio',
+            'appbundle_quotationrequest[baseqr][firstName]' => 'toto',
+            'appbundle_quotationrequest[baseqr][lastName]' => 'likou',
+            'appbundle_quotationrequest[baseqr][email]' => 't.likou@gmail.com',
+            'appbundle_quotationrequest[baseqr][phone]' => '0611733924',
+            'appbundle_quotationrequest[baseqr][address]' => '3 rue du château',
+            'appbundle_quotationrequest[baseqr][hasShelter]' => true,
             'appbundle_quotationrequest[status]' => QuotationRequestStatusEnumType::CREATED,
-            'appbundle_quotationrequest[contactOrigin]' => ContactOriginEnumType::FLYERS,
-            'appbundle_quotationrequest[problemDescription]' => 'I got a problem',
+            'appbundle_quotationrequest[baseqr][contactOrigin]' => ContactOriginEnumType::FLYERS,
+            'appbundle_quotationrequest[baseqr][problemDescription]' => 'I got a problem',
 
         ));
 
@@ -38,22 +38,22 @@ class QuotationRequestControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("0611733924")')->count(), 'Missing element td:contains("Test")');
+        $this->assertGreaterThan(0, $crawler->filter('td:contains("0611733924")')->count(), 'Missing element td:contains("0611733924")');
 
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Editer')->last()->link());
 
         $form2 = $crawler->selectButton('Mettre à jour')->form(array(
-            'appbundle_quotationrequest[vehicleModel]' => 'Clio2',
-            'appbundle_quotationrequest[firstName]' => 'toto',
-            'appbundle_quotationrequest[lastName]' => 'likou',
-            'appbundle_quotationrequest[email]' => 't.likou@gmail.com',
-            'appbundle_quotationrequest[phone]' => '0611733924',
-            'appbundle_quotationrequest[address]' => '3 rue du château',
-            'appbundle_quotationrequest[hasShelter]' => true,
+            'appbundle_quotationrequest[baseqr][vehicleModel]' => 'Clio2',
+            'appbundle_quotationrequest[baseqr][firstName]' => 'toto',
+            'appbundle_quotationrequest[baseqr][lastName]' => 'likou',
+            'appbundle_quotationrequest[baseqr][email]' => 't.likou@gmail.com',
+            'appbundle_quotationrequest[baseqr][phone]' => '0611733924',
+            'appbundle_quotationrequest[baseqr][address]' => '3 rue du château',
+            'appbundle_quotationrequest[baseqr][hasShelter]' => true,
             'appbundle_quotationrequest[status]' => QuotationRequestStatusEnumType::CREATED,
-            'appbundle_quotationrequest[contactOrigin]' => ContactOriginEnumType::FLYERS,
-            'appbundle_quotationrequest[problemDescription]' => 'I got a problem',
+            'appbundle_quotationrequest[baseqr][contactOrigin]' => ContactOriginEnumType::FLYERS,
+            'appbundle_quotationrequest[baseqr][problemDescription]' => 'I got a problem'
         ));
 
         $client->submit($form2);
@@ -62,10 +62,8 @@ class QuotationRequestControllerTest extends WebTestCase
         // Check the element contains an attribute with value equals "Clio2"
         $this->assertGreaterThan(0, $crawler->filter('[value="Clio2"]')->count(), 'Missing element [value="Clio2"]');
 
-
         // Delete the entity
         $client->submit($crawler->selectButton('Supprimer')->form());
-        $crawler = $client->followRedirect();
 
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/Renault Clio2/', $client->getResponse()->getContent());

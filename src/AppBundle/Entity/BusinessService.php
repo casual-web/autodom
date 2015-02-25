@@ -170,13 +170,4 @@ class BusinessService
         return $this;
     }
 
-    public function fromArray(array $data)
-    {
-
-        foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            $this->$method($value);
-        }
-    }
-
 }

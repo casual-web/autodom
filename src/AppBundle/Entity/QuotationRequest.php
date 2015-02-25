@@ -423,12 +423,4 @@ class QuotationRequest
         $this->quotationRequestServiceRelations = $qrsr_collection;
     }
 
-    public function fromArray(array $data)
-    {
-
-        foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            $this->$method($value);
-        }
-    }
 }

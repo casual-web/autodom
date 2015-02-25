@@ -73,12 +73,11 @@ class QuotationRequestController extends Controller
      */
     private function createCreateForm(QuotationRequest $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-        $choices = $em->getRepository('AppBundle:BusinessService')->getChoices();
-        $qr = new QuotationRequestType($choices);
+        $qr = new QuotationRequestType();
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_create'),
-            'method' => 'POST'
+            'method' => 'POST',
+            'em' => $this->getDoctrine()->getManager(),
         ));
 
         $form->add('submit', 'submit', array('label' => 'Créer'));
@@ -180,12 +179,11 @@ class QuotationRequestController extends Controller
      */
     private function createEditForm(QuotationRequest $entity)
     {
-        $em = $this->getDoctrine()->getManager();
-        $bsr_repo = $em->getRepository('AppBundle:BusinessService');
-        $qr = new QuotationRequestType($bsr_repo->getChoices(false));
+        $qr = new QuotationRequestType();
         $form = $this->createForm($qr, $entity, array(
             'action' => $this->generateUrl('admin_devis_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'em' => $this->getDoctrine()->getManager(),
         ));
 
         $form->add('submit', 'submit', array('label' => 'Mettre à jour'));

@@ -9,21 +9,25 @@
           content="Service mobile de r&eacute;paration automobile, pour les professionnels et particuliers : debosselage sans peinture, r&eacute;novation carrosserie et optiques, remplacement pare-brise sur Avignon et sa r&eacute;gion. ">
 {% endblock %}
 
-{% set sub_title = "<h1>Sur Avignon et sa r&eacute;gion
-	<a href='../demande-devis'>demandez un devis</a>, c'est gratuit !
-  </h1>" %}
-
-{% set hide_sumup_title = false %}
 
 {% block body %}
 
     {{ parent() }}
+    {% block header %}
+        {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+            {% block subtitle %}
+                <h1>Sur Avignon et sa r&eacute;gion
+                    <a href="{{ path('quotation_request') }}">demandez un devis</a>, c'est gratuit !
+                </h1>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+    {% block content %}
+        <div class="container marger1">
 
-    <div class="container marger1">
-
-        {#{% include "home/liste_services.html" with {'vars' : 'hide_sumup_title'} %}#}
-    </div>
-
+            {#{% include "home/liste_services.html" with {'vars' : 'hide_sumup_title'} %}#}
+        </div>
+    {% endblock %}
 
 {% endblock %}
 
