@@ -13,8 +13,10 @@
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="enabled" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="slug" sqlType="VARCHAR" precision="128" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="UNIQ_47635A9146F3EA3" unique="true" columns="ref"/>
+      <index name="UNIQ_47635A9989D9B62" unique="true" columns="slug"/>
     </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -61,6 +63,101 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="UNIQ_957A647992FC23A8" unique="true" columns="username_canonical"/>
       <index name="UNIQ_957A6479A0D96FBF" unique="true" columns="email_canonical"/>
+    </table>
+    <table name="phpcr_binarydata" schema="" catalog="autodom" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="node_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="property_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="workspace_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="idx" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="data" sqlType="LONGBLOB" precision="2147483647" scale="0" nullable="false" jdbcType="-4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="UNIQ_37E65615460D9FD7413BC13C1AC10DC4E7087E10" unique="true" columns="node_id,property_name,workspace_name,idx"/>
+    </table>
+    <table name="phpcr_internal_index_types" schema="" catalog="autodom" type="TABLE">
+      <column name="type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="node_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="type,node_id"/>
+    </table>
+    <table name="phpcr_namespaces" schema="" catalog="autodom" type="TABLE">
+      <column name="prefix" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="uri" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="prefix"/>
+    </table>
+    <table name="phpcr_nodes" schema="" catalog="autodom" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="path" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="parent" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="local_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="namespace" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="workspace_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="identifier" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="props" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="numerical_props" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="depth" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sort_order" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="UNIQ_A4624AD7772E836A1AC10DC4" unique="true" columns="identifier,workspace_name"/>
+      <index name="UNIQ_A4624AD7B548B0F1AC10DC4" unique="true" columns="path,workspace_name"/>
+      <index name="IDX_A4624AD73D8E604F" unique="false" columns="parent"/>
+      <index name="IDX_A4624AD7623C14D533E16B56" unique="false" columns="local_name,namespace"/>
+      <index name="IDX_A4624AD78CDE5729" unique="false" columns="type"/>
+    </table>
+    <table name="phpcr_nodes_references" schema="" catalog="autodom" type="TABLE">
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="source_property_name" sqlType="VARCHAR" precision="220" scale="0" nullable="false" jdbcType="12"/>
+      <column name="target_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="source_id,source_property_name,target_id"/>
+      <index name="IDX_F3BF7E1158E0B66" unique="false" columns="target_id"/>
+    </table>
+    <table name="phpcr_nodes_weakreferences" schema="" catalog="autodom" type="TABLE">
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="source_property_name" sqlType="VARCHAR" precision="220" scale="0" nullable="false" jdbcType="12"/>
+      <column name="target_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="source_id,source_property_name,target_id"/>
+      <index name="IDX_F0E4F6FA158E0B66" unique="false" columns="target_id"/>
+    </table>
+    <table name="phpcr_type_childs" schema="" catalog="autodom" type="TABLE">
+      <column name="node_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="protected" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="auto_created" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="mandatory" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="on_parent_version" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="primary_types" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="default_type" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="phpcr_type_nodes" schema="" catalog="autodom" type="TABLE">
+      <column name="node_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="supertypes" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="is_abstract" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="is_mixin" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="queryable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="orderable_child_nodes" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="primary_item" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="node_type_id"/>
+      <index name="UNIQ_34B0A8095E237E06" unique="true" columns="name"/>
+    </table>
+    <table name="phpcr_type_props" schema="" catalog="autodom" type="TABLE">
+      <column name="node_type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="protected" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="auto_created" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="mandatory" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="on_parent_version" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="multiple" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="fulltext_searchable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="query_orderable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="required_type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="query_operators" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="default_value" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="node_type_id,name"/>
+    </table>
+    <table name="phpcr_workspaces" schema="" catalog="autodom" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="name"/>
     </table>
   </data-source>
 </component>

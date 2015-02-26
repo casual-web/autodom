@@ -20,7 +20,9 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Symfony\Cmf\Bundle\MediaBundle\CmfMediaBundle(),
             new CW\UserBundle\CWUserBundle(),
+            new Doctrine\Bundle\PHPCRBundle\DoctrinePHPCRBundle(),
             new AppBundle\AppBundle(),
 
         );

@@ -1,6 +1,16 @@
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+    
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
     prefix: admin
+
+cmf_media_file:
+    resource: "@CmfMediaBundle/Resources/config/routing/file.xml"
+
+cmf_media_image:
+    resource: "@CmfMediaBundle/Resources/config/routing/image.xml"
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

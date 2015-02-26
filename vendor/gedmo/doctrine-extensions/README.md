@@ -1,6 +1,6 @@
 # Doctrine2 behavioral extensions
 
-**Version 2.3.10**
+**Version 2.3.11**
 
 [![Build Status](https://secure.travis-ci.org/Atlantic18/DoctrineExtensions.png?branch=master)](http://travis-ci.org/Atlantic18/DoctrineExtensions)
 
@@ -93,10 +93,6 @@ List of extensions which support ODM
 
 All these extensions can be nested together and mapped in traditional ways - annotations,
 xml or yaml
-
-You can test these extensions on [my blog](http://gediminasm.org/demo "Test doctrine behavioral extensions").
-All tutorials for basic usage examples are on [my blog](http://gediminasm.org "Tutorials for extensions") too.
-You can also fork or clone this blog from [github repository](https://github.com/l3pp4rd/gediminasm.org)
 
 ### Running the tests:
 
