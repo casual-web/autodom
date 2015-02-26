@@ -13,42 +13,7 @@
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
             </tr>
-            <tr>
-                <th>Véhicule</th>
-                <td>{{ entity.vehicleModel }}</td>
-            </tr>
-            <tr>
-                <th>Description du problème</th>
-                <td>{{ entity.problemDescription }}</td>
-            </tr>
-            <tr>
-                <th>Abri</th>
-                <td>{{ entity.hasShelter }}</td>
-            </tr>
-            <tr>
-                <th>Prénom</th>
-                <td>{{ entity.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ entity.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-            <tr>
-                <th>Téléphone</th>
-                <td>{{ entity.phone }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ entity.address }}</td>
-            </tr>
-            <tr>
-                <th>comment vous nous avez trouvé ?</th>
-                <td>{{ co_status_enum_to_label(entity.contactOrigin) }}</td>
-            </tr>
+            {% include 'AppBundle:QuotationRequest:show_common.html.twig' %}
             <tr>
                 <th>Créé le</th>
                 <td>{{ entity.created|date('Y-m-d H:i') }}</td>

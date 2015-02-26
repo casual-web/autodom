@@ -1,0 +1,49 @@
+<html>
+    <body>
+        <h1>DEMANDE DE DEVIS sur Autodom.biz !!</h1>
+        <table border="1">
+            <tr>
+                <th>Véhicule</th>
+                <td>ABARTH 500</td>
+            </tr>
+            <tr>
+                <th>Description du problème</th>
+                <td>2 coups dans la portière conducteur et peinture terne sur le capot moteur</td>
+            </tr>
+            <tr>
+                <th>Abri</th>
+                <td>1</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>FACCHINETTI</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>julien.facchinetti@free.fr</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>0611733924</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>39 chemin de Crillon 84330 CAROMB</td>
+            </tr>
+            <tr>
+                <th>comment vous nous avez trouvé ?</th>
+                <td>bouche à oreilles</td>
+            </tr>
+        </table>
+        <div>
+            Voir cette demande :
+            <a href="http://localhost:8000/admin/devis/1">
+                http://localhost:8000/admin/devis/1
+            </a>
+        </div>
+    </body>
+</html>

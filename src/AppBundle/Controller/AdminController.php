@@ -26,6 +26,8 @@ class AdminController extends Controller
         $metrics = $repository->findDashboardMetrics();
 
         return array('metrics' => $metrics);
+
+
     }
 
 }

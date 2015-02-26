@@ -14,6 +14,7 @@ use AppBundle\Form\FrontQuotationRequestType;
 
 class FrontendController extends Controller
 {
+
     /**
      * @Route("/",  name="home")
      * @Method("GET")
@@ -40,12 +41,15 @@ class FrontendController extends Controller
         $form = $this->createQRForm($entity);
         $form->handleRequest($request);
 
+        $notifier = $this->get('autodom.notifier');
+
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelation(
                 $entity,
                 $form->get('quotationRequestServiceRelations')->getData());
 
+            $notifier->sendQuotationRequestNotification($entity);
             return $this->redirect($this->generateUrl('home'));
         }
 
