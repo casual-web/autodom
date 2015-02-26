@@ -25,7 +25,7 @@ class Notifier
         $this->templating = $templating;
     }
 
-    protected function sendQuotationRequestNotification(QuotationRequest $quotationRequest)
+    public function sendQuotationRequestNotification(QuotationRequest $quotationRequest)
     {
         $mail = \Swift_Message::newInstance();
         $serviceRefList = array();

@@ -26,11 +26,17 @@ class NotifierTest extends WebTestCase
      */
     static private $notifier;
 
+    /**
+     * @var string
+     */
+    static private $kernelRootDir;
+
     static public function setUpBeforeClass()
     {
 
         $kernel = static::createKernel();
         $kernel->boot();
+        self::$kernelRootDir = $kernel->getRootDir();
         self::$container = $kernel->getContainer();
         self::$notifier = self::$container->get('autodom.notifier');
     }
@@ -51,7 +57,7 @@ class NotifierTest extends WebTestCase
         $quotationRequest->setProblemDescription("2 coups dans la portière conducteur et peinture terne sur le capot moteur");
 
         $expected = new \DOMDocument;
-        $expected->load('./Fixtures/qr_body_rendering.xml');
+        $expected->load(self::$kernelRootDir . '/../src/AppBundle/Tests/Notification/Fixtures/qr_body_rendering.xml');
         $actual = new \DOMDocument;
         $bodyRendered = self::$notifier->renderQuotationRequestNotificationBody($quotationRequest);
         $actual->loadXML($bodyRendered);
@@ -60,6 +66,8 @@ class NotifierTest extends WebTestCase
             $expected->firstChild,
             $actual->firstChild
         );
+
+
     }
 
 
