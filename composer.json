@@ -24,13 +24,7 @@
         "stof/doctrine-extensions-bundle": "1.2.x-dev",
         "symfony/framework-bundle": "v2.6.0",
         "fresh/doctrine-enum-bundle": "5.3.x-dev",
-        "friendsofsymfony/user-bundle": "2.0.x-dev",
-        "symfony-cmf/media-bundle": "v1.2.0",
-        "jackalope/jackalope-doctrine-dbal": "1.2.*",
-        "doctrine/phpcr-odm": "1.2.*",
-        "doctrine/phpcr-bundle": "1.2.*"
-
-
+        "friendsofsymfony/user-bundle": "2.0.x-dev"
 
     },
     "require-dev": {

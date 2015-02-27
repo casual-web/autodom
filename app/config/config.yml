@@ -81,19 +81,3 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: CW\UserBundle\Entity\User
-
-doctrine_phpcr:
-    session:
-        backend:
-            type: doctrinedbal
-            # requires DoctrineCacheBundle
-            # caches:
-            #     meta: doctrine_cache.providers.phpcr_meta
-            #     nodes: doctrine_cache.providers.phpcr_nodes
-            # enable logging
-            logging: true
-            # enable profiling in the debug toolbar.
-            profiling: true
-        workspace: default
-        username: admin
-        password: admin
