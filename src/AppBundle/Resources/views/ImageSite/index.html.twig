@@ -1,0 +1,49 @@
+{% extends "AppBundle:Admin:base.html.twig" %}
+
+{% block body -%}
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Liste des photos des caroussels</h1>
+        </div>
+
+        <table class="records_list table">
+
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Modèle véhicule</th>
+                <th>Chemin</th>
+                <th>Ordre dans caroussel par catégorie</th>
+                <th>Lieu de l'intervention</th>
+                <th>Type de dommage</th>
+                <th>Catégorie</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('admin_photos_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.vehicleModel }}</td>
+                    <td>{{ entity.path }}</td>
+                    <td>{{ entity.carouselOrder }}</td>
+                    <td>{{ entity.location }}</td>
+                    <td>{{ entity.damageType }}</td>
+                    <td>{{ entity.businessServiceRef }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_photos_show', { 'id': entity.id }) }}">Voir</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_photos_edit', { 'id': entity.id }) }}">Editer</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

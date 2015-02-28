@@ -37,38 +37,38 @@ class AdminController extends Controller
      * @Route("/image-upload", name="admin_image-upload")
      * @Template()
      */
-    public function imageSiteUploadAction(Request $request)
-    {
-        $document = new ImageSite();
-        $em = $this->getDoctrine()->getManager();
-        $bsRepo = $em->getRepository('AppBundle:BusinessService');
-        $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file', 'file')
-            ->add('carouselOrder')
-            ->add('location')
-            ->add('damageType')
-            ->add('vehicleElement')
-            ->add('businessServiceRef', 'choice', [
-                'label' => 'Catégorie du service',
-                'choices' => $bsRepo->getChoices()
-            ])
-            ->add('submit', 'submit', array('label' => 'Enregistrer'))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
+    /*    public function imageSiteUploadAction(Request $request)
+        {
+            $document = new ImageSite();
             $em = $this->getDoctrine()->getManager();
+            $bsRepo = $em->getRepository('AppBundle:BusinessService');
+            $form = $this->createFormBuilder($document)
+                ->add('name')
+                ->add('file', 'file')
+                ->add('carouselOrder')
+                ->add('location')
+                ->add('damageType')
+                ->add('vehicleElement')
+                ->add('businessServiceRef', 'choice', [
+                    'label' => 'Catégorie du service',
+                    'choices' => $bsRepo->getChoices()
+                ])
+                ->add('submit', 'submit', array('label' => 'Enregistrer'))
+                ->getForm();
 
-            $em->persist($document);
-            $em->flush();
+            $form->handleRequest($request);
 
-            return $this->redirect($this->generateUrl('admin_tableaudebord'));
-        }
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
 
-        return array('form' => $form->createView());
-    }
+                $em->persist($document);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('admin_tableaudebord'));
+            }
+
+            return array('form' => $form->createView());
+        }*/
 
 
 

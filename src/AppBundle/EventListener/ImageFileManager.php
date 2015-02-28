@@ -11,7 +11,7 @@ namespace AppBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\ImageSite;
 
-class ImageFilePathHandler
+class ImageFileManager
 {
 
     /**
@@ -27,7 +27,9 @@ class ImageFilePathHandler
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->upload($entity);
+        if ($entity instanceof ImageSite) {
+            $this->upload($entity);
+        }
     }
 
     /**
@@ -67,13 +69,17 @@ class ImageFilePathHandler
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->upload($entity);
+        if ($entity instanceof ImageSite) {
+            $this->upload($entity);
+        }
     }
 
     public function postRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->removeUpload($entity);
+        if ($entity instanceof ImageSite) {
+            $this->removeUpload($entity);
+        }
     }
 
     /**
@@ -101,7 +107,9 @@ class ImageFilePathHandler
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->preUpload($entity);
+        if ($entity instanceof ImageSite) {
+            $this->preUpload($entity);
+        }
     }
 
     /**
@@ -120,7 +128,9 @@ class ImageFilePathHandler
     public function preUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $this->preUpload($entity);
+        if ($entity instanceof ImageSite) {
+            $this->preUpload($entity);
+        }
     }
 
 
