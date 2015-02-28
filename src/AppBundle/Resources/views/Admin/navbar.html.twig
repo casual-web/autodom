@@ -55,6 +55,27 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- PHOTOS -->
+                <li class="dropdown {{ 'admin_photos' | is_route_active }} {{ 'admin_photos_new' | is_route_active }}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Photos caroussel
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ 'admin_photos' | is_route_active }}">
+                            <a href="{{ path('admin_photos') }}">
+                                Lister photos
+                            </a>
+                        </li>
+                        <li class="{{ 'admin_photos_new' | is_route_active }}">
+                            <a href="{{ path('admin_photos_new') }}">
+                                Ajouter photos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="btn btn-info" href="{{ path('fos_user_security_logout') }}">Deconnexion</a></li>

@@ -15,9 +15,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * ImageSite
  *
- * @ORM\Table()
+ * @ORM\Table(name="image_site")
  * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
  */
 class ImageSite
 {
@@ -29,11 +28,10 @@ class ImageSite
     public $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, name="vehicle_model")
      * @Assert\NotBlank
      */
-    public $name;
-
+    public $vehicleModel;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -51,10 +49,6 @@ class ImageSite
      */
     public $damageType;
     /**
-     * @ORM\Column(name="vehicle_element", type="string", length=255)
-     */
-    public $vehicleElement;
-    /**
      * @Assert\File(maxSize="6000000")
      */
     private $file;
@@ -66,7 +60,12 @@ class ImageSite
      * @ORM\JoinColumn(name="business_service_ref", referencedColumnName="ref")
      */
     private $businessServiceRef;
+    private $temp;
 
+    public function __construct()
+    {
+        $this->temp = null;
+    }
     /**
      * Get businessServiceRef
      *
@@ -95,24 +94,9 @@ class ImageSite
         return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
-    protected function getUploadDir()
+    public function getUploadDir()
     {
-        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
-        // le document/image dans la vue.
-        return 'uploads/documents';
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null !== $this->getFile()) {
-            // do whatever you want to generate a unique name
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename . '.' . $this->getFile()->guessExtension();
-        }
+        return 'uploads/' . $this->businessServiceRef;
     }
 
     /**
@@ -129,60 +113,25 @@ class ImageSite
      * Sets file.
      *
      * @param UploadedFile $file
-     * @return ImageSite
      */
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
-
-        // check if we have an old image
-        if (isset($this->temp)) {
-            // delete the old image
-            unlink($this->getUploadRootDir() . '/' . $this->temp);
-            // clear the temp image path
-            $this->temp = null;
-        }
-        $this->file = null;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        $file = $this->getAbsolutePath();
-        if ($file) {
-            unlink($file);
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
         }
     }
 
-    public function getAbsolutePath()
+    public function hasTemp()
     {
-        return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
+        return isset($this->temp);
     }
+
 
     /**
      * Get id
@@ -195,24 +144,24 @@ class ImageSite
     }
 
     /**
-     * Get name
+     * Get vehicleModel
      *
      * @return string
      */
-    public function getName()
+    public function getVehicleModel()
     {
-        return $this->name;
+        return $this->vehicleModel;
     }
 
     /**
-     * Set name
+     * Set $vehicleModel
      *
-     * @param string $name
+     * @param string $vehicleModel
      * @return ImageSite
      */
-    public function setName($name)
+    public function setVehicleModel($vehicleModel)
     {
-        $this->name = $name;
+        $this->vehicleModel = $vehicleModel;
 
         return $this;
     }
@@ -332,26 +281,4 @@ class ImageSite
         return $this;
     }
 
-    /**
-     * Get vehicleElement
-     *
-     * @return string
-     */
-    public function getVehicleElement()
-    {
-        return $this->vehicleElement;
-    }
-
-    /**
-     * Set vehicleElement
-     *
-     * @param string $vehicleElement
-     * @return ImageSite
-     */
-    public function setVehicleElement($vehicleElement)
-    {
-        $this->vehicleElement = $vehicleElement;
-
-        return $this;
-    }
 }

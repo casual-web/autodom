@@ -25,8 +25,11 @@ class ImageSiteType extends AbstractType
         $bsRepo = $entityManager->getRepository('AppBundle:BusinessService');
 
         $builder
-            ->add('name')
-            ->add('file')
+            ->add('file', 'file', ['label' => 'Fichier'])
+            ->add('location', null, ['label' => 'Lieu de l\'intervention'])
+            ->add('vehicleModel', null, ['label' => 'Modèle du véhicule'])
+            ->add('damageType', null, ['label' => 'Type de dommage'])
+            ->add('carouselOrder', null, ['label' => 'Ordre dans le caroussel par catégorie'])
             ->add('businessServiceRef', 'choice', [
                 'label' => 'Catégorie du service',
                 'choices' => $bsRepo->getChoices()
@@ -40,7 +43,16 @@ class ImageSiteType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Document'
+            'data_class' => 'AppBundle\Entity\ImageSite'
+        ));
+
+
+        $resolver->setRequired(array(
+            'em'
+        ));
+
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager'
         ));
     }
 

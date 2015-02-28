@@ -18,16 +18,6 @@
       <index name="UNIQ_47635A9146F3EA3" unique="true" columns="ref"/>
       <index name="UNIQ_47635A9989D9B62" unique="true" columns="slug"/>
     </table>
-    <table name="ImageSite" schema="" catalog="autodom" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <column name="path" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="business_service_ref" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <column name="carousel_order" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="location" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <column name="damage_type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
     <table name="QuotationRequest" schema="" catalog="autodom" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="vehicle_model" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -73,6 +63,16 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="UNIQ_957A647992FC23A8" unique="true" columns="username_canonical"/>
       <index name="UNIQ_957A6479A0D96FBF" unique="true" columns="email_canonical"/>
+    </table>
+    <table name="image_site" schema="" catalog="autodom" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="vehicle_model" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="path" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="carousel_order" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="location" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="damage_type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="business_service_ref" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
   </data-source>
 </component>
