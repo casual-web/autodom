@@ -10,6 +10,8 @@ namespace AppBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\ImageSite;
+use AppBundle\EventListener\FileManagementException;
+
 
 class ImageFileManager
 {
@@ -49,7 +51,7 @@ class ImageFileManager
         // check if we have an old image
         if ($entity->hasTemp()) {
             // delete the old image
-            unlink($uploadRootDir . '/' . $this->getTemp());
+            unlink($uploadRootDir . '/' . $entity->getTemp());
             // clear the temp image path
             $entity->setTemp(null);
         }
@@ -85,12 +87,15 @@ class ImageFileManager
     /**
      * Called on postRemove
      * @param ImageSite $entity
+     * @throw FileManagementException
      */
     public function removeUpload(ImageSite $entity)
     {
         $file = $this->getAbsolutePath($entity);
-        if ($file) {
+        if (file_exists($file)) {
             unlink($file);
+        } else {
+            throw new FileManagementException($file, $entity);
         }
     }
 
@@ -121,7 +126,7 @@ class ImageFileManager
         if (null !== $entity->getFile()) {
             // generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename . '.' . $entity->getFile()->guessExtension();
+            $entity->setPath($filename . '.' . $entity->getFile()->guessExtension());
         }
     }
 
@@ -132,6 +137,8 @@ class ImageFileManager
             $this->preUpload($entity);
         }
     }
+
+
 
 
 }

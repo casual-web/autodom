@@ -132,6 +132,16 @@ class ImageSite
         return isset($this->temp);
     }
 
+    public function getTemp()
+    {
+        return $this->temp;
+    }
+
+    public function setTemp($temp)
+    {
+        $this->temp = $temp;
+    }
+
 
     /**
      * Get id

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\ImageSite;
 use AppBundle\Form\ImageSiteType;
+use AppBundle\EventListener\FileManagementException;
 
 /**
  * ImageSite controller.
@@ -152,11 +153,10 @@ class ImageSiteController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('AppBundle:ImageSite')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ImageSite entity.');
+            throw $this->createNotFoundException('Enregistrement introuvable.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -242,8 +242,17 @@ class ImageSiteController extends Controller
                 throw $this->createNotFoundException('Unable to find ImageSite entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            try {
+                $em->remove($entity);
+                $em->flush();
+            } catch (FileManagementException $fme) {
+                return $this->render(
+                    'AppBundle:Admin:message.html.twig', [
+                        'message' => 'L\'enregistrement a bien été supprimé mais le fichier image correspondant n\'a pu être trouvé.',
+                        'level' => 'warning'
+                    ]
+                );
+            }
         }
 
         return $this->redirect($this->generateUrl('admin_photos'));
