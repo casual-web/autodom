@@ -1,0 +1,66 @@
+{% extends "AppBundle:FrontendLayout:base.html.twig" %}
+
+{% block title %}services | Debosselage sans peinture {% endblock %}
+
+{% block head %} {{ parent() }} {% endblock %}
+
+{% block description %}
+    <meta name="description"
+          content="Le d&eacute;bosselage sans peinture (DSP) est un proc&eacute;d&eacute; qui permet de r&eacute;sorber des enfoncements caus&eacute;s par la gr&ecirc;le ou autre type de coup, sur la carrosserie des v&eacute;hicules automobiles. Autodom, service mobile, vous propose des tarifs d&eacute;gr&eacute;ssifs en fonction du nombre de chocs, sur Avignon et sa r&eacutegion.">
+{% endblock %}
+
+
+{% block body %}
+
+    {{ parent() }}
+    {% block header %}
+        {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+            {% block header_content %}
+                La carroserie de votre v&eacute;hicule a subit une d&eacute;formation &agrave; la suite d'un coup de porti&egrave;re ou de caddie,
+                d'une averse de gr&ecirc;le ?  Contactez <a
+                    href="{{ app.request.baseUrl }}/">Autodom</a>, service mobile pour professionnels et particuliers.
+            {% endblock %}
+            {% block subtitle %}
+                Service mobile de débosselage sans peinture (DSP)
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
+    {% block content %}
+        {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
+            {% block description %}
+                <h2>Pourquoi ?</h2>
+                <p>
+                    Entre l'achat et la revente de votre v&eacute;hicule il s'&eacute;coule en moyenne 2 &agrave; 4 ans.
+                    Dans ce laps de temps, des incidents peuvent endommager votre carrosserie, et en faire diminuer la c&ocirc;te.
+                </p>
+
+                <h2>Comment ?</h2>
+
+                <p>
+                    Le d&eacute;bosselage sans peinture est un proc&eacute;d&eacute; qui permet de r&eacute;sorber des
+                    bosses sur la carrosserie des v&eacute;hicules automobiles. Le DSP fait appel &agrave; une technique
+                    et
+                    des outils sp&eacute;cifiques. Tout l'art du d&eacute;bosseleur consiste &agrave; rester dans la
+                    limite &eacute;lastique de la t&ocirc;le, et de redresser l'impact en exer&ccedil;ant de multiples
+                    pressions/tirages sur celui-ci,
+                    sans en ab&icirc;mer la peinture et le vernis.
+                </p>
+
+                <h2>Combien ?</h2>
+
+                <p>
+                    Les <a href="/tarifs">tarifs</a> appliqu&eacute;s sont d&eacute;gr&eacute;ssifs en fonction du
+                    nombre de chocs.
+                    Chaque tarif sera calcul&eacute; en fonction de trois crit&egrave;res principaux relatifs à l'impact
+                    :
+                <ul>
+                    <li class="">Acccesibilit&eacute;</li>
+                    <li class="">Taille</li>
+                    <li class="">Localisation (arr&ecirc;te, surface plane,...)</li>
+                </ul>
+
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endblock %}

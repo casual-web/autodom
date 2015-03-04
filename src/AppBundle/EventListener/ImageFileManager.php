@@ -20,10 +20,15 @@ class ImageFileManager
      * @var string
      */
     private $uploadDirectory;
+    /**
+     * @var string
+     */
+    private $kernelRootDir;
 
-    public function __construct($uploadDirectory)
+    public function __construct($kernelRootDir, $relativeuploadDirectory)
     {
-        $this->uploadDirectory = $uploadDirectory;
+        $this->uploadDirectory = $kernelRootDir . '/' . $relativeuploadDirectory;
+        $this->kernelRootDir = $kernelRootDir;
     }
 
     public function postPersist(LifecycleEventArgs $args)

@@ -25,23 +25,8 @@ class ImageSiteFunctionalTest extends WebTestCase
         static::$kernel = static::createKernel();
         static::$kernel->boot();
         $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $this->unLoadFixtures();
         $this->loadFixtures();
         $this->em->clear();
-    }
-
-    public function unLoadFixtures()
-    {
-
-        $connection = $this->em->getConnection();
-        $sqlQuery = <<<EOT
-                    START TRANSACTION;
-                    SET FOREIGN_KEY_CHECKS=0;
-                    TRUNCATE image_site;
-                    SET FOREIGN_KEY_CHECKS=1;
-                    COMMIT;
-EOT;
-        $connection->query($sqlQuery);
     }
 
     public function loadFixtures()
@@ -55,15 +40,44 @@ EOT;
     public function tearDown()
     {
 
-        // $this->unLoadFixtures();
+        $this->unLoadFixtures();
 
+    }
+
+    public function unLoadFixtures()
+    {
+        $is = $this->em->getREpository('AppBundle:ImageSite')->createQueryBuilder('i');
+        $is->where("i.businessServiceRef LIKE :ref")
+            ->setParameter('ref', 'FIXTURE%')
+            ->delete();
+
+        $is->getQuery()->execute();
     }
 
     public function testSelectImagesByCategory()
     {
         $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
-        $entities = $bsr->findByBusinessServiceRef(array('DSP'));
+        $entities = $bsr->findByBusinessServiceRef(array('FIXTURE1'));
         $this->assertEquals(3, count($entities));
     }
+
+    public function testFindVisible()
+    {
+        $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
+        $entities = $bsr->findVisibleByService('FIXTURE1');
+        $this->assertEquals(1, count($entities));
+    }
+
+    public function testOrdering()
+    {
+        $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
+        $entities = $bsr->findAll();
+        $this->assertEquals('FIXTURE1', $entities[2]->getBusinessServiceRef());
+        $this->assertEquals(4, $entities[2]->getCarouselOrder());
+        $this->assertEquals('FIXTURE2', $entities[3]->getBusinessServiceRef());
+        $this->assertEquals(3, $entities[3]->getCarouselOrder());
+
+    }
+
 
 }

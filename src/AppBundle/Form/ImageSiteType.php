@@ -25,7 +25,8 @@ class ImageSiteType extends AbstractType
         $bsRepo = $entityManager->getRepository('AppBundle:BusinessService');
 
         $builder
-            ->add('file', 'file', ['label' => 'Fichier'])
+            ->add('file', 'file', ['label' => 'Fichier', 'required' => false])
+            ->add('visible', null, ['label' => 'Visible sur le site', 'required' => false])
             ->add('location', null, ['label' => 'Lieu de l\'intervention'])
             ->add('vehicleModel', null, ['label' => 'Modèle du véhicule'])
             ->add('damageType', null, ['label' => 'Type de dommage'])

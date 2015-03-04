@@ -7,14 +7,17 @@
                     <img src="{{ asset('bundles/app/img/logo-autodom-baseline_100.png') }}"
                          alt="autodom reparation automobile a domicile">
                 </a>
+
+                <p class='lead'>
                 {% block header_content %}
-                    <p class='lead'>
+
                         La carrosserie de votre v&eacute;hicule a subi un dommage, votre pare-brise
                         est &agrave; remplacer, un phare est terni ? Contactez <a title="Contacter Autodom par email."
                                                                                   href="mailto:contact@autodom.biz">Autodom</a>,
                         service mobile pour professionnels et particuliers.
-                    </p>
+
                 {% endblock %}
+                </p>
             </div>
 
             <div class="well col-md-4 pull-right" id='floatting-contact'>
@@ -39,7 +42,7 @@
 
             </div>
         </div>
-        {% block subtitle %}{% endblock %}
+        <h1>{% block subtitle %}{% endblock %}</h1>
     </div>
 </div>
 {%  endblock %}

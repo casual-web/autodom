@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * ImageSite
  *
  * @ORM\Table(name="image_site")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ImageSiteRepository")
  */
 class ImageSite
 {
@@ -60,12 +60,42 @@ class ImageSite
      * @ORM\JoinColumn(name="business_service_ref", referencedColumnName="ref")
      */
     private $businessServiceRef;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="visible", type="boolean")
+     */
+    private $visible = false;
     private $temp;
 
     public function __construct()
     {
         $this->temp = null;
     }
+
+    /**
+     * Get visible
+     *
+     * @return boolean
+     */
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
+    /**
+     * Set visible
+     *
+     * @param boolean $visible
+     * @return BusinessService
+     */
+    public function setVisible($visible)
+    {
+        $this->visible = $visible;
+
+        return $this;
+    }
+
     /**
      * Get businessServiceRef
      *
@@ -91,12 +121,12 @@ class ImageSite
 
     public function getWebPath()
     {
-        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
+        return null === $this->path ? null : '/' . $this->getUploadDir() . '/' . $this->path;
     }
 
     public function getUploadDir()
     {
-        return 'uploads/' . $this->businessServiceRef;
+        return 'uploads/admin';
     }
 
     /**
@@ -115,6 +145,7 @@ class ImageSite
      * @param UploadedFile $file
      */
     public function setFile(UploadedFile $file = null)
+        // public function setFile(File $file = null)
     {
         $this->file = $file;
         // check if we have an old image path

@@ -4,8 +4,52 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+
 class ImageSiteControllerTest extends WebTestCase
 {
+    /**
+     * @var stringr
+     */
+    private $kernelRootDir;
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    public function setUp()
+    {
+
+        static::$kernel = static::createKernel();
+        static::$kernel->boot();
+        $this->kernelRootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
+        $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $this->unLoadFixtures();
+        $this->loadFixtures();
+        $this->em->clear();
+    }
+
+    public function unLoadFixtures()
+    {
+
+        $connection = $this->em->getConnection();
+        $sqlQuery = <<<EOT
+                    START TRANSACTION;
+                    SET FOREIGN_KEY_CHECKS=0;
+                    TRUNCATE BusinessService;
+                    SET FOREIGN_KEY_CHECKS=1;
+                    COMMIT;
+EOT;
+        $connection->query($sqlQuery);
+    }
+
+    public function loadFixtures()
+    {
+
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderBS->load($this->em);
+
+    }
 
     public function testCompleteScenario()
     {
@@ -22,7 +66,8 @@ class ImageSiteControllerTest extends WebTestCase
             'appbundle_imagesite[vehicleModel]' => 'twingo',
             'appbundle_imagesite[businessServiceRef]' => 'DSP',
             'appbundle_imagesite[location]' => 'Lyon 7',
-            'appbundle_imagesite[file]' => '/home/olivier/Dev/autodom/src/AppBundle/Tests/Controller/Fixtures/contact.jpg',
+            'appbundle_imagesite[location]' => 'Lyon 7',
+            'appbundle_imagesite[file]' => $this->kernelRootDir . '/../src/AppBundle/Tests/Controller/Fixtures/contact.jpg',
             'appbundle_imagesite[damageType]' => 'bosse capot',
             'appbundle_imagesite[carouselOrder]' => '7'
         ));
@@ -55,6 +100,13 @@ class ImageSiteControllerTest extends WebTestCase
 
         // Check the entity has been delete on the list
         $this->assertNotRegExp('/1984/', $client->getResponse()->getContent());
+    }
+
+    public function tearDown()
+    {
+
+        $this->unLoadFixtures();
+
     }
 
 

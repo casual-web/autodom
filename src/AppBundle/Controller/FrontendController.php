@@ -22,9 +22,20 @@ class FrontendController extends Controller
      */
     public function homeAction()
     {
+        $is_repo = $this->getDoctrine()->getRepository('AppBundle:ImageSite');
 
-        return array(// ...
-        );
+        return array('entities' => $is_repo->findVisibleByService('DSP'));
+    }
+
+    /**
+     * @Route("/debosselage-sans-peinture",  name="debosselage-sans-peinture")
+     * @Method("GET")
+     * @Template("AppBundle:FrontBusinessService:debosselage-sans-peinture.html.twig")
+     */
+    public function DSPAction()
+    {
+        $is_repo = $this->getDoctrine()->getRepository('AppBundle:ImageSite');
+        return array('entities' => $is_repo->findVisibleByService('DSP'));
     }
 
     /**

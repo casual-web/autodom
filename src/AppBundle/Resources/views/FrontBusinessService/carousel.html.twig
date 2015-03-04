@@ -1,0 +1,30 @@
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        {% for entity in entities %}
+            <div class="item {% if active_item == entity.id %}active{% endif %} ">
+                <img src="{{ app.request.uriForPath(entity.webPath) }}"
+                     alt="{{ entity.damageType }} {{ entity.location }}"/>
+
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h4>D&eacute;bosselage sans peinture - aile.</h4>
+                        {% if display_comments == true %}
+                            <p>Type d'impact : {{ entity.damageType }}</p>
+                            <p>V&eacute;hicule : {{ entity.vehicleModel }}</p>
+                            <p>Ville : {{ entity.location }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+    </div>
+</div>
+

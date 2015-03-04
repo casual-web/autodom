@@ -8,9 +8,15 @@
             <h1>Photo {{ entity.carouselOrder }}#{{ entity.businessServiceRef }}</h1>
         </div>
 
-        <table class="record_properties table">
 
-            <tbody>
+        <div class="row">
+            <div class='col-xs-6'>
+                <img class="img-thumbnail" src="{{ app.request.uriForPath(entity.webPath) }}"/>
+            </div>
+            <div class='col-xs-6'>
+                <table class="record_properties table">
+
+                    <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
@@ -21,7 +27,7 @@
             </tr>
             <tr>
                 <th>Chemin</th>
-                <td>{{ entity.path }}</td>
+                <td>{{ entity.webPath }}</td>
             </tr>
             <tr>
                 <th>Ordre dans caroussel par catégorie</th>
@@ -41,6 +47,9 @@
             </tr>
             </tbody>
         </table>
+            </div>
+
+        </div>
 
         <ul class="record_actions">
             <li>
