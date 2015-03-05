@@ -40,11 +40,11 @@ class ImageSiteFunctionalTest extends WebTestCase
     public function tearDown()
     {
 
-        //$this->unLoadFixtures();
+        $this->unLoadFixtures();
 
     }
 
-    // use doctrine to trigger event on remove and remove attachds files on disk
+    // use doctrine to trigger event on remove and remove attached files on disk
     public function unLoadFixtures()
     {
         $is = $this->em->getRepository('AppBundle:ImageSite')->createQueryBuilder('i');

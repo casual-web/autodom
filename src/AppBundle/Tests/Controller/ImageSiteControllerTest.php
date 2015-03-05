@@ -3,6 +3,7 @@
 namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
 
 
 class ImageSiteControllerTest extends WebTestCase
@@ -24,12 +25,13 @@ class ImageSiteControllerTest extends WebTestCase
         static::$kernel->boot();
         $this->kernelRootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
         $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $this->unLoadFixtures();
-        $this->loadFixtures();
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderBS->load($this->em);
         $this->em->clear();
     }
 
-    public function unLoadFixtures()
+
+    public function tearDown()
     {
 
         $connection = $this->em->getConnection();
@@ -41,15 +43,9 @@ class ImageSiteControllerTest extends WebTestCase
                     COMMIT;
 EOT;
         $connection->query($sqlQuery);
-    }
-
-    public function loadFixtures()
-    {
-
-        $fixtureLoaderBS = new LoadBusinessServicesData();
-        $fixtureLoaderBS->load($this->em);
 
     }
+
 
     public function testCompleteScenario()
     {
@@ -102,12 +98,6 @@ EOT;
         $this->assertNotRegExp('/1984/', $client->getResponse()->getContent());
     }
 
-    public function tearDown()
-    {
-
-        $this->unLoadFixtures();
-
-    }
 
 
 }

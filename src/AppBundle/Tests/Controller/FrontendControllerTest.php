@@ -4,14 +4,52 @@ namespace AppBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
+use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
 
 class FrontendControllerTest extends WebTestCase
 {
+    /**
+     * @var stringr
+     */
+    private $kernelRootDir;
+
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    public function setUp()
+    {
+
+        static::$kernel = static::createKernel();
+        static::$kernel->boot();
+        $this->kernelRootDir = static::$kernel->getContainer()->getParameter('kernel.root_dir');
+        $this->em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderBS->load($this->em);
+        $this->em->clear();
+    }
+
+
+    public function tearDown()
+    {
+
+        $connection = $this->em->getConnection();
+        $sqlQuery = <<<EOT
+                    START TRANSACTION;
+                    SET FOREIGN_KEY_CHECKS=0;
+                    TRUNCATE BusinessService;
+                    SET FOREIGN_KEY_CHECKS=1;
+                    COMMIT;
+EOT;
+        $connection->query($sqlQuery);
+
+    }
+
+
     public function testHome()
     {
         $client = static::createClient();
-
-
         $crawler = $client->request('GET', '/home');
     }
 
