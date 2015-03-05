@@ -33,11 +33,11 @@ class ImageSite
      */
     public $vehicleModel;
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     public $path;
     /**
-     * @ORM\Column(type="integer", name="carousel_order")
+     * @ORM\Column(type="integer", name="carousel_order", nullable=false)
      */
     public $carouselOrder;
     /**
@@ -145,7 +145,6 @@ class ImageSite
      * @param UploadedFile $file
      */
     public function setFile(UploadedFile $file = null)
-        // public function setFile(File $file = null)
     {
         $this->file = $file;
         // check if we have an old image path
@@ -156,6 +155,11 @@ class ImageSite
         } else {
             $this->path = 'initial';
         }
+    }
+
+    public function unsetFile()
+    {
+        $this->file = null;
     }
 
     public function hasTemp()

@@ -40,18 +40,23 @@ class ImageSiteFunctionalTest extends WebTestCase
     public function tearDown()
     {
 
-        $this->unLoadFixtures();
+        //$this->unLoadFixtures();
 
     }
 
+    // use doctrine to trigger event on remove and remove attachds files on disk
     public function unLoadFixtures()
     {
-        $is = $this->em->getREpository('AppBundle:ImageSite')->createQueryBuilder('i');
+        $is = $this->em->getRepository('AppBundle:ImageSite')->createQueryBuilder('i');
         $is->where("i.businessServiceRef LIKE :ref")
-            ->setParameter('ref', 'FIXTURE%')
-            ->delete();
+            ->setParameter('ref', 'FIXTURE%');
 
-        $is->getQuery()->execute();
+        $results = $is->getQuery()->execute();
+
+        foreach ($results as $entity) {
+            $this->em->remove($entity);
+        }
+        $this->em->flush();
     }
 
     public function testSelectImagesByCategory()

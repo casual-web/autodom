@@ -32,10 +32,10 @@ class LoadImageSiteData implements FixtureInterface
         $isDSP->setDamageType("Coup de genoux, aile avant");
         $isDSP->setCarouselOrder(4);
         $manager->persist($isDSP);
-        $manager->flush();
 
-
+        $uFile2 = $this->createUploadFiles('img2');
         $isDSP2 = new ImageSite();
+        $isDSP2->setFile($uFile2);
         $isDSP2->setVehicleModel('Renault Clio2');
         $isDSP2->setBusinessServiceRef('FIXTURE1');
         $isDSP2->setLocation("Vaucluse (84)");
@@ -43,7 +43,9 @@ class LoadImageSiteData implements FixtureInterface
         $isDSP2->setCarouselOrder(2);
         $manager->persist($isDSP2);
 
+        $uFile3 = $this->createUploadFiles('img3');
         $isDSP3 = new ImageSite();
+        $isDSP3->setFile($uFile3);
         $isDSP3->setVehicleModel('Citroën 2CV');
         $isDSP3->setBusinessServiceRef('FIXTURE1');
         $isDSP3->setLocation("Avignon (84)");
@@ -52,7 +54,9 @@ class LoadImageSiteData implements FixtureInterface
         $isDSP3->setVisible(true);
         $manager->persist($isDSP3);
 
+        $uFile4 = $this->createUploadFiles('img4');
         $isVIT = new ImageSite();
+        $isVIT->setFile($uFile4);
         $isVIT->setVehicleModel('Mercedes SLK2');
         $isVIT->setBusinessServiceRef('FIXTURE2');
         $isVIT->setLocation("Vitrolle (13)");

@@ -60,7 +60,7 @@ class ImageFileManager
             // clear the temp image path
             $entity->setTemp(null);
         }
-        $entity->setFile(null);
+        $entity->unsetFile();
     }
 
     /**
