@@ -119,4 +119,12 @@ EOT;
         $crawler = $client->request('GET', '/businessService');
     }
 
+    public function testDSP()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/debosselage-sans-peinture');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /debosselage-sans-peinture");
+
+    }
+
 }

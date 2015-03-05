@@ -48,8 +48,8 @@ class ImageSiteFunctionalTest extends WebTestCase
     public function unLoadFixtures()
     {
         $is = $this->em->getRepository('AppBundle:ImageSite')->createQueryBuilder('i');
-        $is->where("i.businessServiceRef LIKE :ref")
-            ->setParameter('ref', 'FIXTURE%');
+        $is->where("i.vehicleModel LIKE :vehicle")
+            ->setParameter('vehicle', '%(TEST)%');
 
         $results = $is->getQuery()->execute();
 
@@ -62,14 +62,14 @@ class ImageSiteFunctionalTest extends WebTestCase
     public function testSelectImagesByCategory()
     {
         $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
-        $entities = $bsr->findByBusinessServiceRef(array('FIXTURE1'));
+        $entities = $bsr->findByBusinessServiceRef(array('DSP'));
         $this->assertEquals(3, count($entities));
     }
 
     public function testFindVisible()
     {
         $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
-        $entities = $bsr->findVisibleByService('FIXTURE1');
+        $entities = $bsr->findVisibleByService('DSP');
         $this->assertEquals(1, count($entities));
     }
 
@@ -77,9 +77,10 @@ class ImageSiteFunctionalTest extends WebTestCase
     {
         $bsr = $this->em->getRepository('AppBundle\Entity\ImageSite');
         $entities = $bsr->findAll();
-        $this->assertEquals('FIXTURE1', $entities[2]->getBusinessServiceRef());
+
+        $this->assertEquals('DSP', $entities[2]->getBusinessServiceRef());
         $this->assertEquals(4, $entities[2]->getCarouselOrder());
-        $this->assertEquals('FIXTURE2', $entities[3]->getBusinessServiceRef());
+        $this->assertEquals('VIT', $entities[3]->getBusinessServiceRef());
         $this->assertEquals(3, $entities[3]->getCarouselOrder());
 
     }

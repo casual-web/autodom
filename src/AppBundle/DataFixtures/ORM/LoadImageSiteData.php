@@ -13,10 +13,11 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\ImageSite;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\File;
 
 class LoadImageSiteData implements FixtureInterface
 {
+
+
     /**
      * {@inheritDoc}
      */
@@ -26,8 +27,8 @@ class LoadImageSiteData implements FixtureInterface
         $uFile = $this->createUploadFiles('img1');
         $isDSP = new ImageSite();
         $isDSP->setFile($uFile);
-        $isDSP->setVehicleModel('audi A3');
-        $isDSP->setBusinessServiceRef('FIXTURE1');
+        $isDSP->setVehicleModel('audi A3  (TEST)');
+        $isDSP->setBusinessServiceRef('DSP');
         $isDSP->setLocation("Marseille (13)");
         $isDSP->setDamageType("Coup de genoux, aile avant");
         $isDSP->setCarouselOrder(4);
@@ -36,8 +37,8 @@ class LoadImageSiteData implements FixtureInterface
         $uFile2 = $this->createUploadFiles('img2');
         $isDSP2 = new ImageSite();
         $isDSP2->setFile($uFile2);
-        $isDSP2->setVehicleModel('Renault Clio2');
-        $isDSP2->setBusinessServiceRef('FIXTURE1');
+        $isDSP2->setVehicleModel('Renault Clio2 (TEST)');
+        $isDSP2->setBusinessServiceRef('DSP');
         $isDSP2->setLocation("Vaucluse (84)");
         $isDSP2->setDamageType("poque");
         $isDSP2->setCarouselOrder(2);
@@ -46,8 +47,8 @@ class LoadImageSiteData implements FixtureInterface
         $uFile3 = $this->createUploadFiles('img3');
         $isDSP3 = new ImageSite();
         $isDSP3->setFile($uFile3);
-        $isDSP3->setVehicleModel('Citroën 2CV');
-        $isDSP3->setBusinessServiceRef('FIXTURE1');
+        $isDSP3->setVehicleModel('Citroën 2CV (TEST)');
+        $isDSP3->setBusinessServiceRef('DSP');
         $isDSP3->setLocation("Avignon (84)");
         $isDSP3->setDamageType("grêle");
         $isDSP3->setCarouselOrder(3);
@@ -57,8 +58,8 @@ class LoadImageSiteData implements FixtureInterface
         $uFile4 = $this->createUploadFiles('img4');
         $isVIT = new ImageSite();
         $isVIT->setFile($uFile4);
-        $isVIT->setVehicleModel('Mercedes SLK2');
-        $isVIT->setBusinessServiceRef('FIXTURE2');
+        $isVIT->setVehicleModel('Mercedes SLK2 (TEST)');
+        $isVIT->setBusinessServiceRef('VIT');
         $isVIT->setLocation("Vitrolle (13)");
         $isVIT->setDamageType("impact cailloux");
         $isVIT->setCarouselOrder(3);

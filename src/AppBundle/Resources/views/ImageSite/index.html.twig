@@ -14,7 +14,8 @@
                 <th>Id</th>
                 <th>Modèle véhicule</th>
                 <th>Thumnail</th>
-                <th>Ordre dans caroussel par catégorie</th>
+                <th>Categorie/Ordre</th>
+                <th>Visible</th>
                 <th>Lieu de l'intervention</th>
                 <th>Type de dommage</th>
                 <th>Catégorie</th>
@@ -28,10 +29,11 @@
                     <td>{{ entity.vehicleModel }}</td>
                     <td><img class="img-thumbnail" src="{{ app.request.uriForPath(entity.webPath) }}" width="150"
                              height="100"/></td>
-                    <td>{{ entity.carouselOrder }}</td>
+                    <td>{{ entity.businessServiceRef }} {{ entity.carouselOrder }}</td>
+                    <td>{{ entity.visible }}</td>
                     <td>{{ entity.location }}</td>
                     <td>{{ entity.damageType }}</td>
-                    <td>{{ entity.businessServiceRef }}</td>
+
                     <td>
                         <ul>
                             <li>
