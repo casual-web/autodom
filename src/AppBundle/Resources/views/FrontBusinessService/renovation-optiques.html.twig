@@ -1,0 +1,69 @@
+{% extends "AppBundle:FrontendLayout:base.html.twig" %}
+
+{% block title %}services | Rénovation optiques {% endblock %}
+
+{% block head %} {{ parent() }} {% endblock %}
+
+{% block description %}
+    <meta name="description"
+          content="Sur la base d'un ponçage du phare opacifi&eacute;, retrouvez un &eacute;clairage conforme et &eacute;vitez une contre-visite lors du contr&ocirc;le technique, Autodom service mobile, r&eacute;nove vos optiques, sur Avignon et sa r&eacute;gion dans un rayon de 40 km.">
+{% endblock %}
+{% block body %}
+
+    {{ parent() }}
+    {% block header %}
+    {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+        {% block subtitle %}
+            Rénovation optiques
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+    {% block content %}
+        {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
+            {% block highlights %}
+    <ul class="services_goodies">
+        <li class='puce'>Retrouvez un &eacute;clairage conforme</li>
+        <li class='puce'>Evitez une contre-visite au contr&ocirc;le technique</li>
+        <li class='puce'>&Eacute;conomisez un remplacement</li>
+    </ul>
+{% endblock %}
+            {% block description %}
+                <h2>Pourquoi ?</h2>
+                <p>
+                    Depuis quelques ann&eacute;es tous les v&eacute;hicules neufs sont &eacute;quip&eacute;s d'optiques en
+                    polycarbonate.
+                    Le vernis s'altèrant avec le temps, la puissance d'&eacute;clairage de votre v&eacute;hicule diminue,
+                    vous contraignant
+                    bien souvent &agrave; une contre-visite lors du contr&ocirc;le technique.
+                    </p>
+
+                <h2>Comment ?</h2>
+
+         <p>
+                Sur la base d'un pon&ccedil;age du phare opacifi&eacute;, deux processus sont propos&eacute;s afin de
+                retrouver l'&eacute;clat d'origine d'un phare terni :
+            <ul>
+                <li class="">Polish (intervention 1h30)</li>
+                <li class="">Revernis (intervention 2h30)</li>
+            </ul>
+
+            <blockquote>Pour plus d'info. une vid&eacute;o de d&eacute;monstration est disponible
+                <a href="{{ app.request.baseUrl }}/realisations#optiques-video">ici</a>
+                </blockquote>
+
+            </p>
+
+            <h2>Combien ?</h2>
+
+            <p>
+                Les tarifs suivant comprennent le d&eacute;placement &agrave; votre domicile dans un rayon de 30km.
+            <ul>
+                <li class="">Polish, &agrave; partir de 45 euros TTC l'unit&eacute;</li>
+                <li class="">Revernis &agrave; partir de 75 euros TTC l'unit&eacute;.</li>
+            </ul>
+            </p>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endblock %}

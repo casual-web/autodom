@@ -25,33 +25,33 @@ class ImageSite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, name="vehicle_model")
      * @Assert\NotBlank
      */
-    public $vehicleModel;
+    protected $vehicleModel;
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    public $path;
+    protected $path;
     /**
      * @ORM\Column(type="integer", name="carousel_order", nullable=false)
      */
-    public $carouselOrder;
+    protected $carouselOrder;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    public $location;
+    protected $location;
     /**
      * @ORM\Column(name="damage_type", type="string", length=255)
      */
-    public $damageType;
+    protected $damageType;
     /**
      * @Assert\File(maxSize="6000000")
      */
-    private $file;
+    protected $file;
     /**
      * @var string
      *
@@ -59,14 +59,14 @@ class ImageSite
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BusinessService")
      * @ORM\JoinColumn(name="business_service_ref", referencedColumnName="ref")
      */
-    private $businessServiceRef;
+    protected $businessServiceRef;
     /**
      * @var boolean
      *
      * @ORM\Column(name="visible", type="boolean")
      */
-    private $visible = false;
-    private $temp;
+    protected $visible = false;
+    protected $temp;
 
     public function __construct()
     {

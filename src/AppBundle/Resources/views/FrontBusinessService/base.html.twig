@@ -1,11 +1,13 @@
 <div class="container">
     <div class='row'>
         <div class="col-xs-5">
-            {% include "AppBundle:FrontBusinessService:carousel.html.twig" with {'display_comments': 'yes', 'active_item': entities[0].id} %}
+            <div class="well">
+                {% block highlights %}{% endblock %}
+                {% include "AppBundle:FrontBusinessService:carousel.html.twig" with {'display_comments': 'yes' } %}
+            </div>
         </div>
         <div class="col-xs-7">
             {% block description %}{% endblock %}
         </div>
-
     </div>
 </div>

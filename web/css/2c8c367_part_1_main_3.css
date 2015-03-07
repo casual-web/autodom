@@ -95,45 +95,35 @@ a:hover {
     text-align: center;
 }
 
-/*
-
 ul.services_goodies {
     margin: 0;
-    padding: 15px 0 0 15px;
-}
-
-#myCarousel, #rennovCarousel {
-    border:1px gray solid
+    padding: 13px 0 15px 15px;
 }
 
 li.puce {
-    background-image: url('../img/puce.png');
+    background-image: url('../bundles/app/img/puce.png');
     background-repeat: no-repeat;
     background-position: center left;
     padding: 5px 0 5px 15px;
-    font-size: 18px;
+    font-size: 1.3em;
     list-style: none;
 }
 
 li.puce-normal {
-    background-image: url('../img/puce.png');
+    background-image: url('../bundles/app/img/puce.png');
     background-repeat: no-repeat;
     background-position: center left;
     padding: 5px 0 5px 15px;
     list-style:none;
 }
 
-
-ul.s {
-    list-style-type: none;
+.carousel-inner {
+    overflow: hidden
 }
 
-
-
-
-
-
-*/
+#myCarousel, #rennovCarousel {
+    border: 1px gray solid
+}
 
 
 

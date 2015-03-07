@@ -34,9 +34,44 @@ class FrontendController extends Controller
      */
     public function DSPAction()
     {
-        $is_repo = $this->getDoctrine()->getRepository('AppBundle:ImageSite');
-        return array('entities' => $is_repo->findVisibleByService('DSP'));
+        $actionParameters = $this->getBusinessServiceActionParameters('DSP');
+        return $actionParameters;
     }
+
+    public function getBusinessServiceActionParameters($businessServiceRef)
+    {
+
+        $is_repo = $this->getDoctrine()->getRepository('AppBundle:ImageSite');
+        $entities = $is_repo->findVisibleByService($businessServiceRef);
+        $active_item_id = (isset($entities[0]) ? $entities[0]->getId() : null);
+
+        return [
+            'entities' => $entities,
+            'active_item_id' => $active_item_id];
+    }
+
+    /**
+     * @Route("/renovation-optiques",  name="renovation-optiques")
+     * @Method("GET")
+     * @Template("AppBundle:FrontBusinessService:renovation-optiques.html.twig")
+     */
+    public function OPTAction()
+    {
+        $actionParameters = $this->getBusinessServiceActionParameters('OPT');
+        return $actionParameters;
+    }
+
+    /**
+     * @Route("/renovation-carrosserie",  name="renovation-carrosserie")
+     * @Method("GET")
+     * @Template("AppBundle:FrontBusinessService:renovation-carrosserie.html.twig")
+     */
+    public function CARAction()
+    {
+        $actionParameters = $this->getBusinessServiceActionParameters('CAR');
+        return $actionParameters;
+    }
+
 
     /**
      * Creates a new QuotationRequest entity.
