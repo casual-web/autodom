@@ -1,0 +1,68 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="{{ 'home' | is_route_active }}"><a href="{{ path('home') }}">Accueil </a></li>
+                <li class="{{ 'quotation_request' | is_route_active }}"><a
+                            href="{{ path('quotation_request') }}">Devis </a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        {{ render(controller(
+                        'AppBundle:BusinessService:enabledBusinessServices'
+                        )) }}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown">
+                        R&eacute;alisations
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ app.request.baseUrl }}/realisations#debosselage">
+                                D&eacute;bosselage sans peinture</a>
+                        </li>
+                        <li>
+                            <a href="{{ app.request.baseUrl }}/realisations#carrosserie">
+                                R&eacute;novation carrosserie</a>
+                        </li>
+                        <li>
+                            <a href="{{ app.request.baseUrl }}/realisations#optiques">
+                                R&eacute;novation optiques</a>
+                        </li>
+                        <li>
+                            <a href="{{ app.request.baseUrl }}/realisations#optiques-video">
+                                Vid&eacute;o r&eacute;novation phare</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="{{ 'quality_charter' | is_route_active }}"><a href="{{ path('quality_charter') }}">Charte
+                        qualité </a></li>
+                <li class="{{ 'partners' | is_route_active }}"><a href="{{ path('partners') }}">Partenaires </a></li>
+            </ul>
+            <div class="navbar-header navbar-right">
+                <div class="navbar-brand">
+                <span class="fb-like" data-href="http://www.facebook.com/pages/Autodom/288309807901362"
+                      data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"
+                      data-font="verdana">
+                  </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+
+
+
+
+
+
+

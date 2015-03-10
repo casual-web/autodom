@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "AppBundle:Admin:base.html.twig" %}
 
 {% block title %}AppBundle:Admin:index{% endblock %}
 
@@ -7,18 +7,18 @@
     <div class="container">
 
         <div class="jumbotron">
-            <h1>Manager</h1>
+            <h1>Tableau de bord</h1>
 
-            <p>Administration des services, facturation, gestion clientèlle.</p>
+            {% for counter in metrics %}
+                {% if counter.status == 0 %}
+                    <p>Nombre de devis en cours : {{ counter.nb }}</p>
+                {% endif %}
+                {% if counter.status == 1 %}
+                    <p>Nombre de devis à traiter : {{ counter.nb }}</p>
+                {% endif %}
+            {% endfor %}
+
         </div>
-
-        <a class="btn btn-primary" role="button" href="{{ path('admin_service') }}">
-            Services
-        </a>
-
-        <a class="btn btn-primary" role="button" href="{{ path('admin_devis') }}">
-            Devis
-        </a>
 
     </div>
 

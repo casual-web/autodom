@@ -1,0 +1,129 @@
+/* ###################################
+      GLOBAL
+###################################### */
+
+/* centered columns styles */
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    /* reset the text-align */
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+}
+
+/* ###################################
+      BACKEND
+###################################### */
+
+ul.record_actions {
+  float:right;
+}
+
+li {
+  list-style-type: none;
+}
+
+/* ###################################
+      FRONTEND
+###################################### */
+
+.navbar .nav > li > a:hover {
+    color: #00afc7;
+}
+
+body h1 h2 ul li {
+    color: #140D06;
+}
+
+.lead {
+    font-size: 1.3em;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 215%
+}
+
+h2 {
+    font-size: 170%
+}
+
+a {
+    color: #00afc7;
+}
+
+a:hover {
+    color: #00afc7;
+}
+
+/* ### Floatting contact  ### */
+
+#floatting-contact {
+    background: none;
+    text-align: center;
+    width: 320px;
+}
+
+#floatting-contact img {
+    float: right;
+    padding: 0;
+    margin-top: 12px
+}
+
+#floatting-contact h4 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#floatting-contact p.phone {
+    color: #00afc7;
+    clear: both;
+}
+
+#floatting-contact p.phone i {
+    color: #777777;
+    font-size: 60%;
+}
+
+.footer {
+    padding: 15px 5px 15px 5px;
+    text-align: center;
+}
+
+ul.services_goodies {
+    margin: 0;
+    padding: 13px 0 15px 15px;
+}
+
+li.puce {
+    background-image: url('../bundles/app/img/puce.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding: 5px 0 5px 15px;
+    font-size: 1.3em;
+    list-style: none;
+}
+
+li.puce-normal {
+    background-image: url('../bundles/app/img/puce.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding: 5px 0 5px 15px;
+    list-style:none;
+}
+
+.carousel-inner {
+    overflow: hidden
+}
+
+#myCarousel, #rennovCarousel {
+    border: 1px gray solid
+}
+
+
+

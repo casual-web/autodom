@@ -1,0 +1,9 @@
+{% set image_path = [ 'bundles/app/img/', service.slug , '-sumup.png'] | join %}
+{% set highlights_path = [ 'AppBundle:FrontBusinessService:', service.slug , '-highlights.html.twig'] | join %}
+<div class="well">
+    {% block title %}<h2>{{ service.name }}</h2>{% endblock %}
+   {% include highlights_path %}
+    <a title="Détails {{ service.name }}" href="/{{ service.slug }}" class="thumbnail">
+        <img src='{{ asset(image_path) }}' alt=""/>
+    </a>
+</div>

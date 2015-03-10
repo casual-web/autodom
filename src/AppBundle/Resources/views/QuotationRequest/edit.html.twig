@@ -1,16 +1,41 @@
-{% extends '::base.html.twig' %}
+{% extends "AppBundle:Admin:base.html.twig" %}
 
-{% block body -%}
-    <h1>QuotationRequest edit</h1>
+{% block body %}
 
-    {{ form(edit_form) }}
+    <div class="container">
+        <div class="page-header">
+            <h1>Edition de la demande de devis #{{ entity.id }}</h1>
+        </div>
+        {{ form_start(edit_form) }}
+
+        {{ form_errors(edit_form) }}
+        {{ form_row(edit_form.status) }}
+
+        <div class="btn_place"><strong>Services</strong></div>
+        <div class="well">
+            <ul class="service_relations"
+                data-prototype="{{ form_widget(edit_form.quotationRequestServiceRelations.vars.prototype)|e }}">
+
+                {% for qrsr in edit_form.quotationRequestServiceRelations %}
+                    <li>{{ form_row(qrsr.businessServiceRef) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {{ form_end(edit_form) }}
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_devis') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
 {% endblock %}
+
+
+{% block ending_javascripts %}
+    {% javascripts
+    '@AppBundle/Resources/public/js/service_relation_handler.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+

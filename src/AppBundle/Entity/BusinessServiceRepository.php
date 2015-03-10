@@ -24,4 +24,39 @@ class BusinessServiceRepository extends EntityRepository
 
     }
 
+    public function findEnabled()
+    {
+        return $this->findBy(array('enabled' => '1'));
+    }
+
+    /**
+     * get services enabled only by default or with a suffix if $filterEnabled=false
+     * @param bool $filterEnabled
+     * @return array
+     */
+    public function getChoices($filterEnabled = true)
+    {
+
+        if ($filterEnabled) {
+        }
+        $qb = $this->createQueryBuilder('s');
+        $qb->select('s.ref, s.name, s.enabled');
+
+        $results = $qb->getQuery()->execute();
+        $choices = [];
+        foreach ($results as $item) {
+            if ($item['enabled'] === true) {
+                $choices[$item['ref']] = $item['name'];
+            } else {
+                if ($filterEnabled === false) {
+                    $choices[$item['ref']] = sprintf('%s (désactivé)', $item['name']);
+                } else {
+                    unset($choices[$item['ref']]);
+                }
+            }
+        }
+        return $choices;
+
+    }
+
 }

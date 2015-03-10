@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        {% block stylesheets %}
+            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    {% block javascripts %}
+        {% javascripts
+        '@AppBundle/Resources/public/js/jquery.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    {% block navbar %}{% include 'AppBundle:Admin:navbar.html.twig' %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% block ending_javascripts %}{% endblock %}
+
+    </body>
+</html>

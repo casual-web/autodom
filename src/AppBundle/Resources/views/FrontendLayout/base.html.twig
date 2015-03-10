@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+    {% block head %}
+        <meta charset="UTF-8"/>
+        <meta property="og:titl e" content="Autodom"/>
+        <meta property="og:type" content="company"/>
+        <meta property="og:url" content="http://www.autodom.biz"/>
+        <meta property="og:image" content="http://autodom.biz/assets/img/logo-autodom-baseline.png"/>
+        <meta property="og:site_name" content="autodom.biz"/>
+        <meta property="fb:app_id" content="288309807901362"/>
+        <meta name="keywords"
+              content="debosselage, pare-brise, carrosserie, polish, lustrage, renovation, optiques, grele, vehicule, portiere, voiture, peinture, DSP"/>
+
+        <title>Autodom.biz - {% block title %}{% endblock %}</title>
+        {% block description %}{% endblock %}
+
+        {% block stylesheets %}
+            {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
+        {% endblock %}
+
+        {% include "AppBundle:FrontendLayout:google_plugin_code.html.twig" %}
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    {% endblock %}
+</head>
+<body>
+{% include "AppBundle:FrontendLayout:facebook_plugin_code.html.twig" %}
+
+{% block menu %}
+    {% include "AppBundle:FrontendLayout:navbar.html.twig" %}
+{% endblock %}
+
+{% block header %}
+    {% include "AppBundle:FrontendLayout:header.html.twig" %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    {% include "AppBundle:FrontendLayout:footer.html.twig" %}
+{% endblock %}
+
+{% block javascripts %}
+    {% javascripts
+        '@AppBundle/Resources/public/js/jquery.min.js'
+        '@AppBundle/Resources/public/js/bootstrap.min.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+
+</body>
+</html>

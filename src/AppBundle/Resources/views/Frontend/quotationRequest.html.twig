@@ -1,0 +1,86 @@
+{% extends "AppBundle:FrontendLayout:base.html.twig" %}
+
+
+{% block head %} {{ parent() }} {% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    {% block header %}
+        {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+            {% block subtitle %}
+                <h1>Demandez un devis pour une intervention à votre domicile*</h1>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
+    {% block content %}
+        <div class="container">
+            {{ form_start(form) }}
+            <div class='row'>
+                <div class='col-xs-6'>
+                    {{ form_errors(form) }}
+                    {{ form_label(form.baseqr.vehicleModel) }}
+                    {{ form_widget(form.baseqr.vehicleModel) }}
+                    <br/>
+
+                    <div class='control-group'>
+                        {{ form_label(form.quotationRequestServiceRelations) }}
+                        {{ form_widget(form.quotationRequestServiceRelations) }}
+                    </div>
+
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.problemDescription) }}
+                        {{ form_widget(form.baseqr.problemDescription) }}
+                    </div>
+
+                    {{ form_widget(form.baseqr.hasShelter) }}
+
+                </div>
+
+                <div class='col-xs-6'>
+                    {{ form_row(form.baseqr.firstName) }}
+                    {{ form_row(form.baseqr.lastName) }}
+                    {{ form_row(form.baseqr.email) }}
+
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.phone) }}
+                        {{ form_widget(form.baseqr.phone) }}
+                    </div>
+
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.address) }}
+                        {{ form_widget(form.baseqr.address) }}
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class='row row-centered'>
+                <div class='control-group col-lg-6 col-centered'>
+                    {{ form_label(form.baseqr.contactOrigin) }}
+                    {{ form_widget(form.baseqr.contactOrigin) }}
+                </div>
+            </div>
+            </br></br>
+            <div class='row row-centered'>
+                <div class="col-centered">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-info'}}) }}
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+
+            </br></br>
+            <div class='row row-centered'>
+                <blockquote class="col-centered"><i>* Nous nous engageons &agrave; ne pas transmettre vos donn&eacute;es
+                        à des soci&eacute;t&eacute;s
+                        qui souhaiteraient les utiliser à des fins commerciales.</i>
+                </blockquote>
+            </div>
+        </div>
+    {% endblock %}
+
+
+{% endblock %}

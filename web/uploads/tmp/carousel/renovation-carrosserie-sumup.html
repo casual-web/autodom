@@ -1,0 +1,24 @@
+<div class="well">
+
+    {% if hide_sumup_title != true %}
+    <h2>Rénovation carrosserie</h2>
+    {% endif %}
+
+    <ul class="services_goodies">
+        <li class='puce'>Pr&eacute;parez votre v&eacute;hicule &agrave; la vente</li>
+        <li class='puce'>Eliminez les d&eacute;fauts de surface</li>
+        <li class='puce'>Redonnez de l'&eacute;clat aux peintures d&eacute;polies</li>
+    </ul>
+    <br/>
+    {% if hide_sumup_title != true %}
+    <a title="Détails rénovation carroserie" href="/renovation-carrosserie" class="thumbnail">
+        <img src='assets/img/renovation-carrosserie.png'
+             alt="renovation carrosserie"/>
+    </a>
+    {% else %}
+    <div style="margin:15px">
+        {% include "renovation-carrosserie/carousel.twig" with {'vars' : {'display_comments' : false} }%}
+    </div>
+    {% endif %}
+
+</div>

@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends "AppBundle:Admin:base.html.twig" %}
 
 {% block body -%}
 
@@ -29,13 +29,17 @@
                     <td>
                         <a href="{{ path('admin_devis_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
                     </td>
-                    <td>{{ entity.status }}</td>
+                    <td>
+                        <span class="label label-{{ qr_status_enum_to_style(entity.status) }}">
+                            {{ qr_status_enum_to_label(entity.status) }}
+                        </span>
+                    </td>
                     <td>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
                     <td>{{ entity.vehicleModel }}</td>
                     <td>{{ entity.problemDescription }}</td>
                     <td>
                         {% for subEntity in entity.quotationRequestServiceRelations %}
-                            {{ subEntity.businessServiceId  }}
+                            {{ subEntity.businessServiceRef }}
                         {% endfor %}
                     </td>
                     <td>{{ entity.firstname }} {{ entity.lastname }}</td>
@@ -49,10 +53,10 @@
                     <td>
                         <ul>
                             <li>
-                                <a href="{{ path('admin_devis_show', { 'id': entity.id }) }}">show</a>
+                                <a href="{{ path('admin_devis_show', { 'id': entity.id }) }}">Voir</a>
                             </li>
                             <li>
-                                <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">edit</a>
+                                <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">Editer</a>
                             </li>
                         </ul>
                     </td>
@@ -60,10 +64,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-        <a class="btn btn-primary" href="{{ path('admin_devis_new') }}">
-            Créer une nouvelle demande de devis
-        </a>
 
         </ul>
     </div>

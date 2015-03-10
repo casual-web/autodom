@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * BusinessService
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\BusinessServiceRepository")
  */
 class BusinessService
 {
@@ -50,7 +50,6 @@ class BusinessService
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled = true;
-
 
     /**
      * Get id

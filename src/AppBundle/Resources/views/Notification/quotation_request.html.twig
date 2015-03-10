@@ -1,0 +1,19 @@
+<html>
+<body>
+<h1>DEMANDE DE DEVIS sur Autodom.biz !!</h1>
+<table border="1">
+    {% include 'AppBundle:QuotationRequest:show_common.html.twig' %}
+</table>
+<div>
+    {% if  entity.id %}
+        Voir cette demande : <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">
+        {{ path('admin_devis_edit', { 'id': entity.id }) }}
+    </a>
+    {% else %}
+        Voir toutes les  demandes : <a href="{{ path('admin_devis') }}">
+        {{ path('admin_devis') }}
+    </a>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+
 /**
  * QuotationRequestRepository
  *
@@ -12,5 +13,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuotationRequestRepository extends EntityRepository
 {
-
+    public function findDashboardMetrics()
+    {
+        $qb = $this->createQueryBuilder('qr');
+        $qb->select('COUNT(qr) as nb, qr.status')->groupBy('qr.status');
+        return $qb->getQuery()->execute();
+    }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * BusinessService
@@ -26,7 +27,7 @@ class BusinessService
     /**
      * @var string
      *
-     * @ORM\Column(name="ref", type="string", length=255)
+     * @ORM\Column(name="ref", type="string", length=255, unique=true)
      */
     private $ref;
 
@@ -51,6 +52,11 @@ class BusinessService
      */
     private $enabled = true;
 
+    /**
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -60,29 +66,6 @@ class BusinessService
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get ref
-     *
-     * @return string
-     */
-    public function getRef()
-    {
-        return $this->ref;
-    }
-
-    /**
-     * Set ref
-     *
-     * @param string $ref
-     * @return BusinessService
-     */
-    public function setRef($ref)
-    {
-        $this->ref = $ref;
-
-        return $this;
     }
 
     /**
@@ -153,4 +136,38 @@ class BusinessService
 
         return $this;
     }
+
+    /**
+     * Get slug
+     *
+     * @return boolean
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Get ref
+     *
+     * @return string
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * Set ref
+     *
+     * @param string $ref
+     * @return BusinessService
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+
+        return $this;
+    }
+
 }

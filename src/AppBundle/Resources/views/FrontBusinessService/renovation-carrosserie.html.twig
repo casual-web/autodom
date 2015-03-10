@@ -1,0 +1,65 @@
+{% extends "AppBundle:FrontendLayout:base.html.twig" %}
+
+{% block title %}services | Rénovation carrosserie {% endblock %}
+
+{% block head %} {{ parent() }} {% endblock %}
+
+{% block description %}
+    <meta name="description"
+          content="Avec le temps la carrosserie de votre v&eacute;hicule devient terne. De petites rayues alt&egrave;rent la brillance du vernis. Redonnez-lui tout son&eacute;clat; son &eacute;clat gr&acirc;ce au service de r&eacute;novation carrosserie d'Autodom : nettoyage, polish, lustrage, cirage.">
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+    {% block header %}
+        {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+            {% block header_content %}
+                La carrosserie de votre v&eacute;hicule est ternie ? Dans le cadre d'un entretien ou d'une pr&eacute;paration à la vente,
+                <a href="{{ app.request.baseUrl }}/">Autodom</a> vous propose son conseil sur les meilleurs produits du moment et la r&eacute;novation de la carrosserie de votre v&eacute;hicule.
+            {% endblock %}
+            {% block subtitle %}
+                Rénovation carrosserie
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
+    {% block content %}
+        {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
+            {% block highlights %}
+                {% include 'AppBundle:FrontBusinessService:car_highlights.html.twig' %}
+            {% endblock %}
+            {% block description %}
+                <h2>Pourquoi ?</h2>
+                <p>
+                    Les lavages au "rouleau" créent des micro-rayures qui ternissent le vernis de votre v&eacute;hicule.
+                    Ces micro-rayures sont autant d'asp&eacute;rit&eacute;s dans lesquelles les impuretés (<i>polution,
+                        calcaire, d&eacute;jection de pigeon, resine, etc...</i>) viennent se loger.
+                    La carrosserie de votre voiture devient de plus en plus difficile à entretenir, la revente votre v&eacute;hicule
+                    sera d'autant plus longue.
+                </p>
+
+                <h2>Comment ?</h2>
+
+                <p>
+                    La r&eacute;novation d'un vernis carrosserie s'effectue par &eacute;tapes successives :
+                </p>
+                <ul>
+                    <li>1. D&eacute;contamination ( <i> Gommage</i> )</li>
+                    <li>2. Polissage ( <i>L&eacute;g&egrave;re abrasion de la couche de vernis </i>)</li>
+                    <li>3. Lustrage ( <i>Brillance</i> )</li>
+                    <li>4. Cirage ( <i>Brillance et protection</i> )</li>
+                </ul>
+
+
+                <h2>Combien ?</h2>
+
+                <p>
+                    Un tarif &agrave; la carte vous sera propos&eacute; en fonction de l'&eacute;tat de la
+                    carrosserie.<br>
+                    Un technicien viendra sur place pour effectuer votre devis.
+                </p>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+{% endblock %}

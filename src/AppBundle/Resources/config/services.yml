@@ -1,0 +1,21 @@
+services:
+    doctrine.orm.quotation_request_manager:
+        class: AppBundle\Manager\QuotationRequestManager
+        arguments: ["@doctrine.orm.entity_manager"]
+    autodom.twig.extension:
+        class: AppBundle\Twig\AutodomExtension
+        arguments: ["@request_stack"]
+        tags:
+            - { name: twig.extension }
+    autodom.notifier:
+        class: AppBundle\Notification\Notifier
+        arguments: ["@mailer", "@templating"]
+    autodom.image_site.listener:
+        class: AppBundle\EventListener\ImageFileManager
+        arguments: ["%kernel.root_dir%", "../web"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postRemove }
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

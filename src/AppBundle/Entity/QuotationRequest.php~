@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class QuotationRequest
 {
+
     /**
      * @var integer
      *
@@ -21,63 +22,54 @@ class QuotationRequest
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="vehicle_model", type="string", length=255)
      */
     private $vehicleModel;
-
     /**
      * @var string
      *
      * @ORM\Column(name="problem_description", type="text")
      */
     private $problemDescription;
-
     /**
      * @var boolean
      *
      * @ORM\Column(name="has_shelter", type="boolean")
      */
     private $hasShelter = false;
-
     /**
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $first_name;
-
     /**
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $last_name;
-
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone;
-
     /**
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=512)
      */
     private $address;
-
     /**
      * @var integer
      *
@@ -85,7 +77,6 @@ class QuotationRequest
      *
      */
     private $contactOrigin = "autre";
-
     /**
      * @var datetime $created
      *
@@ -102,13 +93,18 @@ class QuotationRequest
      */
     private $status = "0";
 
-
     /**
-    *
-    * @ORM\OneToMany(targetEntity="QuotationServiceMap", mappedBy="quotation_request", cascade={"remove", "persist"})
-    *
-    */
-    protected $business_services;
+     * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})
+     *
+     */
+    private $quotationRequestServiceRelations;
+
+
+    public function __construct()
+    {
+        $this->quotationRequestServiceRelations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -371,5 +367,38 @@ class QuotationRequest
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Add quotation request service relation
+     *
+     * @param \AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation
+     * @return QuotationRequest
+     */
+    public function addQuotationRequestServiceRelation(\AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation)
+    {
+        $this->quotationRequestServiceRelations[] = $quotationRequestServiceRelation;
+
+        return $this;
+    }
+
+    /**
+     * Remove quotation request service relation
+     *
+     * @param \AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation
+     */
+    public function removeQuotationRequestServiceRelation(\AppBundle\Entity\QuotationRequestServiceRelation $quotationRequestServiceRelation)
+    {
+        $this->quotationRequestServiceRelations->removeElement($quotationRequestServiceRelation);
+    }
+
+    /**
+     * Get quotation request service relation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuotationRequestServiceRelations()
+    {
+        return $this->quotationRequestServiceRelations;
     }
 }

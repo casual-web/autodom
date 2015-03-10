@@ -1,0 +1,8 @@
+{% extends "AppBundle:Admin:base.html.twig" %}
+
+{% block title %}Oops!{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% include "AppBundle:Common:message_content.html.twig" %}
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace Gedmo\Blameable\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -17,14 +18,14 @@ trait BlameableEntity
      * @Gedmo\Blameable(on="create")
      * @ORM\Column(type="string", nullable=true)
      */
-    private $createdBy;
+    protected $createdBy;
 
     /**
      * @var string
      * @Gedmo\Blameable(on="update")
      * @ORM\Column(type="string", nullable=true)
      */
-    private $updatedBy;
+    protected $updatedBy;
 
     /**
      * Sets createdBy.

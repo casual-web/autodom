@@ -1,72 +1,41 @@
-{% extends '::base.html.twig' %}
+{% extends "AppBundle:Admin:base.html.twig" %}
 
-{% block body -%}
-    <h1>QuotationRequest</h1>
+{% block body %}
 
-    <table class="record_properties">
-        <tbody>
+    <div class="container">
+        <div class="page-header">
+            <h1>Demande de devis #{{ entity.id }}</h1>
+        </div>
+
+        <table class="record_properties table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
             </tr>
+            {% include 'AppBundle:QuotationRequest:show_common.html.twig' %}
             <tr>
-                <th>Vehiclemodel</th>
-                <td>{{ entity.vehicleModel }}</td>
+                <th>Créé le</th>
+                <td>{{ entity.created|date('Y-m-d H:i') }}</td>
             </tr>
             <tr>
-                <th>Problemdescription</th>
-                <td>{{ entity.problemDescription }}</td>
+                <th>Etat</th>
+                <td>
+                    <span class="label label-{{ qr_status_enum_to_style(entity.status) }}">
+                            {{ qr_status_enum_to_label(entity.status) }}
+                    </span>
+                </td>
             </tr>
-            <tr>
-                <th>Hasshelter</th>
-                <td>{{ entity.hasShelter }}</td>
-            </tr>
-            <tr>
-                <th>First_name</th>
-                <td>{{ entity.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Last_name</th>
-                <td>{{ entity.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ entity.email }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ entity.phone }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ entity.address }}</td>
-            </tr>
-            <tr>
-                <th>Contactorigin</th>
-                <td>{{ entity.contactOrigin }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ entity.status }}</td>
-            </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
         <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_devis') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            <li>
+                <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}" class="btn btn-default">
+                    Editer
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
 {% endblock %}

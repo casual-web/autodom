@@ -1,0 +1,22 @@
+<div class="well">
+    {% if hide_sumup_title != true %}
+    <h2>R&eacute;novation optiques</h2>
+    {% endif %}
+
+
+    <ul class="services_goodies">
+        <li class='puce'>Retrouvez un &eacute;clairage conforme</li>
+        <li class='puce'>Evitez une contre-visite au contr&ocirc;le technique</li>
+        <li class='puce'>&Eacute;conomisez un remplacement</li>
+    </ul>
+    <br/>
+    {% if hide_sumup_title != true %}
+    <a title="Détails rénovation optiques" href="/renovation-optiques" class="thumbnail">
+        <img height=111 src='assets/img/renovation-optique-avant-apres.png' alt="renover phare opaque avant"/>
+    </a>
+    {% else %}
+    <div style="margin:20px">
+        {% include "renovation-optiques/carousel.twig" with {'vars' : {'display_comments' : false}} %}
+    </div>
+    {% endif %}
+</div>

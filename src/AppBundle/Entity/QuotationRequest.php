@@ -4,6 +4,14 @@ namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
+use AppBundle\DBAL\Types\ContactOriginEnumType;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
+use \Doctrine\Common\Collections\ArrayCollection;
+
+// This is the *INVERSE* side from Doctrine ORM point of view :
+// http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 
 /**
  * QuotationRequest
@@ -45,23 +53,25 @@ class QuotationRequest
      *
      * @ORM\Column(name="first_name", type="string", length=255)
      */
-    private $first_name;
+    private $firstName;
     /**
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
      */
-    private $last_name;
+    private $lastName;
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
+
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @Assert\Regex("/^0[0-9]([ .-]?[0-9]{2}){4}/")
      */
     private $phone;
     /**
@@ -70,13 +80,14 @@ class QuotationRequest
      * @ORM\Column(name="address", type="string", length=512)
      */
     private $address;
+
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="contact_origin", type="string", columnDefinition="ENUM('autre', 'recherche sur internet', 'lien depuis un autre site', 'pages jaunes', 'bouche à oreilles', 'cartes de visite, flyers')")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\ContactOriginEnumType")
+     * @ORM\Column(name="contact_origin", type="ContactOriginEnumType", nullable=false)
      */
-    private $contactOrigin = "autre";
+    private $contactOrigin = ContactOriginEnumType::OTHER;
     /**
      * @var datetime $created
      *
@@ -86,14 +97,15 @@ class QuotationRequest
     private $created;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="status", type="integer")
-     *
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\QuotationRequestStatusEnumType")
+     * @ORM\Column(name="status", type="QuotationRequestStatusEnumType", nullable=false)
      */
-    private $status = "0";
+    private $status = QuotationRequestStatusEnumType::CREATED;
 
     /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="QuotationRequestServiceRelation", mappedBy="quotationRequest", cascade={"remove", "persist"})
      *
      */
@@ -186,47 +198,47 @@ class QuotationRequest
     }
 
     /**
-     * Get first_name
+     * Get firstName
      *
      * @return string
      */
     public function getFirstName()
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     /**
-     * Set first_name
+     * Set firstName
      *
-     * @param string $first_name
+     * @param string $firstName
      * @return QuotationRequest
      */
-    public function setFirstName($first_name)
+    public function setFirstName($firstName)
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     /**
-     * Get last_name
+     * Get lastName
      *
      * @return string
      */
     public function getLastName()
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
     /**
-     * Set last_name
+     * Set lastName
      *
-     * @param string $last_name
+     * @param string $lastName
      * @return QuotationRequest
      */
-    public function setLastName($last_name)
+    public function setLastName($lastName)
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -401,4 +413,14 @@ class QuotationRequest
     {
         return $this->quotationRequestServiceRelations;
     }
+
+    public function setQuotationRequestServiceRelations(ArrayCollection $qrsr_collection)
+    {
+        foreach ($qrsr_collection as $qrsr) {
+            $qrsr->setQuotationRequest($this);
+        }
+
+        $this->quotationRequestServiceRelations = $qrsr_collection;
+    }
+
 }

@@ -8,9 +8,13 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\DBAL\Types\ContactOriginEnumType;
+use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
 use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 
 class QuotationRequestFunctionalTest extends WebTestCase
@@ -28,36 +32,14 @@ class QuotationRequestFunctionalTest extends WebTestCase
 
     public function setUp()
     {
+
         static::$kernel = static::createKernel();
         static::$kernel->boot();
         $this->quotation_em = static::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
         $this->default_em = $this->quotation_em->getDoctrineDefaultManager();
-        $this->loadFixtures();
-    }
-
-    public function loadFixtures()
-    {
-
-        // load existing fixtures
-        $fixtureLoaderBS = new LoadBusinessServicesData();
-        $fixtureLoaderQR = new LoadQuotationRequestData();
-        $fixtureLoaderBS->load($this->default_em);
-        $fixtureLoaderQR->load($this->default_em);
-
-        // add relations
-        $bs_repository = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
-        $qr_repository = $this->quotation_em->getRepository();
-
-        $this->quotation_em->persistAndFlushServiceRelations(
-            $qr_repository->find(1),
-            $bs_repository->findByRefList(array('DSP', 'VIT')));
-
-    }
-
-    public function tearDown()
-    {
         $this->unLoadFixtures();
-
+        $this->loadFixtures();
+        $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
     }
 
     public function unLoadFixtures()
@@ -76,32 +58,77 @@ EOT;
         $connection->query($sqlQuery);
     }
 
+    public function loadFixtures()
+    {
+
+        // load existing fixtures
+        $fixtureLoaderBS = new LoadBusinessServicesData();
+        $fixtureLoaderQR = new LoadQuotationRequestData();
+        $fixtureLoaderBS->load($this->default_em);
+        $fixtureLoaderQR->load($this->default_em);
+
+        // add relations
+        $qr_repository = $this->quotation_em->getRepository();
+
+        $qrsr_collection = new ArrayCollection();
+        $qrsr1 = new QuotationRequestServiceRelation();
+        $qrsr1->setBusinessServiceRef('DSP');
+        $qrsr2 = new QuotationRequestServiceRelation();
+        $qrsr2->setBusinessServiceRef('DSP');
+        $qrsr_collection->add($qrsr1);
+        $qrsr_collection->add($qrsr2);
+        $this->quotation_em->persistAndFlushWithRelation($qr_repository->find(1), $qrsr_collection);
+
+    }
+
+    public function tearDown()
+    {
+        $this->unLoadFixtures();
+
+    }
 
     public function testSearchByContactOrigin()
     {
 
         $qr = $this->quotation_em
             ->getRepository()
-            ->findByContactOrigin('recherche sur internet');
+            ->findByContactOrigin(ContactOriginEnumType::INTERNET_SEARCH);
 
         $this->assertCount(2, $qr);
     }
 
-    public function testBusinessService()
-    {
-        $bsr = $this->default_em->getRepository('AppBundle\Entity\BusinessService');
-        $businessServiceCollection = $bsr->findByRefList(array('DSP', 'VIT'));
-        $this->assertEquals(2, count($businessServiceCollection));
-    }
 
     public function testRelations()
     {
 
         $repository = $this->default_em->getRepository('AppBundle:QuotationRequest');
-        $this->default_em->clear(); // DO NOT REMOVE "clear" : need to have test successful
         $quotationRequest = $repository->find(1);
+        $qrRelations = $quotationRequest->getQuotationRequestServiceRelations();
+        $this->assertCount(2, $qrRelations);
+        $this->assertEquals('DSP', $qrRelations[0]->getBusinessServiceRef());
 
-        $this->assertCount(2, $quotationRequest->getQuotationRequestServiceRelations());
+    }
+
+    public function testFindDashboardMetrics()
+    {
+
+        $repository = $this->default_em->getRepository('AppBundle:QuotationRequest');
+        $metrics = $repository->findDashboardMetrics();
+
+        $this->assertEquals(
+            Array(
+                0 => Array
+                (
+                    'nb' => 2,
+                    'status' => 'NEW',
+                ),
+                1 => Array
+                (
+                    'nb' => 1,
+                    'status' => 'SCH',
+                )),
+            $metrics);
+
     }
 
 

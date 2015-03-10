@@ -5,7 +5,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -57,6 +57,9 @@ doctrine:
         charset:  UTF8
         mapping_types:
             enum: string
+        types:
+            ContactOriginEnumType: AppBundle\DBAL\Types\ContactOriginEnumType
+            QuotationRequestStatusEnumType: AppBundle\DBAL\Types\QuotationRequestStatusEnumType
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
@@ -73,5 +76,8 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
-
-
+            sluggable: true
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: CW\UserBundle\Entity\User

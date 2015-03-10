@@ -1,0 +1,63 @@
+{% extends "AppBundle:Admin:base.html.twig" %}
+
+{% block body -%}
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Photo {{ entity.carouselOrder }}#{{ entity.businessServiceRef }}</h1>
+        </div>
+
+
+        <div class="row">
+            <div class='col-xs-6'>
+                <img class="img-thumbnail" src="{{ app.request.uriForPath(entity.webPath) }}"/>
+            </div>
+            <div class='col-xs-6'>
+                <table class="record_properties table">
+
+                    <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Modèle véhiclue</th>
+                <td>{{ entity.vehicleModel }}</td>
+            </tr>
+            <tr>
+                <th>Chemin</th>
+                <td>{{ entity.webPath }}</td>
+            </tr>
+            <tr>
+                <th>Ordre dans caroussel par catégorie</th>
+                <td>{{ entity.carouselOrder }}</td>
+            </tr>
+            <tr>
+                <th>Lieu d'intervention</th>
+                <td>{{ entity.location }}</td>
+            </tr>
+            <tr>
+                <th>Type de dommage</th>
+                <td>{{ entity.damageType }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie</th>
+                <td>{{ entity.businessServiceRef }}</td>
+            </tr>
+            </tbody>
+        </table>
+            </div>
+
+        </div>
+
+        <ul class="record_actions">
+            <li>
+                <a href="{{ path('admin_photos_edit', { 'id': entity.id }) }}">
+                    Editer
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    </div>
+{% endblock %}
