@@ -27,11 +27,7 @@
     {% block content %}
         {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
             {% block highlights %}
-                <ul class="services_goodies">
-                    <li class='puce'>Pr&eacute;parez votre v&eacute;hicule &agrave; la vente</li>
-                    <li class='puce'>Eliminez les d&eacute;fauts de surface</li>
-                    <li class='puce'>Redonnez de l'&eacute;clat aux peintures d&eacute;polies</li>
-                </ul>
+                {% include 'AppBundle:FrontBusinessService:car_highlights.html.twig' %}
             {% endblock %}
             {% block description %}
                 <h2>Pourquoi ?</h2>

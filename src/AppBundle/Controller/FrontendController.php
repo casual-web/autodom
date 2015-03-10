@@ -22,9 +22,8 @@ class FrontendController extends Controller
      */
     public function homeAction()
     {
-        $is_repo = $this->getDoctrine()->getRepository('AppBundle:ImageSite');
-
-        return array('entities' => $is_repo->findVisibleByService('DSP'));
+        $is_repo = $this->getDoctrine()->getRepository('AppBundle:BusinessService');
+        return array('entities' => $is_repo->findEnabled());
     }
 
     /**

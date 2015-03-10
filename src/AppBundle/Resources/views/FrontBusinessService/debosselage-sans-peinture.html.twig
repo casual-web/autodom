@@ -28,11 +28,7 @@
     {% block content %}
         {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
             {% block highlights %}
-                <ul class="services_goodies">
-                    <li class='puce'>Evitez un passage en carrosserie</li>
-                    <li class='puce'>Conservez la peinture d'origine de votre v&eacute;hicule.</li>
-                    <li class='puce'>R&eacute;duisez les co&ucirc;ts d'intervention.</li>
-                </ul>
+                {% include 'AppBundle:FrontBusinessService:dsp_highlights.html.twig' %}
             {% endblock %}
             {% block description %}
                 <h2>Pourquoi ?</h2>
