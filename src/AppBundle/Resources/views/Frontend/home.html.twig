@@ -29,11 +29,18 @@
                             {% include "AppBundle:Frontend:sumup.html.twig" with {'service' : service} %}
                         </div>
                     </div>
-                    <script type="text/javascript" src="assets/js/script.js"></script>
                 {% endfor %}
             </div>
         </div>
     {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts %}
+        <script type="text/javascript" src="{{ asset('/js/script.js') }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
 
 {% endblock %}
 
