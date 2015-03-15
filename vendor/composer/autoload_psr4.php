@@ -14,4 +14,5 @@ return array(
     'Fresh\\DoctrineEnumBundle\\' => array($vendorDir . '/fresh/doctrine-enum-bundle'),
     'FOS\\UserBundle\\' => array($vendorDir . '/friendsofsymfony/user-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
+    'Behat\\Mink\\' => array($vendorDir . '/behat/mink/src'),
 );

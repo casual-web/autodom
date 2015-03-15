@@ -152,8 +152,8 @@ li.puce-normal {
 
 .img-partners {
     height: 100px;
-    width: 200px;
-    /* padding:13px;*/
+    /*width: 200px;*/
+    margin-bottom: 13px;
     border: 1px solid darkgray;
 }
 
