@@ -1,7 +1,16 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{{ 'home' | is_route_active }}"><a href="{{ path('home') }}">Accueil </a></li>
@@ -46,12 +55,12 @@
                         qualité </a></li>
                 <li class="{{ 'partners' | is_route_active }}"><a href="{{ path('partners') }}">Partenaires </a></li>
             </ul>
-            <div class="navbar-header navbar-right">
+            <div class="navbar-header navbar-right navbar-social">
                 <div class="navbar-brand">
-                <span class="fb-like" data-href="http://www.facebook.com/pages/Autodom/288309807901362"
-                      data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"
-                      data-font="verdana">
-                  </span>
+                    <span class="fb-like" data-href="http://www.facebook.com/pages/Autodom/288309807901362"
+                          data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"
+                          data-font="verdana">
+                    </span>
                 </div>
             </div>
         </div>

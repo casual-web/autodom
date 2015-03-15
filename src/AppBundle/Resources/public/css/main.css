@@ -98,6 +98,10 @@ a:hover {
         background-image: url('../img/logo-autodom-baseline-small.png');
         padding: 100px 0px 0px 0px;
     }
+
+    .navbar-social {
+        display: none;
+    }
 }
 
 .footer {
