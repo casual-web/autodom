@@ -10,6 +10,7 @@
         <meta property="og:image" content="http://autodom.biz/assets/img/logo-autodom-baseline.png"/>
         <meta property="og:site_name" content="autodom.biz"/>
         <meta property="fb:app_id" content="288309807901362"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="keywords"
               content="debosselage, pare-brise, carrosserie, polish, lustrage, renovation, optiques, grele, vehicule, portiere, voiture, peinture, DSP"/>
 
@@ -46,13 +47,12 @@
 
 {% block javascripts %}
     {% javascripts
-        '@AppBundle/Resources/public/js/jquery.min.js'
+    '@AppBundle/Resources/public/js/jquery.min.js'
     '@AppBundle/Resources/public/js/bootstrap.min.js'
     '@AppBundle/Resources/public/js/script.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
-
 
 
 </body>

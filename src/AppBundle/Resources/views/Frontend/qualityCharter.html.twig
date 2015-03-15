@@ -7,9 +7,17 @@
 {% block body %}
 
     {{ parent() }}
+
+    {% block header %}
+        {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
+            {% block subtitle %}
+                <h1>Charte qualit&eacute;</h1>
+            {% endblock %}
+        {% endembed %}
+    {% endblock %}
+
     {% block content %}
         <div class="container">
-            <h1>Charte qualit&eacute;</h1>
 
             <ul class='services_goodies lead'>
                 <li class='puce'>Conseil personalis&eacute;</li>
@@ -18,14 +26,13 @@
                 <li class='puce'>Ex&eacute;cution des interventions dans les r&egrave;gles de l'art</li>
                 <li class='puce'>Toute pi&egrave;ce de r&eacute;emploie est choisie avec soin</li>
             </ul>
-            <br/>
 
             <h2> Autodom c'est aussi 10 ans d'exp&eacute;rience dans le domaine automobile</h2>
             <ul class="services_goodies">
                 <li class='puce'>Carrossier t&ocirc;lier formeur</li>
                 <li class='puce'>Chef d'&eacute;quipe dans un groupe sp&eacute;cialiste du vitrage automobile</li>
             </ul>
-            <hr/>
+
         </div>
     {% endblock %}
 {% endblock %}

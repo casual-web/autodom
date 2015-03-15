@@ -75,14 +75,12 @@ a:hover {
 
 #floatting-contact {
     background: none;
-    text-align: center;
-    width: 320px;
+    /* text-align: center;*/
 }
 
 #floatting-contact img {
-    float: right;
     padding: 0;
-    margin-top: 12px
+    /* margin-top: 12px*/
 }
 
 #floatting-contact h4 {
@@ -92,7 +90,7 @@ a:hover {
 
 #floatting-contact p.phone {
     color: #00afc7;
-    clear: both;
+
 }
 
 #floatting-contact p.phone i {
@@ -108,6 +106,7 @@ a:hover {
 ul.services_goodies {
     margin: 0;
     padding: 13px 0 15px 15px;
+    font-size: 1.1em;
 }
 
 li.puce {
@@ -135,5 +134,10 @@ li.puce-normal {
     border: 1px gray solid
 }
 
-
+.img-partners {
+    height: 100px;
+    width: 200px;
+    /* padding:13px;*/
+    border: 1px solid darkgray;
+}
 

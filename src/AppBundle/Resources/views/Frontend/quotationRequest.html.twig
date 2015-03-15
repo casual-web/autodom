@@ -18,8 +18,25 @@
     {% block content %}
         <div class="container">
             {{ form_start(form) }}
-            <div class='row'>
-                <div class='col-xs-6'>
+            <div class='row-fluid'>
+
+                <div class='col-xs-5'>
+                    {{ form_row(form.baseqr.firstName) }}
+                    {{ form_row(form.baseqr.lastName) }}
+                    {{ form_row(form.baseqr.email) }}
+
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.phone) }}
+                        {{ form_widget(form.baseqr.phone) }}
+                    </div>
+
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.address) }}
+                        {{ form_widget(form.baseqr.address) }}
+                    </div>
+                </div>
+
+                <div class='col-xs-5'>
                     {{ form_errors(form) }}
                     {{ form_label(form.baseqr.vehicleModel) }}
                     {{ form_widget(form.baseqr.vehicleModel) }}
@@ -35,35 +52,19 @@
                         {{ form_widget(form.baseqr.problemDescription) }}
                     </div>
 
+                    <div class='control-group'>
+                        {{ form_label(form.baseqr.contactOrigin) }}
+                        {{ form_widget(form.baseqr.contactOrigin) }}
+                    </div>
+
                     {{ form_widget(form.baseqr.hasShelter) }}
 
                 </div>
 
-                <div class='col-xs-6'>
-                    {{ form_row(form.baseqr.firstName) }}
-                    {{ form_row(form.baseqr.lastName) }}
-                    {{ form_row(form.baseqr.email) }}
 
-                    <div class='control-group'>
-                        {{ form_label(form.baseqr.phone) }}
-                        {{ form_widget(form.baseqr.phone) }}
-                    </div>
-
-                    <div class='control-group'>
-                        {{ form_label(form.baseqr.address) }}
-                        {{ form_widget(form.baseqr.address) }}
-                    </div>
-                </div>
             </div>
             <br/>
 
-            <div class='row row-centered'>
-                <div class='control-group col-lg-6 col-centered'>
-                    {{ form_label(form.baseqr.contactOrigin) }}
-                    {{ form_widget(form.baseqr.contactOrigin) }}
-                </div>
-            </div>
-            </br></br>
             <div class='row row-centered'>
                 <div class="col-centered">
                     {{ form_widget(form.submit, {'attr': {'class': 'btn btn-info'}}) }}
