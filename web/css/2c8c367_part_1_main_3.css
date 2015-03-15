@@ -80,12 +80,24 @@ a:hover {
 
 #floatting-contact p.phone {
     color: #00afc7;
-
 }
 
 #floatting-contact p.phone i {
     color: #777777;
     font-size: 60%;
+}
+
+.header-logo {
+    background-image: url('../bundles/app/img/logo-autodom-baseline_100.png');
+    background-repeat: no-repeat;
+    padding: 120px 0px 0px 0px;
+}
+
+@media all and (max-width: 1024px) {
+    .header-logo {
+        background-image: url('../bundles/app/img/logo-autodom-baseline-small.png');
+        padding: 100px 0px 0px 0px;
+    }
 }
 
 .footer {
