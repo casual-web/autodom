@@ -10,7 +10,7 @@ namespace AppBundle\Tests\EmailImporter;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\EmailImporter\EmailImporter;
-
+use AppBundle\Entity\QuotationRequest;
 
 class EmailImporterTest extends WebTestCase
 {
@@ -55,7 +55,7 @@ class EmailImporterTest extends WebTestCase
     {
         $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
         $emailImporter->prepareFiles();
-        $this->assertEquals(4, $emailImporter->getNbFiles());
+        $this->assertEquals(3, $emailImporter->getNbFiles());
     }
 
     public function testShouldPrepareFiles()
@@ -84,6 +84,16 @@ class EmailImporterTest extends WebTestCase
             );
         }
     }
+
+    public function testEntityCreation()
+    {
+        $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
+        $entites = $emailImporter->loadEntities();
+        $this->assertEquals('hibou84@hotmail.fr', $entites[0]->getEmail());
+
+    }
+
+
 
     public function tearDown()
     {

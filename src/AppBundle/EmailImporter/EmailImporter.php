@@ -9,7 +9,7 @@
 namespace AppBundle\EmailImporter;
 
 use Symfony\Component\Finder\Finder;
-
+use AppBundle\Entity\QuotationRequest;
 
 class EmailImporter
 {
@@ -88,22 +88,92 @@ class EmailImporter
     }
 
     /**
+     * convert XML to quotation request
+     */
+    public function loadEntities()
+    {
+
+        $this->prepareFiles();
+        $results = array();
+
+        foreach ($this->files as $XMLString) {
+            $results[] = $this->createEntity($XMLString);
+        }
+
+        return $results;
+    }
+
+    /**
      * fix XML format issues
      */
     public function prepareFiles()
     {
 
         foreach ($this->finder as $file) {
-            $fileContent = $file->getContents();
-            // apply replacements
-            $cleanContent = str_replace(self::$stringsToRemove, "", $fileContent);
-            $cleanContent = preg_replace(
-                '/<\/html>\s?<\/table><\/div>/i',
-                "</html>",
-                $cleanContent);
-
-            $this->files[] = $cleanContent;
+            $this->files[] = $this->toXMLString($file->getContents());
         }
+    }
+
+    /**
+     * clean HTML file
+     * @param string $HTMLString
+     * @return string
+     */
+    public function toXMLString($HTMLString)
+    {
+        $cleanContent = str_replace(self::$stringsToRemove, "", $HTMLString);
+        $cleanContent = preg_replace(
+            '/<\/html>\s?<\/table><\/div>/i',
+            "</html>",
+            $cleanContent);
+        return $cleanContent;
+    }
+
+    public function createEntity($XMLString)
+    {
+
+        $emailBody = $this->extractEmailBody($XMLString);
+
+
+        var_dump($emailBody);
+
+        $qr = new QuotationRequest;
+        $qr->setEmail(trim($emailBody['email']));
+
+        return $qr;
+
+    }
+
+    public function extractEmailBody($XMLString)
+    {
+
+        $extractedEmailBody = array();
+        $sXE = simplexml_load_string($XMLString);
+        $sXEFiltered = $sXE->xpath("/html/body/div/table");
+
+        foreach ($sXEFiltered as $item) {
+            if ($item->children()->getName() === 'td') {
+                $tds = $item->children();
+                $index = null;
+                foreach ($tds as $item) {
+
+                    if (null !== $index) {
+                        $extractedEmailBody[$index] = strval($item);
+                        $index = null;
+                    } else {
+                        if ($item->b) {
+                            $index = trim(strval($item->b));
+                            $extractedEmailBody[$index] = null;
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return $extractedEmailBody;
+
     }
 
 
