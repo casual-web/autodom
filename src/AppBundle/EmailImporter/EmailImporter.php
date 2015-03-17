@@ -10,6 +10,7 @@ namespace AppBundle\EmailImporter;
 
 use Symfony\Component\Finder\Finder;
 use AppBundle\Entity\QuotationRequest;
+use AppBundle\DBAL\Types\ContactOriginEnumType;
 
 class EmailImporter
 {
@@ -25,9 +26,23 @@ class EmailImporter
         "</table></div>",
         "<td><b>codepromo </b></td>",
         "<td> 0</td>",
-
-
     ];
+
+
+    /**
+     * @var array
+     */
+    static private $contactOriginMap = [
+        'Autre' => ContactOriginEnumType::OTHER,
+        'Recherche sur Internet' => ContactOriginEnumType::INTERNET_SEARCH,
+        'Lien depuis un autre site' => ContactOriginEnumType::SITE_LINK,
+        'Pages jaunes' => ContactOriginEnumType::YELLOW_PAGES,
+        'Bouche à oreille' => ContactOriginEnumType::WORD_OF_MOUTH,
+        'Cartes de visite' => ContactOriginEnumType::CARDS,
+        'flyers' => ContactOriginEnumType::FLYERS
+    ];
+
+
     /**
      * @var string
      */
@@ -132,47 +147,60 @@ class EmailImporter
     public function createEntity($XMLString)
     {
 
-        $emailBody = $this->extractEmailBody($XMLString);
-
-
-        var_dump($emailBody);
-
+        $email = $this->extractEmailData($XMLString);
+        var_dump($email);
         $qr = new QuotationRequest;
-        $qr->setEmail(trim($emailBody['email']));
+        $qr->setEmail(trim($email['email']));
+        $qr->setVehicleModel(trim($email['marque']));
+        $qr->setProblemDescription(trim($email['description']));
+        $qr->setLastName(trim($email['nom']));
+        $qr->setPhone(trim($email['telephone']));
+        $qr->setAddress(trim($email['adresse']));
+        $qr->setContactOrigin(self::$contactOriginMap[trim($email['comment vous nous avez trouvé'])]);
 
         return $qr;
 
     }
 
-    public function extractEmailBody($XMLString)
+    public function extractEmailData($XMLString)
     {
 
-        $extractedEmailBody = array();
+        $extractedEmailData = array();
         $sXE = simplexml_load_string($XMLString);
         $sXEFiltered = $sXE->xpath("/html/body/div/table");
 
+        // extract body
         foreach ($sXEFiltered as $item) {
             if ($item->children()->getName() === 'td') {
                 $tds = $item->children();
                 $index = null;
                 foreach ($tds as $item) {
-
                     if (null !== $index) {
-                        $extractedEmailBody[$index] = strval($item);
+                        $extractedEmailData[$index] = strval($item);
                         $index = null;
                     } else {
                         if ($item->b) {
                             $index = trim(strval($item->b));
-                            $extractedEmailBody[$index] = null;
+                            $extractedEmailData[$index] = null;
 
                         }
                     }
                 }
             }
-
         }
 
-        return $extractedEmailBody;
+        // extract header
+        $sXEFiltered = $sXE->xpath("/html/body/table[@class='header-part1']");
+        foreach ($sXEFiltered as $item) {
+            if ($item->children()->getName() === 'td') {
+                $tds = $item->children();
+                foreach ($tds as $item) {
+                    $extractedEmailData[trim(strval($item->div))] = trim(strval($item));
+                }
+            }
+
+        }
+        return $extractedEmailData;
 
     }
 

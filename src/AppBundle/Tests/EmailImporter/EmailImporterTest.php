@@ -11,6 +11,7 @@ namespace AppBundle\Tests\EmailImporter;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use AppBundle\EmailImporter\EmailImporter;
 use AppBundle\Entity\QuotationRequest;
+use AppBundle\DBAL\Types\ContactOriginEnumType;
 
 class EmailImporterTest extends WebTestCase
 {
@@ -90,6 +91,13 @@ class EmailImporterTest extends WebTestCase
         $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
         $entites = $emailImporter->loadEntities();
         $this->assertEquals('hibou84@hotmail.fr', $entites[0]->getEmail());
+        $this->assertEquals('ex: Audi A4 an 96', $entites[0]->getVehicleModel());
+        $this->assertEquals('goupil', $entites[0]->getLastName());
+        $this->assertEquals('0668608056', $entites[0]->getPhone());
+        $this->assertEquals('1 place de la camargue', $entites[0]->getAddress());
+        $this->assertEquals(ContactOriginEnumType::INTERNET_SEARCH, $entites[0]->getContactOrigin());
+        $this->assertEquals('ex: Décrivez votre problème en quelques lignes
+                    pare brise fissurer', $entites[0]->getProblemDescription());
 
     }
 
