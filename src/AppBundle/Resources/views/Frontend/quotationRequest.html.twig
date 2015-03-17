@@ -20,68 +20,58 @@
             {{ form_start(form) }}
             <div class='row-fluid'>
 
-                <div class='col-xs-5'>
-                    {{ form_row(form.baseqr.firstName) }}
-                    {{ form_row(form.baseqr.lastName) }}
-                    {{ form_row(form.baseqr.email) }}
-
-                    <div class='control-group'>
+                <div class='col-md-4'>
+                    <div class='control-group well'>
+                        {{ form_row(form.baseqr.firstName) }}
+                        {{ form_row(form.baseqr.lastName) }}
+                        {{ form_row(form.baseqr.email) }}
                         {{ form_label(form.baseqr.phone) }}
                         {{ form_widget(form.baseqr.phone) }}
-                    </div>
-
-                    <div class='control-group'>
+                        <br/>
                         {{ form_label(form.baseqr.address) }}
                         {{ form_widget(form.baseqr.address) }}
                     </div>
                 </div>
 
-                <div class='col-xs-5'>
-                    {{ form_errors(form) }}
-                    {{ form_label(form.baseqr.vehicleModel) }}
-                    {{ form_widget(form.baseqr.vehicleModel) }}
-                    <br/>
-
-                    <div class='control-group'>
+                <div class='col-md-4'>
+                    <div class='control-group well'>
+                        {{ form_errors(form) }}
+                        {{ form_label(form.baseqr.vehicleModel) }}
+                        {{ form_widget(form.baseqr.vehicleModel) }}
+                        <br/>
                         {{ form_label(form.quotationRequestServiceRelations) }}
-                        {{ form_widget(form.quotationRequestServiceRelations) }}
-                    </div>
-
-                    <div class='control-group'>
+                        <div style="margin-left:40px">
+                            {{ form_widget(form.quotationRequestServiceRelations) }}
+                        </div>
+                        <br/>
                         {{ form_label(form.baseqr.problemDescription) }}
                         {{ form_widget(form.baseqr.problemDescription) }}
+                        {{ form_widget(form.baseqr.hasShelter) }}
                     </div>
+                </div>
 
+                <div class='col-md-4 col-centered'>
                     <div class='control-group'>
                         {{ form_label(form.baseqr.contactOrigin) }}
                         {{ form_widget(form.baseqr.contactOrigin) }}
                     </div>
+                    <br>
 
-                    {{ form_widget(form.baseqr.hasShelter) }}
-
+                    <div class="row-centered">
+                        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-info'}}) }}
+                    </div>
+                    <br>
+                    <blockquote class="col-centered">
+                        <i>* Nous nous engageons &agrave; ne pas transmettre vos donn&eacute;es
+                            à des soci&eacute;t&eacute;s
+                            qui souhaiteraient les utderiliser à des fins commerciales.
+                        </i>
+                    </blockquote>
                 </div>
 
+                {{ form_end(form) }}
 
-            </div>
-            <br/>
-
-            <div class='row row-centered'>
-                <div class="col-centered">
-                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-info'}}) }}
-                </div>
-            </div>
-
-            {{ form_end(form) }}
-
-            </br></br>
-            <div class='row row-centered'>
-                <blockquote class="col-centered"><i>* Nous nous engageons &agrave; ne pas transmettre vos donn&eacute;es
-                        à des soci&eacute;t&eacute;s
-                        qui souhaiteraient les utiliser à des fins commerciales.</i>
-                </blockquote>
             </div>
         </div>
     {% endblock %}
-
-
 {% endblock %}

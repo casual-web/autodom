@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Demande de devis : DEBOS</title>
+        <style>div.headerdisplayname {
+            font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <table width="100%" class="header-part1">
+
+            <td>
+                <div class="headerdisplayname" style="display:inline;">Sujet :</div>
+                Demande de devis : DEBOS
+            </td>
+
+
+            <td>
+                <div class="headerdisplayname" style="display:inline;">De :</div>
+                alexya888@hotmail.fr
+            </td>
+
+
+            <td>
+                <div class="headerdisplayname" style="display:inline;">Date :</div>
+                19/07/2013 17:27
+            </td>
+
+        </table>
+        <table width="100%" class="header-part2">
+
+            <td>
+                <div class="headerdisplayname" style="display:inline;">Pour :</div>
+                @casual-web.com, contact@autodom.biz>
+            </td>
+
+        </table>
+
+
+        <div class="moz-text-html" lang="x-unicode">
+
+            <table border="1">
+
+                <td>
+                    <b>marque</b>
+                </td>
+                <td>Peugeot 208</td>
+
+
+                <td>
+                    <b>description</b>
+                </td>
+                <td>J\'ai eu un accident avec délit de fuite et ma portière arrière gauche est endommager elle est
+                    enfoncer au niveau des barres en haut et en bas
+                </td>
+
+
+                <td>
+                    <b>nom</b>
+                </td>
+                <td></td>
+
+
+                <td>
+                    <b>email</b>
+                </td>
+                <td>alexya888@hotmail.fr</td>
+
+
+                <td>
+                    <b>telephone</b>
+                </td>
+                <td></td>
+
+
+                <td>
+                    <b>adresse</b>
+                </td>
+                <td>Chemin de bellevue , Rochefort du Gard</td>
+
+                <td>
+                    <b>lieu_intervention</b>
+                </td>
+                <td>NON</td>
+
+                <td>
+                    <b>comment vous nous avez trouvé</b>
+                </td>
+                <td>Autre</td>
+
+            </table>
+
+        </div>
+    </body>
+</html>
