@@ -8,6 +8,7 @@
 
 namespace AppBundle\EmailImporter;
 
+use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Component\Finder\Finder;
 use AppBundle\Entity\QuotationRequest;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
@@ -56,12 +57,35 @@ class EmailImporter
      */
     private $finder;
 
+    /**
+     * @param QuotationRequest
+     */
+    private $quotationRequestCollection;
+
+
     function __construct($directory)
     {
         $this->directory = $directory;
         $this->finder = new Finder();
         $this->finder->in($this->directory)->exclude('expected');
-        $this->files = array();
+        foreach ($this->finder as $file) {
+            $this->files[] = $this->toXMLString($file->getContents());
+        }
+    }
+
+    /**
+     * clean HTML file
+     * @param string $HTMLString
+     * @return string
+     */
+    public function toXMLString($HTMLString)
+    {
+        $cleanContent = str_replace(self::$stringsToRemove, "", $HTMLString);
+        $cleanContent = preg_replace(
+            '/<\/html>\s?<\/table><\/div>/i',
+            "</html>",
+            $cleanContent);
+        return $cleanContent;
     }
 
     /**
@@ -96,6 +120,14 @@ class EmailImporter
         return $this->files;
     }
 
+    /**
+     * @return QuotationRequest
+     */
+    public function getQuotationRequestCollection()
+    {
+        return $this->quotationRequestCollection;
+    }
+
     public function getNbFiles()
     {
 
@@ -108,48 +140,27 @@ class EmailImporter
     public function loadEntities()
     {
 
-        $this->prepareFiles();
-        $results = array();
+        $this->quotationRequestCollection = array();
 
         foreach ($this->files as $XMLString) {
-            $results[] = $this->createEntity($XMLString);
+            $qr = $this->createQuotationRequest($XMLString);
+            $this->quotationRequestCollection[] = $qr;
         }
 
-        return $results;
+        return $this->quotationRequestCollection;
     }
 
     /**
-     * fix XML format issues
+     * @param $XMLString string
+     * @return QuotationRequest
      */
-    public function prepareFiles()
-    {
-
-        foreach ($this->finder as $file) {
-            $this->files[] = $this->toXMLString($file->getContents());
-        }
-    }
-
-    /**
-     * clean HTML file
-     * @param string $HTMLString
-     * @return string
-     */
-    public function toXMLString($HTMLString)
-    {
-        $cleanContent = str_replace(self::$stringsToRemove, "", $HTMLString);
-        $cleanContent = preg_replace(
-            '/<\/html>\s?<\/table><\/div>/i',
-            "</html>",
-            $cleanContent);
-        return $cleanContent;
-    }
-
-    public function createEntity($XMLString)
+    public function createQuotationRequest($XMLString)
     {
 
         $email = $this->extractEmailData($XMLString);
-        var_dump($email);
         $qr = new QuotationRequest;
+
+        // email body extraction
         $qr->setEmail(trim($email['email']));
         $qr->setVehicleModel(trim($email['marque']));
         $qr->setProblemDescription(trim($email['description']));
@@ -157,6 +168,29 @@ class EmailImporter
         $qr->setPhone(trim($email['telephone']));
         $qr->setAddress(trim($email['adresse']));
         $qr->setContactOrigin(self::$contactOriginMap[trim($email['comment vous nous avez trouvé'])]);
+
+        if (isset($email['lieu_intervention'])) {
+            $qr->setHasShelter((strpos($email['lieu_intervention'], 'OUI') !== false) ? true : false);
+        }
+        // email header extraction
+        $dateTime = \DateTime::createFromFormat('d/m/Y H:i', $email['Date :']);
+        $qr->setCreated($dateTime->format('Y-m-d H:i:s'));
+
+        if ($qrsr = $this->createQuotationRequestRelation($email, 'VITRA', 'VIT')) {
+            $qr->addQuotationRequestServiceRelation($qrsr);
+        }
+
+        if ($qrsr = $this->createQuotationRequestRelation($email, 'OPTIC', 'OPT')) {
+            $qr->addQuotationRequestServiceRelation($qrsr);
+        }
+
+        if ($qrsr = $this->createQuotationRequestRelation($email, 'CARROS', 'CAR')) {
+            $qr->addQuotationRequestServiceRelation($qrsr);
+        }
+
+        if ($qrsr = $this->createQuotationRequestRelation($email, 'DEBOS', 'DSP')) {
+            $qr->addQuotationRequestServiceRelation($qrsr);
+        }
 
         return $qr;
 
@@ -202,6 +236,23 @@ class EmailImporter
         }
         return $extractedEmailData;
 
+    }
+
+    /**
+     * @param $email string
+     * @param $oldRef string
+     * @param $newRef strinf
+     * @return QuotationRequestServiceRelation
+     */
+    public function createQuotationRequestRelation($email, $oldRef, $newRef)
+    {
+        $qrsr = null;
+        if (strpos($email['Sujet :'], $oldRef) !== false) {
+            $qrsr = new QuotationRequestServiceRelation();
+            $qrsr->setBusinessServiceRef($newRef);
+        }
+
+        return $qrsr;
     }
 
 

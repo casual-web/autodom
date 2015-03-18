@@ -55,7 +55,6 @@ class EmailImporterTest extends WebTestCase
     public function testShouldPrepareSevenFiles()
     {
         $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
-        $emailImporter->prepareFiles();
         $this->assertEquals(3, $emailImporter->getNbFiles());
     }
 
@@ -71,7 +70,6 @@ class EmailImporterTest extends WebTestCase
         $emailImporter = new EmailImporter($this->getFixturesPath($inputPath));
         $expected = new \DOMDocument;
         $expected->load($this->getFixturesPath($inputPath . "/expected/xml_structure.xml"));
-        $emailImporter->prepareFiles();
         $files = $emailImporter->getFiles();
 
         foreach ($files as $file) {
@@ -86,10 +84,12 @@ class EmailImporterTest extends WebTestCase
         }
     }
 
-    public function testEntityCreation()
+    public function testEntityCreationV1()
     {
         $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
         $entites = $emailImporter->loadEntities();
+
+        // testing body content
         $this->assertEquals('hibou84@hotmail.fr', $entites[0]->getEmail());
         $this->assertEquals('ex: Audi A4 an 96', $entites[0]->getVehicleModel());
         $this->assertEquals('goupil', $entites[0]->getLastName());
@@ -99,8 +99,40 @@ class EmailImporterTest extends WebTestCase
         $this->assertEquals('ex: Décrivez votre problème en quelques lignes
                     pare brise fissurer', $entites[0]->getProblemDescription());
 
+        //testing header content
+        $this->assertEquals('2013-07-16 09:22:00', $entites[0]->getCreated());
+
+        $qrsr = $entites[0]->getQuotationRequestServiceRelations();
+        $this->assertEquals('VIT', $qrsr[0]->getBusinessServiceRef());
+
     }
 
+    public function testEntityCreationV2()
+    {
+        $emailImporter = new EmailImporter($this->getFixturesPath('autre'));
+        $entites = $emailImporter->loadEntities();
+
+        // testing body content
+        $this->assertEquals('syla13@hotmail.fr', $entites[2]->getEmail());
+        $this->assertEquals('mercedes c 220 coupe cdi', $entites[2]->getVehicleModel());
+        $this->assertEquals('Gontal', $entites[2]->getLastName());
+        $this->assertEquals('0665216414', $entites[2]->getPhone());
+        $this->assertEquals(true, $entites[2]->getHasShelter());
+        $this->assertEquals('21 rue des erables
+                    84130 le pontet', $entites[2]->getAddress());
+        $this->assertEquals(ContactOriginEnumType::OTHER, $entites[2]->getContactOrigin());
+        $this->assertEquals("Bonjour, j\\'ai la peinture qui part au dessus de la plaque d\\'immatriculation et j\\'ai 2 bosses au
+                    niveau de la portière a cause du vent et une vers l\\'arriere", $entites[2]->getProblemDescription());
+
+        //testing header content
+        $this->assertEquals('2015-03-05 22:38:00', $entites[2]->getCreated());
+
+        $qrsr = $entites[2]->getQuotationREquestServiceRelations();
+        $this->assertEquals(2, count($qrsr));
+        $this->assertEquals('DSP', $qrsr[1]->getBusinessServiceRef());
+        $this->assertEquals('CAR', $qrsr[0]->getBusinessServiceRef());
+
+    }
 
 
     public function tearDown()
