@@ -165,6 +165,7 @@ class EmailImporter
         $qr->setVehicleModel(trim($email['marque']));
         $qr->setProblemDescription(trim($email['description']));
         $qr->setLastName(trim($email['nom']));
+        $qr->setFirstName('');
         $qr->setPhone(trim($email['telephone']));
         $qr->setAddress(trim($email['adresse']));
         $qr->setContactOrigin(self::$contactOriginMap[trim($email['comment vous nous avez trouvé'])]);
@@ -174,7 +175,7 @@ class EmailImporter
         }
         // email header extraction
         $dateTime = \DateTime::createFromFormat('d/m/Y H:i', $email['Date :']);
-        $qr->setCreated($dateTime->format('Y-m-d H:i:s'));
+        $qr->setCreated($dateTime);
 
         if ($qrsr = $this->createQuotationRequestRelation($email, 'VITRA', 'VIT')) {
             $qr->addQuotationRequestServiceRelation($qrsr);

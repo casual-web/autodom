@@ -69,15 +69,14 @@ EOT;
 
         // add relations
         $qr_repository = $this->quotation_em->getRepository();
-
-        $qrsr_collection = new ArrayCollection();
+        $qr = $qr_repository->find(1);
         $qrsr1 = new QuotationRequestServiceRelation();
         $qrsr1->setBusinessServiceRef('DSP');
+        $qr->addQuotationRequestServiceRelation($qrsr1);
         $qrsr2 = new QuotationRequestServiceRelation();
         $qrsr2->setBusinessServiceRef('DSP');
-        $qrsr_collection->add($qrsr1);
-        $qrsr_collection->add($qrsr2);
-        $this->quotation_em->persistAndFlushWithRelation($qr_repository->find(1), $qrsr_collection);
+        $qr->addQuotationRequestServiceRelation($qrsr2);
+        $this->quotation_em->persistAndFlush($qr);
 
     }
 

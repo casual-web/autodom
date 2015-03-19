@@ -25,7 +25,15 @@ class QuotationRequestManager extends BaseManager
         return $this->em;
     }
 
-    public function persistAndFlushWithRelation(QuotationRequest $entity, $qrsr_collection = null)
+    public function persistAndFlush(QuotationRequest $entity)
+    {
+
+        $qrsr_collection = $entity->getQuotationRequestServiceRelations()->toArray();
+        $this->persistAndFlushWithRelations($entity, $qrsr_collection);
+
+    }
+
+    public function persistAndFlushWithRelations(QuotationRequest $entity, $qrsr_collection)
     {
 
         $entity->getQuotationRequestServiceRelations()->clear();

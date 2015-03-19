@@ -9,7 +9,7 @@ use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use \Doctrine\Common\Collections\ArrayCollection;
-
+use Doctrine\ORM\PersistentCollection;
 // This is the *INVERSE* side from Doctrine ORM point of view :
 // http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 
@@ -348,10 +348,10 @@ class QuotationRequest
     /**
      * Set created
      *
-     * @param string $created
+     * @param DateTime $created
      * @return QuotationRequest
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
 
@@ -413,6 +413,7 @@ class QuotationRequest
     {
         return $this->quotationRequestServiceRelations;
     }
+
 
     public function setQuotationRequestServiceRelations(ArrayCollection $qrsr_collection)
     {

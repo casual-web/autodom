@@ -90,7 +90,7 @@ class FrontendController extends Controller
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.quotation_request_manager');
-            $em->persistAndFlushWithRelation(
+            $em->persistAndFlushWithRelations(
                 $entity,
                 $form->get('quotationRequestServiceRelations')->getData());
 

@@ -51,9 +51,8 @@ class QuotationRequestController extends Controller
 
         if ($form->isValid()) {
             $em = $this->get('doctrine.orm.quotation_request_manager');
-            $em->persistAndFlushWithRelation(
-                $entity,
-                $form->get('quotationRequestServiceRelations')->getData());
+            $entity->setQuotationRequestServiceRelations($form->get('quotationRequestServiceRelations')->getData());
+            $em->persistAndFlush($entity);
 
             return $this->redirect($this->generateUrl('admin_devis', array('id' => $entity->getId())));
         }
@@ -214,10 +213,9 @@ class QuotationRequestController extends Controller
 
         if ($editForm->isValid()) {
             $em = $this->get('doctrine.orm.quotation_request_manager');
-            $em->persistAndFlushWithRelation(
+            $em->persistAndFlushWithRelations(
                 $entity,
                 $editForm->get('quotationRequestServiceRelations')->getData());
-
             return $this->redirect($this->generateUrl('admin_devis_edit', array('id' => $id)));
         }
 
