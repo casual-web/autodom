@@ -71,12 +71,12 @@ class EmailImporterTest extends WebTestCase
         $emailImporter = new EmailImporter($this->getFixturesPath($inputPath));
         $expected = new \DOMDocument;
         $expected->load($this->getFixturesPath($inputPath . "/expected/xml_structure.xml"));
-        $files = $emailImporter->getFiles();
+        $XMLStrings = $emailImporter->getXMLStrings();
 
-        foreach ($files as $file) {
+        foreach ($XMLStrings as $string) {
 
             $actual = new \DOMDocument;
-            $actual->loadXML($file);
+            $actual->loadXML($string);
 
             $this->assertEqualXMLStructure(
                 $expected->firstChild,
@@ -139,7 +139,7 @@ class EmailImporterTest extends WebTestCase
     {
         return array(
             array('autre', 4),
-            array('sans_lieu_intervention_AVANT_2013_08_17', 7),
+            array('sans_lieu_intervention_AVANT_2013_08_17', 3),
 
         );
     }
@@ -163,7 +163,6 @@ class EmailImporterTest extends WebTestCase
         $is = $this->em->getRepository()->createQueryBuilder('q');
         $is->where("q.email LIKE :domain")
             ->setParameter('domain', '%test.1234%');
-
         $results = $is->getQuery()->execute();
 
         foreach ($results as $entity) {

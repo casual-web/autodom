@@ -18,7 +18,7 @@ class QuotationRequestServiceRelation
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\QuotationRequest", inversedBy="quotationRequestServiceRelations")
-     * @ORM\JoinColumn(name="quotation_request_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="quotation_request_id", referencedColumnName="id",  onDelete="CASCADE")
      */
     protected $quotationRequest;
 

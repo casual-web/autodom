@@ -39,8 +39,7 @@ class EmailImporter
         'Lien depuis un autre site' => ContactOriginEnumType::SITE_LINK,
         'Pages jaunes' => ContactOriginEnumType::YELLOW_PAGES,
         'Bouche à oreille' => ContactOriginEnumType::WORD_OF_MOUTH,
-        'Cartes de visite' => ContactOriginEnumType::CARDS,
-        'flyers' => ContactOriginEnumType::FLYERS
+        'Cartes de visite, flyers' => ContactOriginEnumType::CARDS
     ];
 
 
@@ -53,14 +52,23 @@ class EmailImporter
      */
     private $files;
     /**
+     * @var array
+     */
+    private $XMLStrings;
+    /**
      * @var Symfony\Component\Finder\Finder
      */
     private $finder;
 
     /**
-     * @param QuotationRequest
+     * @varQuotationRequest
      */
     private $quotationRequestCollection;
+
+    /**
+     * @var array;
+     */
+    private $errorLog;
 
 
     function __construct($directory)
@@ -69,7 +77,8 @@ class EmailImporter
         $this->finder = new Finder();
         $this->finder->in($this->directory)->exclude('expected');
         foreach ($this->finder as $file) {
-            $this->files[] = $this->toXMLString($file->getContents());
+            $this->files[] = $file;
+            $this->XMLStrings[] = $this->toXMLString($file->getContents());
         }
     }
 
@@ -121,11 +130,27 @@ class EmailImporter
     }
 
     /**
+     * @return array
+     */
+    public function getXMLStrings()
+    {
+        return $this->XMLStrings;
+    }
+
+    /**
      * @return QuotationRequest
      */
     public function getQuotationRequestCollection()
     {
         return $this->quotationRequestCollection;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrorLog()
+    {
+        return $this->errorLog;
     }
 
     public function getNbFiles()
@@ -141,10 +166,11 @@ class EmailImporter
     {
 
         $this->quotationRequestCollection = array();
-
-        foreach ($this->files as $XMLString) {
-            $qr = $this->createQuotationRequest($XMLString);
-            $this->quotationRequestCollection[] = $qr;
+        foreach ($this->XMLStrings as $currentFileIndex => $string) {
+            $qr = $this->createQuotationRequest($string, $currentFileIndex);
+            if ($qr) {
+                $this->quotationRequestCollection[] = $qr;
+            }
         }
 
         return $this->quotationRequestCollection;
@@ -154,89 +180,108 @@ class EmailImporter
      * @param $XMLString string
      * @return QuotationRequest
      */
-    public function createQuotationRequest($XMLString)
+    public function createQuotationRequest($XMLString, $currentFileIndex)
     {
 
-        $email = $this->extractEmailData($XMLString);
-        $qr = new QuotationRequest;
+        $email = $this->extractEmailData($XMLString, $currentFileIndex);
+        if ($email) {
+            $qr = new QuotationRequest;
+            // email body extraction
+            $qr->setEmail(trim($email['email']));
+            $qr->setVehicleModel(trim($email['marque']));
+            $qr->setProblemDescription(trim($email['description']));
+            $qr->setLastName(trim($email['nom']));
+            $qr->setFirstName('');
+            $qr->setPhone(trim($email['telephone']));
+            $qr->setAddress(trim($email['adresse']));
+            $qr->setContactOrigin(self::$contactOriginMap[trim($email['comment vous nous avez trouvé'])]);
 
-        // email body extraction
-        $qr->setEmail(trim($email['email']));
-        $qr->setVehicleModel(trim($email['marque']));
-        $qr->setProblemDescription(trim($email['description']));
-        $qr->setLastName(trim($email['nom']));
-        $qr->setFirstName('');
-        $qr->setPhone(trim($email['telephone']));
-        $qr->setAddress(trim($email['adresse']));
-        $qr->setContactOrigin(self::$contactOriginMap[trim($email['comment vous nous avez trouvé'])]);
+            if (isset($email['lieu_intervention'])) {
+                $qr->setHasShelter((strpos($email['lieu_intervention'], 'OUI') !== false) ? true : false);
+            }
+            // email header extraction
+            $dateTime = \DateTime::createFromFormat('d/m/Y H:i', $email['Date :']);
+            $qr->setCreated($dateTime);
 
-        if (isset($email['lieu_intervention'])) {
-            $qr->setHasShelter((strpos($email['lieu_intervention'], 'OUI') !== false) ? true : false);
+            if ($qrsr = $this->createQuotationRequestRelation($email, 'VITRA', 'VIT')) {
+                $qr->addQuotationRequestServiceRelation($qrsr);
+            }
+
+            if ($qrsr = $this->createQuotationRequestRelation($email, 'OPTIC', 'OPT')) {
+                $qr->addQuotationRequestServiceRelation($qrsr);
+            }
+
+            if ($qrsr = $this->createQuotationRequestRelation($email, 'CARROS', 'CAR')) {
+                $qr->addQuotationRequestServiceRelation($qrsr);
+            }
+
+            if ($qrsr = $this->createQuotationRequestRelation($email, 'DEBOS', 'DSP')) {
+                $qr->addQuotationRequestServiceRelation($qrsr);
+            }
+        } else {
+            $qr = null;
         }
-        // email header extraction
-        $dateTime = \DateTime::createFromFormat('d/m/Y H:i', $email['Date :']);
-        $qr->setCreated($dateTime);
-
-        if ($qrsr = $this->createQuotationRequestRelation($email, 'VITRA', 'VIT')) {
-            $qr->addQuotationRequestServiceRelation($qrsr);
-        }
-
-        if ($qrsr = $this->createQuotationRequestRelation($email, 'OPTIC', 'OPT')) {
-            $qr->addQuotationRequestServiceRelation($qrsr);
-        }
-
-        if ($qrsr = $this->createQuotationRequestRelation($email, 'CARROS', 'CAR')) {
-            $qr->addQuotationRequestServiceRelation($qrsr);
-        }
-
-        if ($qrsr = $this->createQuotationRequestRelation($email, 'DEBOS', 'DSP')) {
-            $qr->addQuotationRequestServiceRelation($qrsr);
-        }
-
         return $qr;
 
     }
 
-    public function extractEmailData($XMLString)
+    public function extractEmailData($XMLString, $currentFileIndex)
     {
 
         $extractedEmailData = array();
+        libxml_use_internal_errors(true);
         $sXE = simplexml_load_string($XMLString);
-        $sXEFiltered = $sXE->xpath("/html/body/div/table");
+        if ($sXE !== false) {
+            $sXEFiltered = $sXE->xpath("/html/body/div/table");
+            // extract body
+            foreach ($sXEFiltered as $item) {
+                if ($item->children()->getName() === 'td') {
+                    $tds = $item->children();
+                    $index = null;
+                    foreach ($tds as $item) {
+                        if (null !== $index) {
+                            $extractedEmailData[$index] = strval($item);
+                            $index = null;
+                        } else {
+                            if ($item->b) {
+                                $index = trim(strval($item->b));
+                                $extractedEmailData[$index] = null;
 
-        // extract body
-        foreach ($sXEFiltered as $item) {
-            if ($item->children()->getName() === 'td') {
-                $tds = $item->children();
-                $index = null;
-                foreach ($tds as $item) {
-                    if (null !== $index) {
-                        $extractedEmailData[$index] = strval($item);
-                        $index = null;
-                    } else {
-                        if ($item->b) {
-                            $index = trim(strval($item->b));
-                            $extractedEmailData[$index] = null;
-
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // extract header
-        $sXEFiltered = $sXE->xpath("/html/body/table[@class='header-part1']");
-        foreach ($sXEFiltered as $item) {
-            if ($item->children()->getName() === 'td') {
-                $tds = $item->children();
-                foreach ($tds as $item) {
-                    $extractedEmailData[trim(strval($item->div))] = trim(strval($item));
+
+            // extract header
+            $sXEFiltered = $sXE->xpath("/html/body/table[@class='header-part1']");
+            foreach ($sXEFiltered as $item) {
+                if ($item->children()->getName() === 'td') {
+                    $tds = $item->children();
+                    foreach ($tds as $item) {
+                        $extractedEmailData[trim(strval($item->div))] = trim(strval($item));
+                    }
                 }
+
             }
 
+        } else {
+
+            foreach (libxml_get_errors() as $error) {
+                $this->addErrorLog(sprintf("[XML PARSING ERROR] %s in file : %s", $error->message, $this->files[$currentFileIndex]->getRealPath()));
+            }
+            $extractedEmailData = null;
         }
         return $extractedEmailData;
+    }
 
+    /**
+     * @param string $errorLog
+     */
+    public function addErrorLog($errorLog)
+    {
+        $this->errorLog[] = $errorLog;
     }
 
     /**
@@ -248,7 +293,7 @@ class EmailImporter
     public function createQuotationRequestRelation($email, $oldRef, $newRef)
     {
         $qrsr = null;
-        if (strpos($email['Sujet :'], $oldRef) !== false) {
+        if ($email && (strpos($email['Sujet :'], $oldRef) !== false)) {
             $qrsr = new QuotationRequestServiceRelation();
             $qrsr->setBusinessServiceRef($newRef);
         }
