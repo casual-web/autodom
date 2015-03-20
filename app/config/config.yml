@@ -60,6 +60,7 @@ doctrine:
         types:
             ContactOriginEnumType: AppBundle\DBAL\Types\ContactOriginEnumType
             QuotationRequestStatusEnumType: AppBundle\DBAL\Types\QuotationRequestStatusEnumType
+            PointType: CrEOF\Spatial\DBAL\Types\Geometry\PointType
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true

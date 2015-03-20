@@ -7,9 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
+use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
-use \Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 // This is the *INVERSE* side from Doctrine ORM point of view :
 // http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
 
@@ -111,12 +112,18 @@ class QuotationRequest
      */
     private $quotationRequestServiceRelations;
 
+    /**
+     * @var Point $point
+     *
+     * @ORM\Column(type="PointType", nullable=true)
+     */
+    protected $point;
+
 
     public function __construct()
     {
         $this->quotationRequestServiceRelations = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -348,7 +355,7 @@ class QuotationRequest
     /**
      * Set created
      *
-     * @param DateTime $created
+     * @param \DateTime $created
      * @return QuotationRequest
      */
     public function setCreated(\DateTime $created)
@@ -379,6 +386,28 @@ class QuotationRequest
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Set point
+     *
+     * @param Point $point
+     *
+     * @return self
+     */
+    public function setPoint(Point $point)
+    {
+        $this->point = $point;
+        return $this;
+    }
+    /**
+     * Get point
+     *
+     * @return Point
+     */
+    public function getPoint()
+    {
+        return $this->point;
     }
 
     /**

@@ -31,6 +31,7 @@
       <column name="contact_origin" sqlType="ENUM" precision="3" scale="0" nullable="false" jdbcType="1" remarks="KERDMlR5cGU6Q29udGFjdE9yaWdpbkVudW1UeXBlKQ=="/>
       <column name="created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="status" sqlType="ENUM" precision="4" scale="0" nullable="false" jdbcType="1" remarks="KERDMlR5cGU6UXVvdGF0aW9uUmVxdWVzdFN0YXR1c0VudW1UeXBlKQ=="/>
+      <column name="point" sqlType="POINT" precision="0" scale="0" nullable="true" jdbcType="1111" remarks="KERDMlR5cGU6cG9pbnQp"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_9F9D69167EECC807" table="QuotationRequestServiceRelation" schema="" catalog="autodom" columns="quotation_request_id"/>
     </table>

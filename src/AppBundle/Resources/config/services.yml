@@ -19,3 +19,7 @@ services:
             - { name: doctrine.event_listener, event: postRemove }
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+    autodom.quotation_request_geocoding.listener:
+            class: AppBundle\EventListener\QuotationRequestGeocoding
+            tags:
+                - { name: doctrine.event_listener, event: prePersist }

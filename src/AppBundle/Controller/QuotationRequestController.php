@@ -37,6 +37,25 @@ class QuotationRequestController extends Controller
     }
 
     /**
+     * Displays a form to create a new QuotationRequest entity.
+     *
+     * @Route("/carte", name="admin_devis_map")
+     * @Method("GET")
+     * @Template("AppBundle:QuotationRequest:map.html.twig")
+     */
+    public function showMapAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('AppBundle:QuotationRequest')->findAllGeoLocated();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
+
+
+
+    /**
      * Creates a new QuotationRequest entity.
      *
      * @Route("/", name="admin_devis_create")

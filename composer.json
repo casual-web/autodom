@@ -27,7 +27,8 @@
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "behat/symfony2-extension": "*",
         "behat/mink-extension": "*",
-        "behat/mink-browserkit-driver": "*"
+        "behat/mink-browserkit-driver": "*",
+        "creof/doctrine2-spatial": "dev-master"
 
     },
     "require-dev": {
