@@ -20,12 +20,11 @@ class QuotationRequestRepository extends EntityRepository
         return $qb->getQuery()->execute();
     }
 
-    public function findAllGeoLocated() {
+    public function findAllGeoLocated()
+    {
         $qb = $this->createQueryBuilder('qr');
         $qb->where("qr.point is not null");
         $results = $qb->getQuery()->execute();
-
-        var_dump(count($results));
         return $results;
 
     }

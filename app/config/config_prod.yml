@@ -1,15 +1,14 @@
 imports:
     - { resource: config.yml }
 
-#framework:
-#    validation:
-#        cache: apc
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%databaseprod.host%"
+        dbname:   "%databaseprod.dbname%"
+        user:     "%databaseprod.user%"
+        password: "%databaseprod.password%"
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
 
 monolog:
     handlers:
@@ -23,3 +22,4 @@ monolog:
             level: debug
         console:
             type:  console
+

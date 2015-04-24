@@ -85,6 +85,20 @@ class QuotationRequest
     /**
      * @var string
      *
+     * @ORM\Column(name="town", type="string", length=255)
+     */
+    private $town;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postal_code", type="integer")
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
      * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\ContactOriginEnumType")
      * @ORM\Column(name="contact_origin", type="ContactOriginEnumType", nullable=false)
      */
@@ -318,6 +332,54 @@ class QuotationRequest
 
         return $this;
     }
+
+    /**
+     * Get town
+     *
+     * @return string
+     */
+    public function getTown()
+    {
+        return $this->town;
+    }
+
+    /**
+     * Set town
+     *
+     * @param string $town
+     * @return QuotationRequest
+     */
+    public function setTown($town)
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    /**
+     * Get postal_code
+     *
+     * @return integer
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set town
+     *
+     * @param integer postalCode
+     * @return QuotationRequest
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+
 
     /**
      * Get contactOrigin

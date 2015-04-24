@@ -149,7 +149,9 @@ class FrontendController extends Controller
      */
     public function galleryAction()
     {
-        return array(// ...
+        return array(
+            'dsp_entities' => $this->getBusinessServiceActionParameters('DSP'),
+            'opt_entities' => $this->getBusinessServiceActionParameters('OPT')
         );
     }
 
