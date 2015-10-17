@@ -11,10 +11,10 @@ framework:
 doctrine:
     dbal:
         driver:   "%database_driver%"
-        host:     "%databasetest.host%"
-        dbname:   "%databasetest.dbname%"
-        user:     "%databasetest.user%"
-        password: "%databasetest.password%"
+        host:     "%database_host%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
 
 web_profiler:
     toolbar: false

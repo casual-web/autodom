@@ -60,7 +60,7 @@ doctrine:
         types:
             ContactOriginEnumType: AppBundle\DBAL\Types\ContactOriginEnumType
             QuotationRequestStatusEnumType: AppBundle\DBAL\Types\QuotationRequestStatusEnumType
-            PointType: CrEOF\Spatial\DBAL\Types\Geometry\PointType;
+            #PointType: CrEOF\Spatial\DBAL\Types\Geometry\PointType;
 
 
     orm:

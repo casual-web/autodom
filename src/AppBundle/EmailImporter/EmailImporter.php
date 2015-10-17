@@ -8,10 +8,10 @@
 
 namespace AppBundle\EmailImporter;
 
+use AppBundle\DBAL\Types\ContactOriginEnumType;
+use AppBundle\Entity\QuotationRequest;
 use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Component\Finder\Finder;
-use AppBundle\Entity\QuotationRequest;
-use AppBundle\DBAL\Types\ContactOriginEnumType;
 
 class EmailImporter
 {
@@ -78,7 +78,7 @@ class EmailImporter
         $this->finder->in($this->directory)->exclude('expected');
         foreach ($this->finder as $file) {
             $this->files[] = $file;
-            $this->XMLStrings[] = $this->toXMLString($file->getContents());
+            $this->XMLStrings[$file->getFileName()] = $this->toXMLString($file->getContents());
         }
     }
 
@@ -169,7 +169,9 @@ class EmailImporter
         foreach ($this->XMLStrings as $currentFileIndex => $string) {
             $qr = $this->createQuotationRequest($string, $currentFileIndex);
             if ($qr) {
-                $this->quotationRequestCollection[] = $qr;
+                $this->quotationRequestCollection[$currentFileIndex] = $qr;
+            } else {
+                $this->addErrorLog(sprintf("[WARNING] INGORING Parsing : $currentFileIndex"));
             }
         }
 
@@ -187,6 +189,10 @@ class EmailImporter
         if ($email) {
             $qr = new QuotationRequest;
             // email body extraction
+            if (!isset($email['email'])) {
+                return null;
+            }
+
             $qr->setEmail(trim($email['email']));
             $qr->setVehicleModel(trim($email['marque']));
             $qr->setProblemDescription(trim($email['description']));

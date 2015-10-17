@@ -4,10 +4,10 @@ imports:
 doctrine:
     dbal:
         driver:   "%database_driver%"
-        host:     "%databaseprod.host%"
-        dbname:   "%databaseprod.dbname%"
-        user:     "%databaseprod.user%"
-        password: "%databaseprod.password%"
+        host:     "%database_host%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
 
 
 monolog:

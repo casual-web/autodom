@@ -24,7 +24,7 @@ class QuotationRequestGeocoding
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if ($entity instanceof QuotationRequest) {
+      /*  if ($entity instanceof QuotationRequest) {
             $query = sprintf(self::GOOGLE_GEOCODING_API, urlencode(utf8_encode($entity->getAddress())));
             $result = json_decode(file_get_contents($query));
 
@@ -41,6 +41,6 @@ class QuotationRequestGeocoding
             }
 
 
-        }
+        }*/
     }
 }

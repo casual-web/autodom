@@ -32,6 +32,8 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr1->setEmail("julien.facchinetti@free.fr");
         $qr1->setPhone("0611733924");
         $qr1->setAddress("39 chemin de Crillon 84330 CAROMB");
+        $qr1->setTown("CAROMB");
+        $qr1->setPostalCode("84330");
         $qr1->setHasShelter(true);
         $qr1->setStatus(QuotationRequestStatusEnumType::CREATED);
         $qr1->setContactOrigin(ContactOriginEnumType::WORD_OF_MOUTH);
@@ -45,6 +47,8 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr2->setEmail("letrefle23@yahoo.fr");
         $qr2->setPhone("0635778922");
         $qr2->setAddress("13010 marseille");
+        $qr2->setPostalCode("13010");
+        $qr2->setTown("MARSEILLE");
         $qr2->setHasShelter(false);
         $qr2->setContactOrigin(ContactOriginEnumType::INTERNET_SEARCH);
         $qr2->setProblemDescription("Donner un coup de jeune pour mise en vente");
@@ -56,7 +60,9 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr3->setFirstName('joe');
         $qr3->setEmail("jo-moha84@hotmail.fr");
         $qr3->setPhone("0761594387");
-        $qr3->setAddress("'7 rue loucheur 13010 marseille");
+        $qr3->setAddress("7 rue loucheur 13010 marseille");
+        $qr3->setTown("MARSEILLE");
+        $qr3->setPostalCode("13010");
         $qr3->setHasShelter(false);
         $qr3->setStatus(QuotationRequestStatusEnumType::SCHEDULED);
         $qr3->setContactOrigin(ContactOriginEnumType::INTERNET_SEARCH);

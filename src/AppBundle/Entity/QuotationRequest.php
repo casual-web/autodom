@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
-use CrEOF\Spatial\PHP\Types\Geography\Point;
+//use CrEOF\Spatial\PHP\Types\Geography\Point;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -85,14 +85,14 @@ class QuotationRequest
     /**
      * @var string
      *
-     * @ORM\Column(name="town", type="string", length=255)
+     * @ORM\Column(name="town", type="string", length=255, nullable=true)
      */
     private $town;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="postal_code", type="integer")
+     * @ORM\Column(name="postal_code", type="integer", nullable=true)
      */
     private $postalCode;
 
@@ -126,12 +126,13 @@ class QuotationRequest
      */
     private $quotationRequestServiceRelations;
 
-    /**
+
+  /* /**
      * @var Point $point
      *
-     * @ORM\Column(type="PointType", nullable=true)
+     * @ORM\Column(type="CrEOF\Spatial\PHP\Types\Geography\Point", nullable=true)
      */
-    protected $point;
+    //protected $point;
 
 
     public function __construct()
@@ -450,27 +451,28 @@ class QuotationRequest
         return $this;
     }
 
-    /**
+   /* /**
      * Set point
      *
      * @param Point $point
      *
      * @return self
      */
-    public function setPoint(Point $point)
+    /*public function setPoint(Point $point)
     {
         $this->point = $point;
         return $this;
-    }
-    /**
+    }*/
+
+   /* /**
      * Get point
      *
      * @return Point
      */
-    public function getPoint()
+   /* public function getPoint()
     {
         return $this->point;
-    }
+    }*/
 
     /**
      * Add quotation request service relation

@@ -8,11 +8,9 @@
 
 namespace AppBundle\Tests\EmailImporter;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use AppBundle\EmailImporter\EmailImporter;
-use AppBundle\Entity\QuotationRequest;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
-use AppBundle\Manager\QuotationRequestManager;
+use AppBundle\EmailImporter\EmailImporter;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EmailImporterTest extends WebTestCase
 {
@@ -20,18 +18,20 @@ class EmailImporterTest extends WebTestCase
     /**
      * @var string
      */
-    static private $kernelRootDir;
+    protected static $kernelRootDir;
     /**
      * @var \AppBundle\Manager\QuotationRequestManager
      */
-    private $em;
+    protected $em;
+    
+    protected static $kernel;
 
     public function setUp()
     {
-        static::$kernel = static::createKernel();
-        static::$kernel->boot();
+        self::$kernel = self::createKernel();
+        self::$kernel->boot();
         self::$kernelRootDir = static::$kernel->getRootDir();
-        $this->em = static::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
+        $this->em = self::$kernel->getContainer()->get('doctrine.orm.quotation_request_manager');
     }
 
     public function testShouldLoadSevenFiles()
@@ -50,7 +50,8 @@ class EmailImporterTest extends WebTestCase
             sprintf(
                 '%s%s',
                 self::$kernelRootDir . '/../src/AppBundle/Tests/EmailImporter/Fixtures',
-                $subPath);
+                $subPath
+            );
     }
 
     public function testShouldPrepareSevenFiles()
@@ -67,14 +68,12 @@ class EmailImporterTest extends WebTestCase
 
     public function ShouldPrepareFiles($inputPath)
     {
-
         $emailImporter = new EmailImporter($this->getFixturesPath($inputPath));
         $expected = new \DOMDocument;
         $expected->load($this->getFixturesPath($inputPath . "/expected/xml_structure.xml"));
         $XMLStrings = $emailImporter->getXMLStrings();
 
         foreach ($XMLStrings as $string) {
-
             $actual = new \DOMDocument;
             $actual->loadXML($string);
 
@@ -85,25 +84,27 @@ class EmailImporterTest extends WebTestCase
         }
     }
 
+
     public function testEntityCreationV1()
     {
         $emailImporter = new EmailImporter($this->getFixturesPath('sans_lieu_intervention_AVANT_2013_08_17'));
         $entites = $emailImporter->loadEntities();
+        $entityTested = $entites["20130716-Demande de devis _ VITRA-26.html"];
 
         // testing body content
-        $this->assertEquals('hibou84@test.1234.fr', $entites[0]->getEmail());
-        $this->assertEquals('ex: Audi A4 an 96', $entites[0]->getVehicleModel());
-        $this->assertEquals('goupil', $entites[0]->getLastName());
-        $this->assertEquals('0668608056', $entites[0]->getPhone());
-        $this->assertEquals('1 place de la camargue', $entites[0]->getAddress());
-        $this->assertEquals(ContactOriginEnumType::INTERNET_SEARCH, $entites[0]->getContactOrigin());
+        $this->assertEquals('hibou84@test.1234.fr', $entityTested->getEmail());
+        $this->assertEquals('ex: Audi A4 an 96', $entityTested->getVehicleModel());
+        $this->assertEquals('goupil', $entityTested->getLastName());
+        $this->assertEquals('0668608056', $entityTested->getPhone());
+        $this->assertEquals('1 place de la camargue', $entityTested->getAddress());
+        $this->assertEquals(ContactOriginEnumType::INTERNET_SEARCH, $entityTested->getContactOrigin());
         $this->assertEquals('ex: Décrivez votre problème en quelques lignes
-                    pare brise fissurer', $entites[0]->getProblemDescription());
+                    pare brise fissurer', $entityTested->getProblemDescription());
 
         //testing header content
-        $this->assertEquals('2013-07-16 09:22:00', $entites[0]->getCreated()->format('Y-m-d H:i:s'));
+        $this->assertEquals('2013-07-16 09:22:00', $entityTested->getCreated()->format('Y-m-d H:i:s'));
 
-        $qrsr = $entites[0]->getQuotationRequestServiceRelations();
+        $qrsr = $entityTested->getQuotationRequestServiceRelations();
         $this->assertEquals('VIT', $qrsr[0]->getBusinessServiceRef());
 
     }
@@ -112,23 +113,27 @@ class EmailImporterTest extends WebTestCase
     {
         $emailImporter = new EmailImporter($this->getFixturesPath('autre'));
         $entities = $emailImporter->loadEntities();
+        $entityTested = $entities["20150305-Demande de devis _ DEBOS + CARROS-114.html"];
 
         // testing body content
-        $this->assertEquals('syla13@test.1234.fr', $entities[2]->getEmail());
-        $this->assertEquals('mercedes c 220 coupe cdi', $entities[2]->getVehicleModel());
-        $this->assertEquals('Gontal', $entities[2]->getLastName());
-        $this->assertEquals('0665216414', $entities[2]->getPhone());
-        $this->assertEquals(true, $entities[2]->getHasShelter());
+        $this->assertEquals('syla13@test.1234.fr', $entityTested->getEmail());
+        $this->assertEquals('mercedes c 220 coupe cdi', $entityTested->getVehicleModel());
+        $this->assertEquals('Gontal', $entityTested->getLastName());
+        $this->assertEquals('0665216414', $entityTested->getPhone());
+        $this->assertEquals(true, $entityTested->getHasShelter());
         $this->assertEquals('21 rue des erables
-                    84130 le pontet', $entities[2]->getAddress());
-        $this->assertEquals(ContactOriginEnumType::OTHER, $entities[2]->getContactOrigin());
-        $this->assertEquals("Bonjour, j\\'ai la peinture qui part au dessus de la plaque d\\'immatriculation et j\\'ai 2 bosses au
-                    niveau de la portière a cause du vent et une vers l\\'arriere", $entities[2]->getProblemDescription());
+                    84130 le pontet', $entityTested->getAddress());
+        $this->assertEquals(ContactOriginEnumType::OTHER, $entityTested->getContactOrigin());
+        $this->assertEquals(
+            "Bonjour, j\\'ai la peinture qui part au dessus de la plaque d\\'immatriculation et j\\'ai 2 bosses au
+                    niveau de la portière a cause du vent et une vers l\\'arriere",
+            $entityTested->getProblemDescription()
+        );
 
         //testing header content
-        $this->assertEquals('2015-03-05 22:38:00', $entities[2]->getCreated()->format('Y-m-d H:i:s'));
+        $this->assertEquals('2015-03-05 22:38:00', $entityTested->getCreated()->format('Y-m-d H:i:s'));
 
-        $qrsr = $entities[2]->getQuotationREquestServiceRelations();
+        $qrsr = $entityTested->getQuotationREquestServiceRelations();
         $this->assertEquals(2, count($qrsr));
         $this->assertEquals('DSP', $qrsr[1]->getBusinessServiceRef());
         $this->assertEquals('CAR', $qrsr[0]->getBusinessServiceRef());

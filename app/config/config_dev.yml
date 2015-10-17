@@ -14,10 +14,10 @@ web_profiler:
 doctrine:
     dbal:
         driver:   "%database_driver%"
-        host:     "%databasedev.host%"
-        dbname:   "%databasedev.dbname%"
-        user:     "%databasedev.user%"
-        password: "%databasedev.password%"
+        host:     "%database_host%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
 monolog:
     handlers:
         main:
