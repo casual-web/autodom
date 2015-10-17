@@ -23,7 +23,7 @@ class EmailImporterTest extends WebTestCase
      * @var \AppBundle\Manager\QuotationRequestManager
      */
     protected $em;
-    
+
     protected static $kernel;
 
     public function setUp()
