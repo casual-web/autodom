@@ -71,14 +71,16 @@ class EmailImporter
     private $errorLog;
 
 
-    function __construct($directory)
+    public function __construct($directory)
     {
         $this->directory = $directory;
         $this->finder = new Finder();
         $this->finder->in($this->directory)->exclude('expected');
         foreach ($this->finder as $file) {
-            $this->files[] = $file;
-            $this->XMLStrings[$file->getFileName()] = $this->toXMLString($file->getContents());
+            if($file->getFileName() != "index.html") {
+                $this->files[] = $file;
+                $this->XMLStrings[$file->getFileName()] = $this->toXMLString($file->getContents());
+            }
         }
     }
 
@@ -93,7 +95,8 @@ class EmailImporter
         $cleanContent = preg_replace(
             '/<\/html>\s?<\/table><\/div>/i',
             "</html>",
-            $cleanContent);
+            $cleanContent
+        );
         return $cleanContent;
     }
 
@@ -167,6 +170,7 @@ class EmailImporter
 
         $this->quotationRequestCollection = array();
         foreach ($this->XMLStrings as $currentFileIndex => $string) {
+            print($currentFileIndex."\n");
             $qr = $this->createQuotationRequest($string, $currentFileIndex);
             if ($qr) {
                 $this->quotationRequestCollection[$currentFileIndex] = $qr;
@@ -186,6 +190,7 @@ class EmailImporter
     {
 
         $email = $this->extractEmailData($XMLString, $currentFileIndex);
+
         if ($email) {
             $qr = new QuotationRequest;
             // email body extraction

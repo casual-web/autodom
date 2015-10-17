@@ -11,12 +11,27 @@ use AppBundle\EmailImporter\EmailImporter;
 
 class EmailImportCommand extends ContainerAwareCommand
 {
+
+    protected $defaultDir;
+
+    public function __construct($defaultDir)
+    {
+        $this->defaultDir = $defaultDir;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
             ->setName('autodom:EmailImport')
             ->setDescription('import html email')
-            ->addArgument('directory', InputArgument::REQUIRED, 'Give me a directory where I can find .html files');
+            ->addArgument(
+                'directory',
+                InputArgument::REQUIRED,
+                'Give me a directory where I can find .html files',
+                $this->defaultDir
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
