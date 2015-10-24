@@ -20,7 +20,7 @@
                     href="{{ app.request.baseUrl }}/">Autodom</a>, service mobile pour professionnels et particuliers.
             {% endblock %}
             {% block subtitle %}
-                Service mobile de débosselage sans peinture (DSP)
+                Service mobile de débosselage sans peinture (DSP)</br>
             {% endblock %}
         {% endembed %}
     {% endblock %}
@@ -28,16 +28,17 @@
     {% block content %}
         {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
             {% block highlights %}
-                {% include 'AppBundle:FrontBusinessService:debosselage-sans-peinture-highlights.html.twig' %}
+                {#{% include 'AppBundle:FrontBusinessService:debosselage-sans-peinture-highlights.html.twig' %}#}
             {% endblock %}
             {% block description %}
                 <h2>Pourquoi ?</h2>
+                {% include 'AppBundle:FrontBusinessService:debosselage-sans-peinture-highlights.html.twig' %}
+
+                <h3>Comment ?</h3>
                 <p>
                     Entre l'achat et la revente de votre v&eacute;hicule il s'&eacute;coule en moyenne 2 &agrave; 4 ans.
                     Dans ce laps de temps, des incidents peuvent endommager votre carrosserie, et en faire diminuer la c&ocirc;te.
                 </p>
-
-                <h2>Comment ?</h2>
 
                 <p>
                     Le d&eacute;bosselage sans peinture est un proc&eacute;d&eacute; qui permet de r&eacute;sorber des
@@ -55,13 +56,7 @@
                     Les tarifs appliqu&eacute;s sont d&eacute;gr&eacute;ssifs en fonction du
                     nombre de chocs.
                     Chaque tarif sera calcul&eacute; en fonction de trois crit&egrave;res principaux relatifs à l'impact
-                    :
-                <ul>
-                    <li class="puce-normal">Acccesibilit&eacute;</li>
-                    <li class="puce-normal">Taille</li>
-                    <li class="puce-normal">Localisation (arr&ecirc;te, surface plane,...)</li>
-                </ul>
-
+                    : Atcccesibilit&eacute;, taille , localisation.
             {% endblock %}
         {% endembed %}
     {% endblock %}

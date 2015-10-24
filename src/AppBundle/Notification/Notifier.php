@@ -8,8 +8,8 @@
 
 namespace AppBundle\Notification;
 
-use Symfony\Component\Templating\EngineInterface;
 use AppBundle\Entity\QuotationRequest;
+use Symfony\Component\Templating\EngineInterface;
 
 class Notifier
 {
@@ -30,13 +30,13 @@ class Notifier
         $mail = \Swift_Message::newInstance();
         $serviceRefList = array();
         $mail
-            ->setFrom('contact@casual-web.com', 'Autodom')
-            ->setTo('contact@casual-web.com;contact@autodom.biz')
-            ->setSubject(sprintf("Demande de devis : %s", $serviceRefList))
+            ->setFrom(['contact@casual-web.com'=>'Autodom'])
+            ->setTo(['contact@autodom.biz'])
+            ->setBcc(['contact@casual-web.com'])
+            ->setSubject(sprintf("Demande de devis : %s", "TODO3"))
             ->setBody($this->renderQuotationRequestNotificationBody($quotationRequest))
             ->setReplyTo('no-reply@autodom.biz')
-            ->setContentType('text/html; charset="UTF-8')
-            ->setContentTransferEncoding('8bit');
+            ->setContentType('text/html; charset="UTF-8');
 
         $this->mailer->send($mail);
     }
@@ -45,7 +45,8 @@ class Notifier
     {
         return $this->templating->render(
             'AppBundle:Notification:quotation_request.html.twig',
-            ['entity' => $quotationRequest]);
+            ['entity' => $quotationRequest]
+        );
     }
 
     /*

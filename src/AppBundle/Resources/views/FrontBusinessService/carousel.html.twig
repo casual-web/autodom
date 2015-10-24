@@ -6,18 +6,19 @@
                      alt="{{ entity.damageType }} {{ entity.location }}"/>
 
                 <div class="container">
-                    <div class="carousel-caption"> {% if display_comments == true %}
-                            <h4>D&eacute;bosselage sans peinture - {{ entity.damageType }}.</h4>
-                            <p>{{ entity.vehicleModel }} // {{ entity.location }}</p>
+                    <div class="carousel-caption">
+                        {% if display_comments == true %}
+                            <span>D&eacute;bosselage sans peinture - {{ entity.damageType }}.</br>
+                                {{ entity.vehicleModel }} // {{ entity.location }}</span>
                         {% endif %}
                     </div>
-                    </div>
                 </div>
+            </div>
         {% endfor %}
         <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
     </div>
-    </div>
+</div>
 
 
 
