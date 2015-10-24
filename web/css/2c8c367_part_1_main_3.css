@@ -21,11 +21,11 @@
 ###################################### */
 
 ul.record_actions {
-  float:right;
+    float: right;
 }
 
 li {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 /* ###################################
@@ -39,7 +39,6 @@ li {
 body h1 h2 ul li {
     color: #140D06;
 }
-
 
 .lead {
     font-size: 1.3em;
@@ -66,16 +65,16 @@ blockquote {
     font-size: 0.9em;
 }
 
-/* ### Floatting contact  ### */
+/*--------------------
+    Floatting contact
+______________________*/
 
 #floatting-contact {
     background: none;
-    /* text-align: center;*/
 }
 
 #floatting-contact img {
     padding: 0;
-    /* margin-top: 12px*/
 }
 
 #floatting-contact h4 {
@@ -93,14 +92,14 @@ blockquote {
 }
 
 .header-logo {
-    background-image: url('../bundles/app/img/logo-autodom-baseline_100.png');
+    background-image: url('../../bundles/app/img/logo-autodom-baseline_100.png');
     background-repeat: no-repeat;
     padding: 120px 0px 30px 0px;
 }
 
 @media all and (max-width: 1024px) {
     .header-logo {
-        background-image: url('../bundles/app/img/logo-autodom-baseline-small.png');
+        background-image: url('../../bundles/app/img/logo-autodom-baseline-small.png');
         padding: 100px 0px 0px 0px;
     }
 
@@ -114,14 +113,18 @@ blockquote {
     text-align: center;
 }
 
-ul.services_goodies {
+.services_goodies {
     margin: 0;
     padding: 13px 0 15px 15px;
     font-size: 1.1em;
 }
 
+div.services_highlights {
+    margin: 30px 0 40px 30px;
+}
+
 li.puce {
-    background-image: url('../bundles/app/img/puce.png');
+    background-image: url('../../bundles/app/img/puce.png');
     background-repeat: no-repeat;
     background-position: center left;
     padding: 5px 0 5px 15px;
@@ -130,25 +133,45 @@ li.puce {
 }
 
 li.puce-normal {
-    background-image: url('../bundles/app/img/puce.png');
+    background-image: url('../../bundles/app/img/puce.png');
     background-repeat: no-repeat;
     background-position: center left;
     padding: 5px 0 5px 15px;
-    list-style:none;
-}
-
-.carousel-inner {
-    overflow: hidden
-}
-
-#myCarousel, #rennovCarousel {
-    border: 1px gray solid
+    list-style: none;
 }
 
 .img-partners {
     height: 100px;
-    /*width: 200px;*/
     margin-bottom: 13px;
     border: 1px solid darkgray;
 }
+
+/*----------------------
+        Carousel
+-----------------------*/
+.carousel-inner {
+    overflow: hidden
+}
+
+.carousel-control {
+    font-size: 3em;
+    top: 450px;
+    color:#222222;
+}
+
+.carousel-caption {
+    text-shadow: none;
+    right: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    color: #222222;
+    top: 465px;
+}
+
+#myCarousel, #rennovCarousel {
+    border: 1px solid gray;
+}
+
+
 
