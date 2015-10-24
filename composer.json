@@ -27,12 +27,14 @@
         "doctrine/migrations": "1.0.*@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "symfony/framework-bundle": "v2.6.0",
+        "symfony/framework-bundle": "~2.7",
         "fresh/doctrine-enum-bundle": "5.3.x-dev",
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "behat/symfony2-extension": "*",
         "behat/mink-extension": "*",
-        "behat/mink-browserkit-driver": "*"
+        "behat/mink-browserkit-driver": "*",
+        "coresphere/console-bundle": "dev-master"
+
 
     },
     "require-dev": {

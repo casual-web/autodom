@@ -36,7 +36,7 @@ class Version20151017164455 extends AbstractMigration implements ContainerAwareI
         $servicesLoader->load($manager->getDoctrineDefaultManager());
 
         // imports quotation request
-        $emailImporter = new EmailImporter('/tmp/autodom_devis');
+     /*   $emailImporter = new EmailImporter(__DIR__."/../../web/emails");
         $this->write(sprintf('start loading %s entities...', $emailImporter->getNbFiles()));
         $entities = $emailImporter->loadEntities();
         if (count($entities) > 0) {
@@ -54,7 +54,7 @@ class Version20151017164455 extends AbstractMigration implements ContainerAwareI
             $manager->flush();
         } else {
             $this->write("No file found");
-        }
+        }*/
 
         //photos ??
     }

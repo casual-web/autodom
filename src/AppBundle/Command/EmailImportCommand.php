@@ -14,13 +14,6 @@ class EmailImportCommand extends ContainerAwareCommand
 
     protected $defaultDir;
 
-    public function __construct($defaultDir)
-    {
-        $this->defaultDir = $defaultDir;
-
-        parent::__construct();
-    }
-
     protected function configure()
     {
         $this
@@ -28,9 +21,9 @@ class EmailImportCommand extends ContainerAwareCommand
             ->setDescription('import html email')
             ->addArgument(
                 'directory',
-                InputArgument::REQUIRED,
+                InputArgument::OPTIONAL,
                 'Give me a directory where I can find .html files',
-                $this->defaultDir
+                __DIR__."/../../../web/emails"
             );
     }
 

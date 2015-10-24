@@ -1,0 +1,177 @@
+/* ###################################
+      GLOBAL
+###################################### */
+
+/* centered columns styles */
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    /* reset the text-align */
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+}
+
+/* ###################################
+      BACKEND
+###################################### */
+
+ul.record_actions {
+    float: right;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* ###################################
+      FRONTEND
+###################################### */
+
+.navbar .nav > li > a:hover {
+    color: #00afc7;
+}
+
+body h1 h2 ul li {
+    color: #140D06;
+}
+
+.lead {
+    font-size: 1.3em;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 215%
+}
+
+h2 {
+    font-size: 170%
+}
+
+a {
+    color: #00afc7;
+}
+
+a:hover {
+    color: #00afc7;
+}
+
+blockquote {
+    font-size: 0.9em;
+}
+
+/*--------------------
+    Floatting contact
+______________________*/
+
+#floatting-contact {
+    background: none;
+}
+
+#floatting-contact img {
+    padding: 0;
+}
+
+#floatting-contact h4 {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#floatting-contact p.phone {
+    color: #00afc7;
+}
+
+#floatting-contact p.phone i {
+    color: #777777;
+    font-size: 60%;
+}
+
+.header-logo {
+    background-image: url('../img/logo-autodom-baseline_100.png');
+    background-repeat: no-repeat;
+    padding: 120px 0px 30px 0px;
+}
+
+@media all and (max-width: 1024px) {
+    .header-logo {
+        background-image: url('../img/logo-autodom-baseline-small.png');
+        padding: 100px 0px 0px 0px;
+    }
+
+    .navbar-social {
+        display: none;
+    }
+}
+
+.footer {
+    padding: 15px 5px 15px 5px;
+    text-align: center;
+}
+
+.services_goodies {
+    margin: 0;
+    padding: 13px 0 15px 15px;
+    font-size: 1.1em;
+}
+
+div.services_highlights {
+    margin: 30px 0 40px 30px;
+}
+
+li.puce {
+    background-image: url('../img/puce.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding: 5px 0 5px 15px;
+    font-size: 1.3em;
+    list-style: none;
+}
+
+li.puce-normal {
+    background-image: url('../img/puce.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding: 5px 0 5px 15px;
+    list-style: none;
+}
+
+.img-partners {
+    height: 100px;
+    margin-bottom: 13px;
+    border: 1px solid darkgray;
+}
+
+/*----------------------
+        Carousel
+-----------------------*/
+.carousel-inner {
+    overflow: hidden
+}
+
+.carousel-control {
+    font-size: 3em;
+    top: 450px;
+    color:#222222;
+}
+
+.carousel-caption {
+    text-shadow: none;
+    right: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    color: #222222;
+    top: 465px;
+}
+
+#myCarousel, #rennovCarousel {
+    border: 1px solid gray;
+}
+
+
+
