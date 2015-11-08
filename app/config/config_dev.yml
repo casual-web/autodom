@@ -54,5 +54,5 @@ assetic:
     filters:
         cssrewrite: ~
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: contact@casual-web.com

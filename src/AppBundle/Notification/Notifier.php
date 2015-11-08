@@ -30,7 +30,7 @@ class Notifier
         $mail = \Swift_Message::newInstance();
         $serviceRefList = array();
         $mail
-            ->setFrom(['contact@casual-web.com'=>'Autodom'])
+            ->setFrom(['contact@autodom.biz'=>'Autodom'])
             ->setTo(['contact@autodom.biz'])
             ->setBcc(['contact@casual-web.com'])
             ->setSubject(sprintf("Demande de devis : %s", "TODO3"))
