@@ -5,16 +5,16 @@ parameters:
     database_port:     ~
     database_name:     autodom
     database_user:     dev
-    database_password: coffee50
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
+    database_password: xxxxx
 
+    mailer_port: 587
+    mailer_auth_mode:  login
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            fr
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            1Qe63L0T932epKffs4895tXE3QP8imM8
