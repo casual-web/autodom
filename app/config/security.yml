@@ -12,29 +12,32 @@ security:
 
     firewalls:
         dev:
-            pattern:  ^/
+            pattern:  ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
         admin:
-            pattern: ^/admin
+            pattern:      ^/admin
+            anonymous:    true
+            provider: fos_userbundle
             form_login:
                 check_path: fos_user_security_check
                 login_path: fos_user_security_login
-                provider: fos_userbundle
-                csrf_provider: form.csrf_provider
+                #csrf_provider: form.csrf_provider
+                csrf_provider: security.csrf.token_manager
             logout:
                 path:   fos_user_security_logout
                 target: fos_user_security_login
-            #anonymous:    true
+
 
 
     access_control:
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/admin, role: ROLE_ADMIN }
+       - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       # - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        - { path: ^/admin, role: ROLE_ADMIN }
+
 
 
 

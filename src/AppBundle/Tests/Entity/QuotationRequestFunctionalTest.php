@@ -8,13 +8,11 @@
 
 namespace AppBundle\Tests\Entity;
 
+use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
+use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
 use AppBundle\DBAL\Types\ContactOriginEnumType;
-use AppBundle\DBAL\Types\QuotationRequestStatusEnumType;
 use AppBundle\Entity\QuotationRequestServiceRelation;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use AppBundle\DataFixtures\ORM\LoadQuotationRequestData;
-use AppBundle\DataFixtures\ORM\LoadBusinessServicesData;
-use \Doctrine\Common\Collections\ArrayCollection;
 
 
 class QuotationRequestFunctionalTest extends WebTestCase
@@ -74,7 +72,7 @@ EOT;
         $qrsr1->setBusinessServiceRef('DSP');
         $qr->addQuotationRequestServiceRelation($qrsr1);
         $qrsr2 = new QuotationRequestServiceRelation();
-        $qrsr2->setBusinessServiceRef('DSP');
+        $qrsr2->setBusinessServiceRef('OPT');
         $qr->addQuotationRequestServiceRelation($qrsr2);
         $this->quotation_em->persistAndFlush($qr);
 
@@ -115,13 +113,13 @@ EOT;
         $metrics = $repository->findDashboardMetrics();
 
         $this->assertEquals(
-            Array(
-                0 => Array
+            array(
+                0 => array
                 (
                     'nb' => 2,
                     'status' => 'NEW',
                 ),
-                1 => Array
+                1 => array
                 (
                     'nb' => 1,
                     'status' => 'SCH',
@@ -129,6 +127,7 @@ EOT;
             $metrics);
 
     }
+
 
 
 }

@@ -34,29 +34,6 @@ class Version20151017164455 extends AbstractMigration implements ContainerAwareI
         $servicesLoader = new LoadBusinessServicesData();
         $manager = $this->container->get("doctrine.orm.quotation_request_manager");
         $servicesLoader->load($manager->getDoctrineDefaultManager());
-
-        // imports quotation request
-     /*   $emailImporter = new EmailImporter(__DIR__."/../../web/emails");
-        $this->write(sprintf('start loading %s entities...', $emailImporter->getNbFiles()));
-        $entities = $emailImporter->loadEntities();
-        if (count($entities) > 0) {
-            $this->write(sprintf('start persisitng %s entities...', $emailImporter->getNbFiles()));
-
-            $errors = $emailImporter->getErrorLog();
-            if (count($errors)) {
-                foreach ($errors as $err) {
-                    $this->write($err);
-                }
-            }
-            foreach ($entities as $entity) {
-                $manager->persistAndFlush($entity);
-            }
-            $manager->flush();
-        } else {
-            $this->write("No file found");
-        }*/
-
-        //photos ??
     }
 
 

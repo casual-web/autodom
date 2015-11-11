@@ -28,12 +28,18 @@ class Notifier
     public function sendQuotationRequestNotification(QuotationRequest $quotationRequest)
     {
         $mail = \Swift_Message::newInstance();
-        $serviceRefList = array();
+
+        $relation = $quotationRequest->getQuotationRequestServiceRelations();
+        $sumup = '';
+        foreach ($relation as $item) {
+            $sumup .= ' ' . $item->getBusinessServiceRef();
+        }
+
         $mail
-            ->setFrom(['contact@autodom.biz'=>'Autodom'])
+            ->setFrom(['contact@autodom.biz' => 'Autodom'])
             ->setTo(['contact@autodom.biz'])
             ->setBcc(['contact@casual-web.com'])
-            ->setSubject(sprintf("Demande de devis : %s", "TODO3"))
+            ->setSubject(sprintf("Demande de devis : %s", $sumup))
             ->setBody($this->renderQuotationRequestNotificationBody($quotationRequest))
             ->setReplyTo('no-reply@autodom.biz')
             ->setContentType('text/html; charset="UTF-8');
@@ -48,6 +54,7 @@ class Notifier
             ['entity' => $quotationRequest]
         );
     }
+
 
     /*
     'Content-Type: text/html; charset="UTF-8"' . "\r\n";

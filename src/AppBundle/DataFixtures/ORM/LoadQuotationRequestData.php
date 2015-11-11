@@ -66,7 +66,10 @@ class LoadQuotationRequestData implements FixtureInterface
         $qr3->setHasShelter(false);
         $qr3->setStatus(QuotationRequestStatusEnumType::SCHEDULED);
         $qr3->setContactOrigin(ContactOriginEnumType::INTERNET_SEARCH);
-        $qr3->setProblemDescription("Peinture pare choc avant et arrière , Aile gauche avant et aile gauche arrière a de bosselé et a peindre fard avant a renoverr");
+        $qr3->setProblemDescription(
+            "Peinture pare choc avant et arrière , ".
+            "Aile gauche avant et aile gauche arrière a de bosselé et a peindre fard avant a renover"
+        );
         $manager->persist($qr3);
 
         $manager->flush();
