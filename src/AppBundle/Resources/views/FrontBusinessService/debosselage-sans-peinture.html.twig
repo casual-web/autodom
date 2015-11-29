@@ -15,7 +15,7 @@
     {% block header %}
         {% embed 'AppBundle:FrontendLayout:header.html.twig' %}
             {% block header_content %}
-                La carroserie de votre v&eacute;hicule a subit une d&eacute;formation &agrave; la suite d'un coup de porti&egrave;re ou de caddie,
+                La carrosserie de votre v&eacute;hicule a subit une d&eacute;formation &agrave; la suite d'un coup de porti&egrave;re ou de caddie,
                 d'une averse de gr&ecirc;le ?  Contactez <a
                     href="{{ app.request.baseUrl }}/">Autodom</a>, service mobile pour professionnels et particuliers.
             {% endblock %}
@@ -28,7 +28,6 @@
     {% block content %}
         {% embed 'AppBundle:FrontBusinessService:base.html.twig' %}
             {% block highlights %}
-                {#{% include 'AppBundle:FrontBusinessService:debosselage-sans-peinture-highlights.html.twig' %}#}
             {% endblock %}
             {% block description %}
                 <h2>Pourquoi ?</h2>
@@ -56,7 +55,7 @@
                     Les tarifs appliqu&eacute;s sont d&eacute;gr&eacute;ssifs en fonction du
                     nombre de chocs.
                     Chaque tarif sera calcul&eacute; en fonction de trois crit&egrave;res principaux relatifs à l'impact
-                    : Atcccesibilit&eacute;, taille , localisation.
+                    : Accesibilit&eacute;, taille , localisation.
             {% endblock %}
         {% endembed %}
     {% endblock %}
