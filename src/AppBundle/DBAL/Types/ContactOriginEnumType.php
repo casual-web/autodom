@@ -28,7 +28,7 @@ class ContactOriginEnumType extends AbstractEnumType
      * @var array Readable choices
      * @static
      */
-    protected static $choices = [
+    protected static $choices = array(
 
         self::OTHER => 'autre',
         self::INTERNET_SEARCH => 'recherche sur internet',
@@ -37,7 +37,7 @@ class ContactOriginEnumType extends AbstractEnumType
         self::WORD_OF_MOUTH => 'bouche à oreilles',
         self::CARDS => 'cartes de visite',
         self::FLYERS => 'flyers'
-    ];
+    );
 
 
 }
