@@ -27,7 +27,7 @@ class QuotationRequestStatusEnumType extends AbstractEnumType
      * @var array Readable choices
      * @static
      */
-    protected static $choices = [
+    protected static $choices = array(
 
         self::CREATED => 'nouvelle',
         self::SCHEDULED => 'programmée',
@@ -36,7 +36,7 @@ class QuotationRequestStatusEnumType extends AbstractEnumType
         self::CASHED => 'réglé',
         self::CANCELLED => 'annulé'
 
-    ];
+    );
 
 }
 
