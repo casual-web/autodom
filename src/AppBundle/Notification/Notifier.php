@@ -25,13 +25,12 @@ class Notifier
         $this->templating = $templating;
     }
 
-    public function sendQuotationRequestNotification(QuotationRequest $quotationRequest)
+    public function sendQuotationRequestNotification($quotationRequestData, QuotationRequest $quotationRequest)
     {
         $mail = \Swift_Message::newInstance();
 
-        $relation = $quotationRequest->getQuotationRequestServiceRelations();
         $sumup = '';
-        foreach ($relation as $item) {
+        foreach ($quotationRequestData as $item) {
             $sumup .= ' ' . $item->getBusinessServiceRef();
         }
 

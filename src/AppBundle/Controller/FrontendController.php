@@ -89,12 +89,14 @@ class FrontendController extends Controller
         $notifier = $this->get('autodom.notifier');
 
         if ($form->isValid()) {
+            $data = $form->get('quotationRequestServiceRelations')->getData();
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelations(
                 $entity,
-                $form->get('quotationRequestServiceRelations')->getData());
+                $data
+            );
 
-            $notifier->sendQuotationRequestNotification($entity);
+            $notifier->sendQuotationRequestNotification($data, $entity);
             return $this->redirect($this->generateUrl('home'));
         }
 
