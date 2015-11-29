@@ -44,9 +44,9 @@ class FrontendController extends Controller
         $entities = $is_repo->findVisibleByService($businessServiceRef);
         $active_item_id = (isset($entities[0]) ? $entities[0]->getId() : null);
 
-        return [
+        return array(
             'entities' => $entities,
-            'active_item_id' => $active_item_id];
+            'active_item_id' => $active_item_id);
     }
 
     /**
