@@ -1,9 +1,8 @@
 <?php
+define('STDIN', fopen("php://stdin", "r"));
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
-
-define('STDIN', fopen("php://stdin", "r"));
 
 class AppKernel extends Kernel
 {
