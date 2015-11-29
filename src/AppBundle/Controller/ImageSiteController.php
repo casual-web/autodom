@@ -247,10 +247,10 @@ class ImageSiteController extends Controller
                 $em->flush();
             } catch (FileManagementException $fme) {
                 return $this->render(
-                    'AppBundle:Admin:message.html.twig', [
+                    'AppBundle:Admin:message.html.twig', array(
                         'message' => 'L\'enregistrement a bien été supprimé mais le fichier image correspondant n\'a pu être trouvé.',
                         'level' => 'warning'
-                    ]
+                    )
                 );
             }
         }
