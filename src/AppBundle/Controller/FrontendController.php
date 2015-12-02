@@ -151,10 +151,18 @@ class FrontendController extends Controller
      */
     public function galleryAction()
     {
-        return array(
-            'dsp_entities' => $this->getBusinessServiceActionParameters('DSP'),
-            'opt_entities' => $this->getBusinessServiceActionParameters('OPT')
-        );
+        // get active business services
+        $repoBS  = $this->getDoctrine()->getRepository("AppBundle:BusinessService");
+        $enabledBS = $repoBS->findEnabled();
+
+        $galleryData = [];
+        foreach($enabledBS as $bs) {
+            $ref = mb_strtolower($bs->getRef());
+            $indexName = $ref."_entities";
+            $galleryData[$indexName] = $this->getBusinessServiceActionParameters($ref);
+        }
+
+        return $galleryData;
     }
 
     /**
