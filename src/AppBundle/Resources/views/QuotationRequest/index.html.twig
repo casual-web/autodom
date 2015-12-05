@@ -34,7 +34,7 @@
                             {{ qr_status_enum_to_label(entity.status) }}
                         </span>
                     </td>
-                    <td>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
+                    <td nowrap>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
                     <td>{{ entity.vehicleModel }}</td>
                     <td>{{ entity.problemDescription }}</td>
                     <td>

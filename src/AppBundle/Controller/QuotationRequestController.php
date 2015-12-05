@@ -29,7 +29,7 @@ class QuotationRequestController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('AppBundle:QuotationRequest')->findBy(array(), array('created' => 'ASC'));
+        $entities = $em->getRepository('AppBundle:QuotationRequest')->findBy(array(), array('created' => 'DESC'));
 
         return array(
             'entities' => $entities,
