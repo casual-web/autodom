@@ -1,12 +1,12 @@
 <div class="container">
     <div class='row'>
-        <div class="col-md-5 col-xs-12">
+        <div class="col-md-6 col-xs-12">
             <div  style="background: none;">
                 {% block highlights %}{% endblock %}
                 {% include "AppBundle:FrontBusinessService:carousel.html.twig" with {'display_comments': 'yes' } %}
             </div>
         </div>
-        <div class="col-md-7 col-xs-12 well">
+        <div class="col-md-6 col-xs-12 well">
             {% block description %}{% endblock %}
         </div>
     </div>
