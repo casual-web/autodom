@@ -28,7 +28,7 @@ class BaseQuotationRequestType extends AbstractType
             ->add('hasShelter', 'checkbox', ['required' => false, 'label' => 'Je dispose d\'un abri (garage, tonelle, ...) et d\'une alimentation électrique'])
             ->add('firstName', 'text', ['label' => 'Nom'])
             ->add('lastName', 'text', ['label' => 'Prénom'])
-            ->add('email')
+            ->add('email', 'email')
             ->add('phone', 'text', ['label' => 'Téléphone'])
             ->add('address', 'text', ['label' => 'Adresse postale'])
             ->add('contactOrigin', null, ['label' => 'Dites-nous comment vous nous avez trouvé :']);

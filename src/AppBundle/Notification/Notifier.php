@@ -40,7 +40,7 @@ class Notifier
             ->setBcc(['contact@casual-web.com'])
             ->setSubject(sprintf("Demande de devis : %s", $sumup))
             ->setBody($this->renderQuotationRequestNotificationBody($quotationRequest))
-            ->setReplyTo('no-reply@autodom.biz')
+            ->setReplyTo($quotationRequest->getEmail())
             ->setContentType('text/html; charset="UTF-8');
 
         $this->mailer->send($mail);
