@@ -30,8 +30,11 @@ class Notifier
         $mail = \Swift_Message::newInstance();
 
         $sumup = '';
-        foreach ($quotationRequestData as $item) {
-            $sumup .= ' ' . $item->getBusinessServiceRef();
+
+        if (is_array($quotationRequestData)) {
+            foreach ($quotationRequestData as $item) {
+                $sumup .= ' ' . $item->getBusinessServiceRef();
+            }
         }
 
         $mail
