@@ -2,14 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\QuotationRequest;
+use AppBundle\Form\FrontQuotationRequestType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\QuotationRequest;
-use AppBundle\Entity\QuotationRequestServiceRelation;
-use AppBundle\Form\FrontQuotationRequestType;
 
 
 class FrontendController extends Controller
@@ -77,7 +76,7 @@ class FrontendController extends Controller
      *
      * @Route("/", name="frontend_devis_create")
      * @Method("POST")
-     * @Template("AppBundle:QuotationRequest:new.html.twig")
+     * @Template("AppBundle:Frontend:quotationRequest.html.twig")
      */
     public function createQRAction(Request $request)
     {
@@ -152,13 +151,13 @@ class FrontendController extends Controller
     public function galleryAction()
     {
         // get active business services
-        $repoBS  = $this->getDoctrine()->getRepository("AppBundle:BusinessService");
+        $repoBS = $this->getDoctrine()->getRepository("AppBundle:BusinessService");
         $enabledBS = $repoBS->findEnabled();
 
         $galleryData = [];
-        foreach($enabledBS as $bs) {
+        foreach ($enabledBS as $bs) {
             $ref = mb_strtolower($bs->getRef());
-            $indexName = $ref."_entities";
+            $indexName = $ref . "_entities";
             $galleryData[$indexName] = $this->getBusinessServiceActionParameters($ref);
         }
 
