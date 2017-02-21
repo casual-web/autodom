@@ -197,7 +197,7 @@ class FrontendController extends Controller
             return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
         }
 
-        return new Response(json_encode(["message"=>"mail sent successfuly"], "200");
+        return new Response(json_encode(["message"=>"mail sent successfuly", "status"=>"200"]), "200");
 
     }
 
