@@ -100,7 +100,7 @@ class FrontendController extends Controller
                 $quotationRequestData
             );
 
-            $notifier->sendQuotationRequestNotification($service_references, $entity);
+            $notifier->sendQuotationRequestNotification($service_references->getBusinessServiceReferences(), $entity);
             return $this->redirect($this->generateUrl('home'));
         }
 
