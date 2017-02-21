@@ -194,9 +194,10 @@ class FrontendController extends Controller
             $notifier->sendQuotationRequestNotification($data_services, $entity);
         } catch (\Exception $e) {
             $httpEx = new HttpException('424', 'Unable to send mail for unexcepected reasons');
+            return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
         }
 
-        return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
+        return new Response(json_encode(["message"=>"mail sent successfuly"], "200");
 
     }
 
