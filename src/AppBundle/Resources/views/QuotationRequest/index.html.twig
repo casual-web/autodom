@@ -37,7 +37,7 @@
                     <td nowrap>{% if entity.created %}{{ entity.created|date('Y-m-d') }}{% endif %}</td>
                     <td>{{ entity.vehicleModel }}</td>
                     <td>{{ entity.problemDescription }}</td>
-                    <td>
+                    <td id="data_services_{{ entity.id  }}">
                         {% for subEntity in entity.quotationRequestServiceRelations %}
                             {{ subEntity.businessServiceRef }}
                         {% endfor %}
@@ -58,6 +58,10 @@
                             <li>
                                 <a href="{{ path('admin_devis_edit', { 'id': entity.id }) }}">Editer</a>
                             </li>
+                            <li>
+                                <div id="loading_{{entity.id }}" style="display:none">...</div>
+                                <button id="{{entity.id }}"  class="replay-email" type="button">Rejouer</button>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -67,4 +71,35 @@
 
         </ul>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).on('click', ".replay-email", function(e){
+                entity_id =$(this)[0].id;
+                data_services=$('#data_services_'+entity_id)[0].innerText;
+                $(this).hide();$('#loading_'+entity_id).show();
+                e.preventDefault();
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ path('replay_email') }}",
+                    data: { 'id': entity_id , 'data_services' : data_services},
+                    success: function(responseData){
+                        console.log("mail sent successfully");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    },
+                    complete: function(jqXHR, textStatus ){
+                        console.log(jqXHR);
+                        $('#loading_'+entity_id).hide();$('#'+entity_id).show();
+                    }
+                })
+            });
+        });
+
+    </script>
+
 {% endblock %}

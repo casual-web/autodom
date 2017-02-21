@@ -3,13 +3,16 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\QuotationRequest;
+use AppBundle\Entity\QuotationRequestServiceRelationCollection;
 use AppBundle\Form\FrontQuotationRequestType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FrontendController extends Controller
 {
@@ -88,14 +91,16 @@ class FrontendController extends Controller
         $notifier = $this->get('autodom.notifier');
 
         if ($form->isValid()) {
-            $data = $form->get('quotationRequestServiceRelations')->getData();
+            $service_references = new QuotationRequestServiceRelationCollection(
+                $form->get('quotationRequestServiceRelations')->getData()
+            );
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelations(
                 $entity,
-                $data
+                $quotationRequestData
             );
 
-            $notifier->sendQuotationRequestNotification($data, $entity);
+            $notifier->sendQuotationRequestNotification($service_references, $entity);
             return $this->redirect($this->generateUrl('home'));
         }
 
@@ -165,6 +170,37 @@ class FrontendController extends Controller
     }
 
     /**
+     * Launch replay email action on one QuotationRequest entity.
+     * Should be private API but
+     * @Route("/replay", name="replay_email")
+     * @Method("POST")
+     * @Template()
+     */
+    public function replayEmailAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity_id = $request->request->get('id');
+        $data_services = \explode(" ", $request->request->get('data_services'));
+        $entity = $em->getRepository('AppBundle:QuotationRequest')->find($entity_id);
+
+        if ($entity===null) {
+            $httpEx = new NotFoundHttpException('Unable to find QuotationRequest entity: ' . "$entity_id");
+            return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
+        }
+
+        try {
+            $notifier = $this->get('autodom.notifier');
+            $notifier->sendQuotationRequestNotification($data_services, $entity);
+        } catch (\Exception $e) {
+            $httpEx = new HttpException('424', 'Unable to send mail for unexcepected reasons');
+        }
+
+        return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
+
+    }
+
+    /**
      * @Route("/charte-qualite",  name="quality_charter")
      * @Method("GET")
      * @Template()
@@ -180,7 +216,8 @@ class FrontendController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function partnersAction()
+    public
+    function partnersAction()
     {
         return array(// ...
         );
@@ -190,7 +227,8 @@ class FrontendController extends Controller
      * @Route("/businessService")
      * @Template()
      */
-    public function businessServiceAction()
+    public
+    function businessServiceAction()
     {
         return array(// ...
         );
