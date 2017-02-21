@@ -146,6 +146,7 @@ class QuotationRequestController extends Controller
         );
     }
 
+
     /**
      * Creates a form to delete a QuotationRequest entity by id.
      *

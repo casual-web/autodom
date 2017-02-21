@@ -25,18 +25,10 @@ class Notifier
         $this->templating = $templating;
     }
 
-    public function sendQuotationRequestNotification($quotationRequestData, QuotationRequest $quotationRequest)
+    public function sendQuotationRequestNotification(array $quotationRequestData, QuotationRequest $quotationRequest)
     {
         $mail = \Swift_Message::newInstance();
-
-        $sumup = '';
-
-        if (is_array($quotationRequestData)) {
-            foreach ($quotationRequestData as $item) {
-                $sumup .= ' ' . $item->getBusinessServiceRef();
-            }
-        }
-
+        $sumup = implode(' ', $quotationRequestData);
         $mail
             ->setFrom(['contact@autodom.biz' => 'Autodom'])
             ->setTo(['contact@autodom.biz'])
@@ -49,6 +41,8 @@ class Notifier
         $this->mailer->send($mail);
     }
 
+
+
     public function renderQuotationRequestNotificationBody(QuotationRequest $quotationRequest)
     {
         return $this->templating->render(
@@ -57,10 +51,5 @@ class Notifier
         );
     }
 
-
-    /*
-    'Content-Type: text/html; charset="UTF-8"' . "\r\n";
-    'Content-Transfer-Encoding: 8bit' . "\r\n" .
-    'X-Mailer: PHP/'*/
 }
 

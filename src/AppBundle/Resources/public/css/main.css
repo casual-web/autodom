@@ -177,5 +177,10 @@ li.puce-normal {
     width:548px;
 }
 
+.loading-image {
+    background-image: url('../img/dots_2.gif');
+    background-repeat: no-repeat;
+    background-position: center left;
+}
 
 
