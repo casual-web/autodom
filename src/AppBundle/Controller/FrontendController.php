@@ -91,9 +91,8 @@ class FrontendController extends Controller
         $notifier = $this->get('autodom.notifier');
 
         if ($form->isValid()) {
-            $service_references = new QuotationRequestServiceRelationCollection(
-                $form->get('quotationRequestServiceRelations')->getData()
-            );
+            $quotationRequestData = $form->get('quotationRequestServiceRelations')->getData();
+            $service_references = new QuotationRequestServiceRelationCollection($quotationRequestData);
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelations(
                 $entity,
