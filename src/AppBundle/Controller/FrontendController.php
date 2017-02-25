@@ -91,16 +91,16 @@ class FrontendController extends Controller
         $notifier = $this->get('autodom.notifier');
 
         if ($form->isValid()) {
-            $service_references = new QuotationRequestServiceRelationCollection(
-                $form->get('quotationRequestServiceRelations')->getData()
-            );
+            $quotationRequestData = $form->get('quotationRequestServiceRelations')->getData();
+            $quotationRequestData = (empty($quotationRequestData)) ? [] : $quotationRequestData;
+            $service_references = new QuotationRequestServiceRelationCollection($quotationRequestData);
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelations(
                 $entity,
                 $quotationRequestData
             );
 
-            $notifier->sendQuotationRequestNotification($service_references, $entity);
+            $notifier->sendQuotationRequestNotification($service_references->getBusinessServiceReferences(), $entity);
             return $this->redirect($this->generateUrl('home'));
         }
 
@@ -194,9 +194,10 @@ class FrontendController extends Controller
             $notifier->sendQuotationRequestNotification($data_services, $entity);
         } catch (\Exception $e) {
             $httpEx = new HttpException('424', 'Unable to send mail for unexcepected reasons');
+            return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
         }
 
-        return new Response(json_encode(["message"=>$httpEx->getMessage()]), $httpEx->getStatusCode());
+        return new Response(json_encode(["message"=>"mail sent successfuly", "status"=>"200"]), "200");
 
     }
 
