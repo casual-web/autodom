@@ -16,6 +16,7 @@ class QuotationRequestServiceRelationCollection extends ArrayCollection
     {
         $iterator = $this->getIterator();
         $iterator->rewind();
+        $references=[];
         while ($iterator->valid()) {
             $references[$iterator->key()]= $iterator->current()->getBusinessServiceRef();
             $iterator->next();
