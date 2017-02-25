@@ -92,7 +92,7 @@ class FrontendController extends Controller
 
         if ($form->isValid()) {
             $quotationRequestData = $form->get('quotationRequestServiceRelations')->getData();
-            $quotationRequestData = ($quotationRequestData ? null : []);
+            $quotationRequestData = (empty($quotationRequestData)) ? [] : $quotationRequestData;
             $service_references = new QuotationRequestServiceRelationCollection($quotationRequestData);
             $em = $this->get('doctrine.orm.quotation_request_manager');
             $em->persistAndFlushWithRelations(
